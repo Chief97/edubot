@@ -1,10 +1,34 @@
 from flask import Flask, request, jsonify
 
+from Other_Features.UserAccessManagement import UserAccessManagement
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
 
 app = Flask(__name__)
 
 questionGenerationService = QuestionGenerationService()
+
+
+################################################# Start User access management End points #######################################################
+
+userAccessManagement = UserAccessManagement()
+userAccessManagement.initialization()
+
+
+@app.route('/selfEvaluate/registerUser', methods=['POST'])
+def registerUser():
+    textInput = request.get_json()['data']
+    response = userAccessManagement.registerUser(textInput)
+    return jsonify(response)
+
+
+@app.route('/selfEvaluate/validateUser', methods=['POST'])
+def validateUserCredentials():
+    textInput = request.get_json()['data']
+    response = userAccessManagement.validateUserCredentials(textInput)
+    return jsonify(response)
+
+################################################# End User access management End points #########################################################
+
 
 ################################################# Start Doubt Detection End points ##############################################################
 
@@ -18,6 +42,7 @@ questionGenerationService = QuestionGenerationService()
 
 ################################################# Start Question Generation End points ##########################################################
 
+
 @app.route('/selfEvaluate/questionGeneration/importantSentences', methods=['POST'])
 def allImportantSentences():
     textInput = request.get_json()['text']
@@ -30,6 +55,7 @@ def allQuestions():
     textInput = request.get_json()['text']
     allQuestionsForPara = questionGenerationService.executeQuestionGeneration(textInput)
     return jsonify(allQuestionsForPara)
+
 
 ################################################# End Question Generation End points ############################################################
 
