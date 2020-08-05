@@ -6,6 +6,17 @@ app = Flask(__name__)
 
 questionGenerationService = QuestionGenerationService()
 
+################################################# Start Doubt Detection End points ##############################################################
+
+################################################# End Doubt Detection End points ################################################################
+
+
+################################################# Start Doubt Response End points ###############################################################
+
+################################################# End Doubt Response End points #################################################################
+
+
+################################################# Start Question Generation End points ##########################################################
 
 @app.route('/selfEvaluate/questionGeneration/importantSentences', methods=['POST'])
 def allImportantSentences():
@@ -20,5 +31,11 @@ def allQuestions():
     allQuestionsForPara = questionGenerationService.executeQuestionGeneration(textInput)
     return jsonify(allQuestionsForPara)
 
+################################################# End Question Generation End points ############################################################
+
+
+################################################# Start Answer Generation End points ##############################################################
+
+################################################# End Question Generation End points ##############################################################
 
 app.run(debug=True)
