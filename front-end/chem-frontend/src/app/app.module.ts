@@ -1,16 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
+import { routing} from './app-routing.module';
 import { AppComponent } from './app.component';
+import {LoginComponentComponent} from "./components/login-component/login-component.component";
+import {MainModuleModule} from "./main-module/main-component/main-module.module";
+import {RegisterModuleModule} from "./register-module/register-main-component/register-module.module";
+
+// import { ParticlesModule } from "../node_modules/angular-particle-updated";
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponentComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    MainModuleModule,
+    routing,
+    RegisterModuleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
