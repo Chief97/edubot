@@ -25,18 +25,35 @@ class QuestionFormation(object):
        :param sentence: selected sentence
        :return: the subject of the sentence
        """
+
+        if sent_tokenize(sentence)[0].find("Therefore") != -1 or sent_tokenize(sentence)[0].find("Therefore,") != -1 or sent_tokenize(sentence)[0].find("The") != -1:
+            wordDic={'Therefore':'','Therefore,':''}
+            p = PreProcess()
+            sentence = p.multipleReplace(sentence,wordDic)
+            # print("TRUE")
+        # print(sentence)
         doc = nlp(sentence);
         root = [token for token in doc if token.head == token][0]
         sub = ""
         if str(list(root.lefts)) == '[]':
-            sub = "SUBJECT CANNOT BE DEFINED";
+            return "SUBJECT CANNOT BE DEFINED";
         else:
             subject = list(root.lefts)[0]
             for descendant in subject.subtree:
                 assert subject is descendant or subject.is_ancestor(descendant);
                 sub = sub + str(descendant.text) + " ";
+            p = PreProcess()
+            if p.tokenizedSentenceLength(sub) <= 1:
+                stopwords = nltk.corpus.stopwords.words('english');
+                verifyVal = sub.lower()
+                if verifyVal in stopwords:
+                    return "SUBJECT CANNOT BE DEFINED";
+                else:
+                    return verifyVal;
+            else:
+                return sub;
         # print("subject :" + sub)
-        return sub;
+
 
     def _getLabelArray(self, subject):
         """
@@ -95,12 +112,26 @@ class QuestionFormation(object):
 
     def generateWhyQuestion(self, sentence):
         # print(nltk.word_tokenize(sentence)[0])
+        ##newly added
         if nltk.word_tokenize(sentence)[0].find("Because") != -1 or nltk.word_tokenize(sentence)[0].find(
-                "Hence") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or nltk.word_tokenize(sentence)[0].find("But") != -1:
-            wordDic = {'Because': '', 'Therefore,': '', 'Hence,': '','But if':'',"But":''}
+                "Hence") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or \
+                nltk.word_tokenize(sentence)[0].find("But") != -1:
+            wordDic = {'Because of': '', 'Because': '', 'Therefore,': '', 'Therefore': '', 'Hence,': '', 'But if': '', "But": '', 'Hence': ''}
             preProcess = PreProcess()
             sentence = preProcess.multipleReplace(sentence, wordDic)
-            return 'Why is ' + sentence + '?'
+            if str(sentence).count(',') > 0:
+                doc = nlp(sentence)
+                pos=''
+                for chunk in doc.noun_chunks:
+                    if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
+                        pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
+                        # print(pos)
+                    if str(pos).find('PRP') == -1:
+                        break;
+                question = '';
+                return question
+            else:
+                return 'Why is ' + sentence + '?'
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
             doc = nlp(sentence)
@@ -114,30 +145,41 @@ class QuestionFormation(object):
             headword = headword[0];
             sentencePart = self._slicer(sentence, 'because');
             # print("hii1 " + sentencePart)
-            if str(sentencePart).count(',') > 0:
-                sentencePart = self.slicer1(sentencePart, ',');
-            # print("hii " + sentencePart)
-            s = ''
-            for word, pos in nltk.pos_tag(nltk.word_tokenize(str(sentencePart))):
-                if (pos == 'PRP'):
+            if len(sent_tokenize(sentencePart)) <= 2:
+                return ''
+            else:
+                if str(sentencePart).count(',') > 0:
+                    sentencePart = self.slicer1(sentencePart, ',');
+                # print("hii " + sentencePart)
+                s = ''
+                for word, pos in nltk.pos_tag(nltk.word_tokenize(str(sentencePart))):
+                    if (pos == 'PRP'):
+                        # print(word)
+                        word = headword
+                        # print(word)
                     # print(word)
-                    word = headword
-                    # print(word)
-                # print(word)
-                s = s + word + " "
-                # s = ''.join(word)
-            # print(s)
-            question = 'Why ' + s + '?';
-            return question
+                    s = s + word + " "
+                    # s = ''.join(word)
+                # print(s)
+                question = 'Why ' + s + '?';
+                return question
         else:
             return ''
 
     def generateWHQuestion(self, sentence):
         question = '';
-        WHVerbs = ['Who', 'What', 'Where', 'Why'];
-        count = 0;
+        WHVerbs = ['Who', 'What', 'Where'];
+        # p = PreProcess()
+        # wordDic = {'But':'','Similarly':'','Thus':'','Therefore,':''}
+        wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '','Therefore,': '', 'But,': '','But': '', 'Similarly': '', 'Therefore':''}
+        p = PreProcess()
+        sentence = p.multipleReplace(sentence, wordDic)
+        # if nltk.word_tokenize(sentence)[0].find("But") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or nltk.word_tokenize(sentence)[0].find("Similarly") != -1 or nltk.word_tokenize(sentence)[0].find("Thus") != -1:
+        #     sentence = p.multipleReplace(sentence,wordDic)
+        print("SENTENCE ___________________________ " + sentence)
         subject = self._getSubject(sentence);
-        if subject == 'SUBJECT CANNOT BE DEFINED':
+        print("SUBJECT ************ " ,str(subject))
+        if subject == 'SUBJECT CANNOT BE DEFINED' or subject == '':
             question = '';
         else:
             label = self._getLabelArray(subject);
@@ -159,11 +201,10 @@ class QuestionFormation(object):
                 question = question + '?'
             # print("QUESTION : " + question)
 
-        for verb in WHVerbs:
-            if question.find(verb) != -1:
-                count += 1;
-
-        if count == 0:
+        if question is '':
+            # question = "CANNOT GENERATE MEANINGFUL WH TYPE QUESTION";
+            return '';
+        elif nltk.word_tokenize(question)[0] not in WHVerbs:
             # question = "CANNOT GENERATE MEANINGFUL WH TYPE QUESTION";
             return '';
         else:
@@ -178,12 +219,12 @@ class QuestionFormation(object):
         stopwords = nltk.corpus.stopwords.words('english');
 
         pattern = r"""
-        NP:{<DT>?<JJ>*<NN>}
-           {<NNP>+}
-           {<NNS>+}
-           {<NN>+}
-           {<NNP><NN>}
-        """
+            NP:{<DT>?<JJ>*<NN>}
+               {<NNP>+}
+               {<NNS>+}
+               {<NN>+}
+               {<NNP><NN>}
+            """
         noun_list = [];
         for sent in sent_tokenize(sentence):
             subject = self._getSubject(sent);
@@ -260,7 +301,7 @@ class QuestionFormation(object):
         else:
             raise Exception('Sub string not found!')
 
-    def genenerateHowQuestion(self, sentence):
+    def generateHowQuestion(self, sentence):
         # qf = QuestionFormation()
         c = str(sentence).count(',')
 
@@ -300,11 +341,13 @@ class QuestionFormation(object):
 
     def createYesUsingHVerbPhrase(self, sentence):
 
-        if str(sentence).find("This") != -1 or str(sentence).find("this") != -1 or str(sentence).find("them") != -1 or str(sentence).find("them,") != -1:
+        if str(sentence).find("This") != -1 or str(sentence).find("this") != -1 or str(sentence).find(
+                "them") != -1 or str(sentence).find("them,") != -1:
             question = ''
             return question
         else:
-            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': ''}
+            ##newly added
+            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': ''}
             p = PreProcess()
             sentence = p.multipleReplace(sentence, wordDic)
             words = nltk.word_tokenize(sentence);
@@ -396,11 +439,13 @@ class QuestionFormation(object):
                                 return question;
 
     def createNoUsingHVerbPhrase(self, sentence):
-        if str(sentence).find("This") != -1 or str(sentence).find("this") != -1 or str(sentence).find("them") != -1 or str(sentence).find("them,") != -1:
+        if str(sentence).find("This") != -1 or str(sentence).find("this") != -1 or str(sentence).find(
+                "them") != -1 or str(sentence).find("them,") != -1:
             question = ''
             return question
         else:
-            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': ''}
+            ##newly added
+            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': ''}
             p = PreProcess()
             sentence = p.multipleReplace(sentence, wordDic)
             words = nltk.word_tokenize(sentence);
@@ -509,11 +554,11 @@ class QuestionFormation(object):
               """
 
         pattern = r"""
-              NP:{<DT>?<JJ>*<NN>}
-                 {<NNP>+}
-                 {<NN>+}
-                 {<NNP><NN>}
-              """
+                  NP:{<DT>?<JJ>*<NN>}
+                     {<NNP>+}
+                     {<NN>+}
+                     {<NNP><NN>}
+                  """
         noun_list = [];
         for sent in sent_tokenize(sentence):
             # subject = self._getSubject(sent);

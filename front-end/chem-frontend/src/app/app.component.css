@@ -1,0 +1,11 @@
+
+#particles-js{
+  background-image: url("../assets/image/background.png");
+  background-size: cover;
+  height: 900px;
+}
+
+div {
+  background-image: url("../assets/image/back.jpg");
+  height: 100%;
+}

@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'chem-frontend';
+  innerHeight: any;
+  innerWidth: any;
+  constructor() {
+    this.innerHeight = (window.screen.height) + "px";
+    this.innerWidth = (window.screen.width) + "px";
+  }
 }
