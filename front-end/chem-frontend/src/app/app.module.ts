@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { routing} from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChaptersChemComponent } from './chapters-chem/chapters-chem.component';
 import {LoginComponentComponent} from "./components/login-component/login-component.component";
 import {MainModuleModule} from "./main-module/main-component/main-module.module";
 import {RegisterModuleModule} from "./register-module/register-main-component/register-module.module";
@@ -13,8 +12,6 @@ import {RegisterModuleModule} from "./register-module/register-main-component/re
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ChaptersChemComponent
     AppComponent,
     LoginComponentComponent
   ],
