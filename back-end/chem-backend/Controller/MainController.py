@@ -5,8 +5,6 @@ from Service.Self_Assess_Question_Generation.QuestionGenerationService import Qu
 
 app = Flask(__name__)
 
-questionGenerationService = QuestionGenerationService()
-
 
 ################################################# Start User access management End points #######################################################
 
@@ -41,6 +39,8 @@ def validateUserCredentials():
 
 
 ################################################# Start Question Generation End points ##########################################################
+
+questionGenerationService = QuestionGenerationService()
 
 
 @app.route('/selfEvaluate/questionGeneration/importantSentences', methods=['POST'])
