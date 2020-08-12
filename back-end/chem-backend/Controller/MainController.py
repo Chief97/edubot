@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 
 from Other_Features.UserAccessManagement import UserAccessManagement
+from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetectionService
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
 
 app = Flask(__name__)
+
 
 
 ################################################# Start User access management End points #######################################################
@@ -29,6 +31,15 @@ def validateUserCredentials():
 
 
 ################################################# Start Doubt Detection End points ##############################################################
+doubtDetectionService = DoubtDetectionService()
+
+
+@app.route('/selfLearn/doubtDetection/getIntent', methods=['POST'])
+def detectIntent_id():
+    textInput = request.get_json()['text']
+    intent_id = doubtDetectionService.getIntent(textInput)
+    return intent_id
+
 
 ################################################# End Doubt Detection End points ################################################################
 
