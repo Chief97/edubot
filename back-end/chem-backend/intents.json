@@ -1,0 +1,556 @@
+{"intents": [
+        {"class": "greeting",
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day"]
+        },
+        {"class": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye"]
+        },
+        {"class": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful"]
+        },
+        {"class": "1_mixture",
+            "patterns": ["what is mixture?", "explain mixture?", "state about mixture?", "explain about mixture?", "can you explain about mixture?"]
+        },
+        {"class": "1_mixture_type",
+            "patterns": ["what are the type of mixtures?", "give two types of mixture?", "types of mixture?"]
+        },
+        {"class": "1_componentsInAir",
+            "patterns": ["what are the components mixed in air?", "what are the substances mixed in air?", "components or substances mixed in the air?"]
+        },
+        {"class": "1_componentsInCement",
+            "patterns": ["what are the components mixed in cement?", "what are the substances mixed in cement mortar?", "components or substances mixed in the cement?"]
+        },
+        {"class": "1_componentsInCake",
+            "patterns": ["what are the components mixed in cake?", "what are the substances mixed in cake?", "components or substances mixed in the cake?"]
+        },
+        {"class": "1_componentsInWellwater",
+            "patterns": ["what are the components mixed in well water?", "what are the substances mixed in well water?", "components or substances mixed in the well water?"]
+        },
+        {"class": "1_componentsInSeawater",
+            "patterns": ["what are the components mixed in sea water?", "what are the substances mixed in sea water?", "components or substances mixed in the sea water?"]
+        },
+        {"class": "1_componentAndMixture",
+            "patterns": ["what are the difference between components and mixture?", "comparison between component and mixture?", "relationship between component and mixture?", "how component and mixture are connected?"]
+        },
+        {"class": "1_componentDistributedInMixture",
+            "patterns": ["explain the activity to study how the components are distributed in a mixture?", "how components are distributed in a mixture?", "tell about how components are distributed in a mixture?"]
+        },
+        {"class": "1_homogeneous_mixture",
+            "patterns": ["what is homogeneous mixture?", "explain homogeneous mixture?", "state about homogeneous mixture?", "explain about homogeneous mixture?", "can you explain about homogeneous mixture?"]
+        },
+        {"class": "1_homogeneous_mixture_eg",
+            "patterns": ["give few examples of homogeneous mixture?", "can you tell few examples of homogeneous mixture?", "examples for homogeneous mixture?", "examples of homogeneous mixture?", "what are the examples for homogeneous mixture?"]
+        },
+        {"class": "1_heterogeneous_mixture",
+            "patterns": ["what is heterogeneous mixture?", "explain heterogeneous mixture?", "state about heterogeneous mixture?", "explain about heterogeneous mixture?", "can you explain about heterogeneous mixture?"]
+        },
+        {"class": "1_heterogeneous_mixture_eg",
+            "patterns": ["give few examples of heterogeneous mixture?", "can you tell few examples of heterogeneous mixture?", "examples for heterogeneous mixture?", "examples of heterogeneous mixture?", "what are the examples for heterogeneous mixture?"]
+        },
+        {"class": "1_solvent",
+            "patterns": ["what is solvent?", "explain solvent?", "state about solvent?", "explain about solvent?", "can you explain about solvent?"]
+        },
+        {"class": "1_solution",
+            "patterns": ["what is solution?", "explain solution?", "state about solution?", "explain about solution?", "can you explain about solution?"]
+        },
+        {"class": "1_solute",
+            "patterns": ["what is solute?", "explain solute?", "state about solute?", "explain about solute?", "can you explain about solute?"]
+        },
+        {"class": "1_solventSolutionSolute_relationship",
+            "patterns": ["relationship between solvent, solution and solute?", "how solution, solvent and solute are connected?"]
+        },
+        {"class": "1_solubility_of_solute",
+            "patterns": ["what is solubility of a solute?", "explain solubility of a solute?", "state about solubility of a solute?", "explain about solubility of a solute?", "can you explain about solubility of a solute?"]
+        },
+        {"class": "1_factors_affect_solubility",
+            "patterns": ["what are the factors affecting solubility?", "factors affect the solubility of solute?"]
+        },
+        {"class": "1_polar_organic_soluteOrSolvent",
+            "patterns": ["what is polar organic solutes?", "explain polar organic solutes or solvents?", "state about polar organic solute?", "explain about polar organic solvent?"]
+        },
+        {"class": "1_non_polar_organic_soluteOrSolvent",
+            "patterns": ["what is non polar organic solutes?", "explain non polar organic solutes or solvents?", "state about non polar organic solute?", "explain about non polar organic solvent?"]
+        },
+        {"class": "1_polar_inorganic_soluteOrSolvent",
+            "patterns": ["what is polar inorganic solutes?", "explain polar inorganic solutes or solvents?", "state about polar inorganic solute?", "explain about polar inorganic solvent?"]
+        },
+        {"class": "1_non_polar_inorganic_soluteOrSolvent",
+            "patterns": ["what is non polar inorganic solutes?", "explain non polar inorganic solutes or solvents?", "state about non polar inorganic solute?", "explain about non polar inorganic solvent?"]
+        },
+        {"class": "1_solubility_of_gas",
+            "patterns": ["what is solubility of a gas?", "explain solubility of a gas?", "state about solubility of a gas?", "explain about solubility of a gas?", "can you explain about solubility of a gas?"]
+        },
+        {"class": "1_temperature_affect_solubility_gas",
+            "patterns": ["how temperature affecting solubility of a gas?", "temperature affect the solubility of gas?"]
+        },
+        {"class": "1_factors_affect_solubility_gasInWater",
+            "patterns": ["what are the factors affecting solubility of a gas in water?", "factors affect the solubility of gas in water?"]
+        },
+        {"class": "1_composition_of_mixture",
+            "patterns": ["what is composition of mixture?", "explain composition of mixture?", "state about composition of mixture?", "explain about composition of mixture?", "can you explain about composition of mixture?"]
+        },
+        {"class": "1_composition_massFraction_component",
+            "patterns": ["what is the equation for mass fraction of a component in a mixture?", "explain about the mass fraction of a component in a mixture?"]
+        },
+        {"class": "1_composition_massFraction_solute",
+            "patterns": ["what is the equation for mass fraction of a solute in a mixture?", "explain about the mass fraction of a solute in a mixture?"]
+        },
+        {"class": "1_composition_volumeFraction",
+            "patterns": ["what is the equation for volume fraction of a component in a mixture?", "explain about the volume fraction of a component in a mixture?"]
+        },
+        {"class": "1_composition_moleFraction",
+            "patterns": ["what is the equation for mole fraction of a component in a mixture?", "explain about the mole fraction of a component in a mixture?"]
+        },
+        {"class": "1_composition_massVolume",
+            "patterns": ["explain about the composition of a mixture in terms of mass over volume?"]
+        },
+        {"class": "1_composition_moleVolume",
+            "patterns": ["explain about the composition of a mixture in terms of amount of mole over volume?"]
+        },
+        {"class": "1_standard_solution",
+            "patterns": ["what is standard solution?", "explain standard solution?", "state about standard solution?", "explain about standard solution?", "can you explain about standard solution?"]
+        },
+        {"class": "1_SIunits_standard_solution",
+            "patterns": ["what are SI units important in the preparation of standard solutions?", "what are Standard International units important in the preparation of standard solutions?"]
+        },
+        {"class": "1_equipment_required_prepare_solution",
+            "patterns": ["what are the equipments required to prepare a solution of a specified concentration?"]
+        },
+        {"class": "1_factors_consider_prepare_solution",
+            "patterns": ["what are the factors should be consider when preparing a solution of a specific concentration?"]
+        },
+        {"class": "1_equation_cnv",
+            "patterns": ["what is the equation that related to concentration (c), moles (n) and volume (v)?"]
+        },
+        {"class": "1_components_separated_from_mixture_eg",
+            "patterns": ["what are the real world examples where components from mixtures should be separated?", "real world examples where components separated from mixtures?"]
+        },
+        {"class": "1_components_seperated_from_mixture_properties",
+            "patterns": ["what are the physical properties should consider when separate components from mixture?"]
+        },
+        {"class": "1_components_separated_from_mixture_methods",
+            "patterns": ["what are the separation methods that used to separate components from mixtures?"]
+        },
+        {"class": "1_components_separated_from_mixture_mechanical_separation",
+            "patterns": ["explain about mechanical separation for separate components from mixtures?", "what are the methods used in mechanical separation for separate components from mixtures?"]
+        },
+        {"class": "1_components_separated_from_mixture_mechanical_separation_occasion",
+            "patterns": ["give list of examples for the occasions where components are separated by mechanical methods in day to day life?"]
+        },
+        {"class": "1_components_separated_from_mixture_vapourisation",
+            "patterns": ["explain about vapourisation or evaporation for separate components from mixtures?", "describe about vapourisation or evaporation for separate components from mixtures?"]
+        },
+        {"class": "1_components_separated_from_mixture_filtration",
+            "patterns": ["explain about filtration for separate components from mixtures?", "describe about filtration for separate components from mixtures?"]
+        },
+        {"class": "1_components_separated_from_mixture_crystallisation",
+            "patterns": ["explain about crystallisation for separate components from mixtures?", "describe about crystallisation for separate components from mixtures?"]
+        },
+        {"class": "1_components_separated_from_mixture_recrystallisation",
+            "patterns": ["explain about recrystallisation for separate components from mixtures?", "describe about recrystallisation for separate components from mixtures?"]
+        },
+        {"class": "1_solvent_extraction",
+            "patterns": ["what is solvent extraction?", "explain solvent extraction?", "explain about solvent extraction?", "can you explain about solvent extraction?"]
+        },
+        {"class": "1_simple_distillation",
+            "patterns": ["what is simple distillation?", "explain simple distillation?", "explain about simple distillation?", "can you explain about simple distillation?"]
+        },
+        {"class": "1_fractional_distillation",
+            "patterns": ["what is fractional distillation?", "explain fractional distillation?", "explain about fractional distillation?", "can you explain about fractional distillation?"]
+        },
+        {"class": "1_steam_distillation",
+            "patterns": ["what is steam distillation?", "explain steam distillation?", "explain about steam distillation?", "can you explain about steam distillation?"]
+        },
+        {"class": "1_chromatography",
+            "patterns": ["what is chromatography?", "explain chromatography?", "explain about chromatography?", "can you explain about chromatography?"]
+        },
+        {"class": "1_uses_separating",
+            "patterns": ["what are the uses of separating techniques?"]
+        },
+        {"class": "2_acid",
+            "patterns": ["what is acid?", "explain about acid?", "can you explain about acid?"]
+        },
+        {"class": "2_acid_eg",
+            "patterns": ["give some examples of acids that are often used in laboratory?","frequently using acids in laboratory?"]
+        },
+        {"class": "2_strong_acid",
+            "patterns": ["what is strong acid?", "explain about strong acid?", "can you explain about strong acid?"]
+        },
+        {"class": "2_weak_acid",
+            "patterns": ["what is weak acid?", "explain about weak acid?", "can you explain about weak acid?"]
+        },
+        {"class": "2_strongAndWeak_acid",
+            "patterns": ["what are the difference between strong and weak acid?", "comparison between strong and weak acid?"]
+        },
+        {"class": "2_properties_acid",
+            "patterns": ["what are the properties of acid?", "give some properties acid?"]
+        },
+        {"class": "2_usage_hcl",
+            "patterns": ["what are the uses of hydrochloric acid?", "usage of HCl acid?", "give some use of hydrochloric acid?"]
+        },
+        {"class": "2_usage_h2so4",
+            "patterns": ["what are the uses of sulphuric acid?", "usage of H2so4 acid?", "give some use of sulphuric acid?"]
+        },
+        {"class": "2_usage_ch3cooh",
+            "patterns": ["what are the uses of acetic acid?", "usage of CH3COOH acid?", "give some use of acetic acid?"]
+        },
+        {"class": "2_base",
+            "patterns": ["what is base?", "explain about base?", "can you explain about base?"]
+        },
+        {"class": "2_strong_base",
+            "patterns": ["what is strong base?", "explain about strong base?", "can you explain about strong base?"]
+        },
+        {"class": "2_weak_base",
+            "patterns": ["what is weak base?", "explain about weak base?", "can you explain about weak base?"]
+        },
+        {"class": "2_strongAndWeak_base",
+            "patterns": ["what are the difference between strong and weak base?", "comparison between strong and weak base?"]
+        },
+        {"class": "2_properties_base",
+            "patterns": ["what are the properties of base?", "give some properties base?"]
+        },
+        {"class": "2_usage_NaOH",
+            "patterns": ["what are the uses of sodium hydroxide?", "usage of NaOH?", "give some use of sodium hydroxide?"]
+        },
+        {"class": "2_usage_Mg(OH)2",
+            "patterns": ["what are the uses of magnesium hydroxide?", "usage of Mg(OH)2?", "give some use of magnesium hydroxide?"]
+        },
+        {"class": "2_usage_pH_scale",
+            "patterns": ["what are the uses of pH scale?", "usage of pH scale?", "give some use of pH scale?"]
+        },
+        {"class": "2_usage_pH_paper",
+            "patterns": ["what are the uses of pH paper?", "usage of pH paper?", "give some use of pH paper?"]
+        },
+        {"class": "2_salt",
+            "patterns": ["what is salt?", "explain about salt?", "can you explain about salt?"]
+        },
+        {"class": "2_usage_NaCl",
+            "patterns": ["what are the uses of sodium chloride?", "usage of NaCl?", "give some use of sodium chloride?"]
+        },
+        {"class": "2_usage_CuSO4",
+            "patterns": ["what are the uses of copper sulphate?", "usage of CuSO4?", "give some use of copper sulphate?"]
+        },
+        {"class": "2_neutralisation",
+            "patterns": ["what is neutralisation?", "explain about neutralisation?", "can you explain about neutralisation?"]
+        },
+        {"class": "3_electroChemical_cells",
+		 "patterns": ["what is electrochemical cells?", "define electrochemical cells?", "can you explain electrochemical cells?", "tell about electrochemical cells?"]
+		},
+		{"class": "3_electro_cells_equipments",
+         "patterns": ["equipments powered by electrochemical cells", "what are the equipments that use electrochemical cells?", "give few equipments that powered by electroChemical cells?", "can you give name of equipments that are used electro chemical cells?"]
+        },
+		{"class": "3_batteries_eg",
+         "patterns": ["give few examples of electrochemical cells or batteries?", "different types of cells and batteries?", "can you tell few examples of electrochemical cells or batteries?", "examples for batteries?", "examples of electro batteries or cells?", "what are the examples for electro batteries or cells?"]
+        },
+		{"class": "3_electro_cells_usage",
+         "patterns": ["what are the uses of electrochemical cells?", "usage of electrochemical cells?", "give some use of electro chemical cells?"]
+        },
+		{"class": "3_anode",
+         "patterns": ["what is anode?", "explain anode?", "state about anode?", "explain about anode?", "can you explain about anode?"]
+        },
+		{"class": "3_cathode",
+         "patterns": ["what is cathode?", "explain cathode?", "state about cathode?", "explain about cathode?", "can you explain about cathode?"]
+        },
+		{"class": "3_oxidation",
+         "patterns": ["what is oxidation?", "explain oxidation?", "state about oxidation?", "explain about oxidation?", "can you explain about oxidation?"]
+        },
+		{"class": "3_reduction",
+         "patterns": ["what is reduction?", "explain reduction?", "state about reduction?", "explain about reduction?", "can you explain about reduction?"]
+        },
+		{"class": "3_compare_anode_cathode",
+         "patterns": ["different between anode and cathode?", "comparison between anode and cathode?", "can you give the difference between anode and cathode?"]
+        },
+		{"class": "3_compare_electronflow_currentflow",
+         "patterns": ["different between electron flow and current flow??", "comparison between electron flow and the conventional current flow?", "can you give the difference between electron flow and current flow?"]
+        },
+		{"class": "3_zinc_h2so4",
+         "patterns": ["explain about the practical that does to observe the reaction between zinc metal and sulphuric acid reaction?", "explain about zinc metal and dilute sulphuric acid reaction?", "explain about zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_h2so4_materials",
+         "patterns": ["what are the materials required for the practical that does to observe zinc and sulphuric acid reaction? ", "what materials need for zinc and dilute sulphuric acid reaction?", "materials required for zn and h2so4 reaction?"]
+        },
+		{"class": "3_zinc_h2so4_method",
+         "patterns": ["what procedure should follow in the practical that does observe zinc and sulphuric acid reaction?", "what are the methods have follow to observe zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_h2so4_observation",
+         "patterns": ["what observation get from the practical that does to observe zinc and sulphuric acid reaction? ", "observations from zinc and dilute sulphuric acid reaction?", "what would be the observation can get from zn and h2so4 reaction?"]
+        },
+		{"class": "3_zinc_h2so4_equation",
+         "patterns": ["what are the ionic equations and chemical symbols that related to zinc and sulphuric acid reaction?", "what equations related to zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4",
+         "patterns": ["explain about the practical that does to observe the reaction between zinc strip, copper strip and sulphuric acid reaction?", "explain about zinc strip, copper strip and dilute sulphuric acid reaction?", "explain about zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_materials",
+         "patterns": ["what are the materials required for the practical that does to observe zinc, copper and sulphuric acid reaction? ", "what materials need for zinc, copper and dilute sulphuric acid reaction?", "materials required for zn, cu and h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_method",
+         "patterns": ["what procedure should follow in the practical that does observe zinc, copper and sulphuric acid reaction?", "what are the methods have follow to observe zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_observation",
+         "patterns": ["what observation get from the practical that does to observe zinc, copper and sulphuric acid reaction? ", "observations from zinc, copper and dilute sulphuric acid reaction?", "what would be the observation can get from zn, cu and h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_equation",
+         "patterns": ["what are the ionic equations and chemical symbols that related to zinc, copper and sulphuric acid reaction?", "what equations related to zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_anode_terminal",
+         "patterns": ["what is the anode terminal in the zinc, copper and sulphuric acid reaction", "anode terminal in the zn, cu and dilute h2so4 reaction?", "positive terminal in the zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_cathode_terminal",
+         "patterns": ["what is the cathode terminal in the zinc, copper and sulphuric acid reaction", "cathode terminal in the zn, cu and dilute h2so4 reaction?", "negative terminal in the zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_anode_equation",
+         "patterns": ["what are the ionic equations related to the anode terminal in the zinc, copper and sulphuric acid reaction?", "ionic equations related to the positive terminal in the zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_zinc_copper_h2so4_cathode_equation",
+         "patterns": ["what are the ionic equations related to the cathode terminal in the zinc, copper and sulphuric acid reaction?", "ionic equations related to the negative terminal in the zn, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4",
+         "patterns": ["explain about the practical that does to observe the reaction between iron strip, copper strip and sulphuric acid reaction?", "explain about iron strip, copper strip and dilute sulphuric acid reaction?", "explain about fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_materials",
+         "patterns": ["what are the materials required for the practical that does to observe iron, copper and sulphuric acid reaction? ", "what materials need for iron, copper and dilute sulphuric acid reaction?", "materials required for fe, cu and h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_method",
+         "patterns": ["what procedure should follow in the practical that does observe iron, copper and sulphuric acid reaction?", "what are the methods have follow to observe fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_observation",
+         "patterns": ["what observation get from the practical that does to observe iron, copper and sulphuric acid reaction? ", "observations from iron, copper and dilute sulphuric acid reaction?", "what would be the observation can get from fe, cu and h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_equation",
+         "patterns": ["what are the ionic equations and chemical symbols that related to iron, copper and sulphuric acid reaction?", "what equations related to fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_anode_terminal",
+         "patterns": ["what is the anode terminal in the iron, copper and sulphuric acid reaction", "anode terminal in the fe, cu and dilute h2so4 reaction?", "positive terminal in the fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_cathode_terminal",
+         "patterns": ["what is the cathode terminal in the iron, copper and sulphuric acid reaction", "cathode terminal in the fe, cu and dilute h2so4 reaction?", "negative terminal in the fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_anode_equation",
+         "patterns": ["what are the ionic equations related to the anode terminal in the iron, copper and sulphuric acid reaction?", "ionic equations related to the positive terminal in the fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_copper_h2so4_cathode_equation",
+         "patterns": ["what are the ionic equations related to the cathode terminal in the iron, copper and sulphuric acid reaction?", "ionic equations related to the negative terminal in the fe, cu and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4",
+         "patterns": ["explain about the practical that does to observe the reaction between iron strip, zinc strip and sulphuric acid reaction?", "explain about iron strip, zinc strip and dilute sulphuric acid reaction?", "explain about fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_materials",
+         "patterns": ["what are the materials required for the practical that does to observe iron, zinc and sulphuric acid reaction? ", "what materials need for iron, zinc and dilute sulphuric acid reaction?", "materials required for fe, zn and h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_method",
+         "patterns": ["what procedure should follow in the practical that does observe iron, zinc and sulphuric acid reaction?", "what are the methods have follow to observe fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_observation",
+         "patterns": ["what observation get from the practical that does to observe iron, zinc and sulphuric acid reaction? ", "observations from iron, zinc and dilute sulphuric acid reaction?", "what would be the observation can get from fe, zn and h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_equation",
+         "patterns": ["what are the ionic equations and chemical symbols that related to iron, zinc and sulphuric acid reaction?", "what equations related to fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_anode_terminal",
+         "patterns": ["what is the anode terminal in the iron, zinc and sulphuric acid reaction", "anode terminal in the fe, zn and dilute h2so4 reaction?", "positive terminal in the fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_cathode_terminal",
+         "patterns": ["what is the cathode terminal in the iron, zinc and sulphuric acid reaction", "cathode terminal in the fe, zn and dilute h2so4 reaction?", "negative terminal in the fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_anode_equation",
+         "patterns": ["what are the ionic equations related to the anode terminal in the iron, zinc and sulphuric acid reaction?", "ionic equations related to the positive terminal in the fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_iron_zinc_h2so4_cathode_equation",
+         "patterns": ["what are the ionic equations related to the cathode terminal in the iron, zinc and sulphuric acid reaction?", "ionic equations related to the negative terminal in the fe, zn and dilute h2so4 reaction?"]
+        },
+		{"class": "3_electrolysis",
+         "patterns": ["what is electrolysis?", "explain electrolysis?", "state about electrolysis?", "explain about electrolysis?", "can you explain about electrolysis?"]
+        },
+		{"class": "3_electrolysis_realworld_eg",
+         "patterns": ["give few real world examples of electrolysis?", "can you tell few real world examples of electrolysis?", "real world examples for electrolysis?", "examples of electrolysis?", "what are the real world examples of electrolysis?"]
+        },
+		{"class": "3_electrolysis_process",
+         "patterns": ["what is electrolysis process?", "explain electrolysis process?", "state about electrolysis process?", "explain about electrolysis process?", "can you explain about electrolysis process?"]
+        },
+		{"class": "3_electrolysis_electricity_conduct_proof",
+         "patterns": ["explain about the practical that does to observe the proof for electricity conduction in water?", "explain about the practical that proof the electricity conduction in water? ", "explain about electricity conduction in water?"]
+        },
+		{"class": "3_electrolysis_electricity_conduct_proof_materials",
+         "patterns": ["what are the materials required for the practical that does to observe the proof for electricity conduction in water? ", "what materials need for the proof for electricity conduction in water?", "materials required for the proof for electricity conduction in water?"]
+        },
+		{"class": "3_electrolysis_electricity_conduct_proof_method",
+         "patterns": ["what procedure should follow in the practical that does observe the proof for electricity conduction in water?", "what are the methods have follow to observe the proof for electricity conduction in water practical?"]
+        },
+		{"class": "3_electrolysis_electricity_conduct_proof_observation",
+         "patterns": ["what observation get from the practical that does to observe the proof for electricity conduction in water?", "observations from the proof for electricity conduction in water?", "what would be the observation can get from the proof for electricity conduction in water practical?"]
+        },
+		{"class": "3_electrolytes_eg",
+         "patterns": ["give few examples of electrolytes?", "can you tell few examples of electrolytes?", "examples for electrolytes?", "examples of electrolytes?", "what are the examples for electrolytes?"]
+        },
+		{"class": "3_electrolysis_Fused_NaCl",
+         "patterns": ["explain about the practical that does to observe the electrolysis of fused sodium chloride using carbon electrodes?", "explain about the practical for electrolysis of fused sodium chloride?", "explain about electrolysis of fused NaCl?"]
+        },
+		{"class": "3_electrolysis_Fused_NaCl_materials",
+         "patterns": ["what are the materials required for the practical that does to observe the electrolysis of fused sodium chloride?", "materials required for electrolysis of fused NaCl?"]
+        },
+		{"class": "3_electrolysis_Fused_NaCl_method",
+         "patterns": ["what procedure should follow in the practical that does observe the electrolysis of fused sodium chloride?", "what are the methods have follow to observe the electrolysis of fused NaCl?"]
+        },
+		{"class": "3_electrolysis_Fused_NaCl_reaction+",
+         "patterns": ["what are the ionic equations related to the positive electrode in the electrolysis of fused sodium chloride?", "ionic equations related to the (+) electrode in the electrolysis of fused NaCl?"]
+        },
+		{"class": "3_electrolysis_Fused_NaCl_reaction-",
+         "patterns": ["what are the ionic equations related to the negative electrode in the electrolysis of fused sodium chloride?", "ionic equations related to the (-) electrode in the electrolysis of fused NaCl?"]
+        },
+		{"class": "3_electrolysis_aqueous_NaCl",
+         "patterns": ["explain about the practical that does to observe the electrolysis of aqueous sodium chloride using carbon electrodes?", "explain about the practical for electrolysis of aqueous sodium chloride?", "explain about electrolysis of aqueous NaCl?"]
+        },
+		{"class": "3_electrolysis_aqueous_NaCl_materials",
+         "patterns": ["what are the materials required for the practical that does to observe the electrolysis of aqueous sodium chloride?", "materials required for electrolysis of aqueous NaCl?"]
+        },
+		{"class": "3_electrolysis_aqueous_NaCl_method",
+         "patterns": ["what procedure should follow in the practical that does observe the electrolysis of aqueous sodium chloride?", "what are the methods have follow to observe the electrolysis of aqueous NaCl?"]
+        },
+		{"class": "3_electrolysis_aqueous_NaCl_reaction+",
+         "patterns": ["what are the ionic equations related to the positive electrode in the electrolysis of aqueous sodium chloride?", "ionic equations related to the (+) electrode in the electrolysis of aqueous NaCl?"]
+        },
+		{"class": "3_electrolysis_aqueous_NaCl_reaction-",
+         "patterns": ["what are the ionic equations related to the negative electrode in the electrolysis of aqueous sodium chloride?", "ionic equations related to the (-) electrode in the electrolysis of aqueous NaCl?"]
+        },
+		{"class": "3_electrolysis_aqueous_CuSO4",
+         "patterns": ["explain about the practical that does to observe the electrolysis of aqueous copper sulphate using carbon electrodes?", "explain about the practical for electrolysis of aqueous copper sulphate?", "explain about electrolysis of aqueous CuSO4?"]
+        },
+		{"class": "3_electrolysis_aqueous_CuSO4_materials",
+         "patterns": ["what are the materials required for the practical that does to observe the electrolysis of aqueous copper sulphate?", "materials required for electrolysis of aqueous CuSo4?"]
+        },
+		{"class": "3_electrolysis_aqueous_CuSO4_method",
+         "patterns": ["what procedure should follow in the practical that does observe the electrolysis of aqueous copper sulphate?", "what are the methods have follow to observe the electrolysis of aqueous CuSO4?"]
+        },
+		{"class": "3_electrolysis_aqueous_CuSO4_reaction+",
+         "patterns": ["what are the ionic equations related to the positive electrode in the electrolysis of aqueous copper sulphate?", "ionic equations related to the (+) electrode in the electrolysis of aqueous CuSO4?"]
+        },
+		{"class": "3_electrolysis_aqueous_CuSO4_reaction-",
+         "patterns": ["what are the ionic equations related to the negative electrode in the electrolysis of aqueous copper sulphate?", "ionic equations related to the (-) electrode in the electrolysis of aqueous CuSO4?"]
+        },
+		{"class": "3_electrolysis_acidulated_water",
+         "patterns": ["explain about the practical that does to observe the electrolysis of acidulated water?", "explain about the practical for electrolysis of acidic water?", "explain about electrolysis of acidulated H2O?"]
+        },
+		{"class": "3_electrolysis_acidulated_water_materials",
+         "patterns": ["what are the materials required for the practical that does to observe the electrolysis of acidulated water?", "materials required for electrolysis of acidic H2O?"]
+        },
+		{"class": "3_electrolysis_acidulated_water_method",
+         "patterns": ["what procedure should follow in the practical that does observe the electrolysis of acidulated water?", "what are the methods have follow to observe the electrolysis of acidic H2O?"]
+        },
+		{"class": "3_electrolysis_acidulated_water_reaction+",
+         "patterns": ["what are the ionic equations related to the positive electrode in the electrolysis of acidulated water?", "ionic equations related to the (+) electrode in the electrolysis of acidic H2O?"]
+        },
+		{"class": "3_electrolysis_acidulated_water_reaction-",
+         "patterns": ["what are the ionic equations related to the negative electrode in the electrolysis of acidulated water?", "ionic equations related to the (-) electrode in the electrolysis of acidic H2O?"]
+        },
+        {"class": "3_electrolysis_industrial_application_eg",
+         "patterns": ["give few examples of electrolysis industrial application?", "can you tell few examples of electrolysis industrial application?", "examples for electrolysis industrial application?", "examples of electrolysis industrial application?", "what are the examples for electrolysis industrial application?"]
+        },	
+		{"class": "3_electrolysis_production_Na_metal",
+         "patterns": ["what is the process of industrial production of sodium?", "How sodium metal product from industry?", "can you explain about the Na production in industry?"]
+        },	
+		{"class": "3_electrolysis_Na_uses",
+         "patterns": ["what are the uses of Sodium?", "Uses of Na metal?", "use of Na"]
+        },
+		{"class": "3_electrolysis_Cl_uses",
+         "patterns": ["what are the uses of chlorine?", "uses of chlorine?", "use of cl?"]
+        },
+		{"class": "3_electroplating",
+         "patterns": ["what is electroplating?", "define electroplating?", "can you explain electroplating?", "tell about electroplating?"]
+        },
+		{"class": "3_electroplating_practical",
+         "patterns": ["explain about the practical that does to observe the electroplating?", "explain about the practical for electroplating?"]
+        },
+		{"class": "3_electroplating_practical_material",
+         "patterns": ["what are the materials required for the practical that does to observe the electroplating? ", "what materials need for electroplating practical?", "materials required for electroplating?"]
+        },
+        {"class": "3_electroplating_practical_method",
+         "patterns": ["what procedure should follow in the practical that does observe the electroplating?", "what are the methods have follow to observe the electroplating?"]
+        },
+        {"class": "3_electroplating_practical_anodic",
+            "patterns": ["what are the ionic equations related to the positive electrode in the electroplating practical?", "ionic equations related to the (+) electrode in the electroplating?", "what is the ionic equations related to the anodic reaction in the electroplating practical?"]
+         },
+         {"class": "3_electroplating_practical_cathodic",
+            "patterns": ["what are the ionic equations related to the negative electrode in the electroplating practical?", "ionic equations related to the (-) electrode in the electroplating?", "what is the ionic equations related to the cathodic reaction in the electroplating practical?"]
+        },
+        {"class": "3_corrosion",
+            "patterns": ["what is corrosion?", "define corrosion?", "can you explain corrosion?", "tell about corrosion?"]
+           },
+        {"class": "3_rusting",
+            "patterns": ["what is rusting?", "define rusting?", "can you explain rusting?", "tell about rusting?"]
+           },
+        {"class": "3_practical_rusting_air",
+            "patterns": ["explain the practical that does to find whether air is essential for rusting?", "finding out the role of air for rusting?", "examing how air effect rusting?"]
+           },
+        {"class": "3_practical_rusting_water",
+            "patterns": ["explain the practical that does to find whether water is essential for rusting?", "finding out the role of water for rusting?", "examing how water effect rusting?"]
+           },
+        {"class": "3_practical_rusting_acid",
+            "patterns": ["explain the practical that does to find whether acid is essential for rusting?", "finding out the role of acid for rusting?", "examing how acid effect rusting?"]
+           },
+        {"class": "3_practical_rusting_salt",
+            "patterns": ["explain the practical that does to find whether salt is essential for rusting?", "finding out the role of salt for rusting?", "examing how salt effect rusting?"]
+           },
+        {"class": "3_practical_rusting_base",
+            "patterns": ["explain the practical that does to find whether base is essential for rusting?", "finding out the role of base for rusting?", "examing how base effect rusting?"]
+           },
+        {"class": "3_practical_metals_corrosion",
+            "patterns": ["explain the practical that does to find the effect of other metals on corrosion of iron?", "finding out the effect of metals on corrosion of iron?", "examing how metals effect on corrosion of iron?"]
+           },
+        {"class": "4_hydrocarbons",
+            "patterns": ["what is hydrocarbons?", "define hydrocarbons?", "can you explain hydrocarbons?", "tell about hydrocarbons?"]
+           },
+        {"class": "4_examples_organicCompound",
+            "patterns": ["examples for organic compounds", "give examples of organic compounds"]
+        },
+        {"class": "4_practical_pressureOfC&HinCandleWax",
+            "patterns": ["explain the practical that does to confirm the pressure of carbon and hydrogen in candle wax?", "confirming pressure of carbon and hydrogen in candle wax", "examing pressure of carbon and hydrogen in candle wax?"]
+           },
+        {"class": "4_alkanes",
+            "patterns": ["explain about alkanes?", "what is alkanes?"]
+           },
+        {"class": "4_alkanes_molecular&structuralFormula", 
+            "patterns": ["give molecular formula and structural formula of alkanes?", "list the molecular and structral formula of alkanes?"]
+           },
+        {"class": "4_alkenes",
+            "patterns": ["explain about alkenes?", "what is alkenes?"]
+           },
+        {"class": "4_alkenes_molecular&structuralFormula", 
+            "patterns": ["give molecular formula and structural formula of alkenes?", "list the molecular and structral formula of alkenes?"]
+           },
+        {"class": "4_ethene",
+            "patterns": ["explain about ethene?", "what is ethene?"]
+           },
+        {"class": "4_ethene_derivatives",
+            "patterns": ["what are the derivatives of ethene?", "list the derivatives of ethene?"]
+        },
+        {"class": "4_chloroethene",
+            "patterns": ["explain about chloroethene", "what is chloroethene?", "can you define chloroethene?"]
+        },
+        {"class": "4_tetrafluoroethene",
+            "patterns": ["explain about tetrafluoroethene", "what is tetrafluoroethene?", "can you define tetrafluoroethene?"]
+        },
+        {"class": "4_polymers",
+            "patterns": ["explain about polymers", "what is polymers?", "can you define polymers?"]
+        },
+        {"class": "4_polythene",
+            "patterns": ["explain about polythene", "what is polythene?", "can you define polythene?"]
+        },
+        {"class": "4_polychloroethene",
+            "patterns": ["explain about polychloroethene", "what is polychloroethene?", "can you define polychloroethene?"]
+        },
+        {"class": "4_polytetrafluoroethene",
+            "patterns": ["explain about polytetrafluoroethene", "what is polytetrafluoroethene?", "can you define polytetrafluoroethene?"]
+        },
+        {"class": "4_polymers_classification_origin",
+            "patterns": ["what are the classification of polymers based on origin?", "classify polymers based on origin?"]
+        },
+        {"class": "4_polymers_classification_structure",
+            "patterns": ["what are the classification of polymers based on structure?", "classify polymers based on structure?"]
+        },
+        {"class": "4_polymers_importance",
+            "patterns": ["importance of polymers?", "list the importance of polymers?", "what are the importance of polymers?"]
+        }
+        	
+   ]
+}
