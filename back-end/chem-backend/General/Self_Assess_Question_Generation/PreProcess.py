@@ -61,6 +61,8 @@ class PreProcess(object):
                     sent = self.multipleReplace(sent, wordDic);
                 if nltk.word_tokenize(sent)[0] == 'A':
                     sent = str(sent).replace('A', '');
+                elif sent.find("or 6") != -1:
+                    sent = sent.replace("or 6","")
                 final_sentences_list.append(str(sent));
                 text = text + str(sent).rstrip("\n").rstrip("\n ").rstrip(" \n").rstrip(" \n ") + " ";
         # print(removed_sentences_list)

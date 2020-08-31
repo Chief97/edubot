@@ -167,6 +167,7 @@ class QuestionFormation(object):
             return ''
 
     def generateWHQuestion(self, sentence):
+        sentence = sentence.lower()
         question = '';
         WHVerbs = ['Who', 'What', 'Where'];
         # p = PreProcess()

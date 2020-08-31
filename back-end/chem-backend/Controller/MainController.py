@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
 
 from Other_Features.UserAccessManagement import UserAccessManagement
+from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetectionService
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
 from Service.Self_Learn_Doubt_Response.DoubtResponseService import DoubtResponseService
 
 app = Flask(__name__)
 
-questionGenerationService = QuestionGenerationService()
-doubtResponseService = DoubtResponseService()
 
 
 ################################################# Start User access management End points #######################################################
@@ -33,12 +32,21 @@ def validateUserCredentials():
 
 
 ################################################# Start Doubt Detection End points ##############################################################
+doubtDetectionService = DoubtDetectionService()
+
+
+@app.route('/selfLearn/doubtDetection/getIntent', methods=['POST'])
+def detectIntent_id():
+    textInput = request.get_json()['text']
+    intent_id = doubtDetectionService.getIntent(textInput)
+    return intent_id
+
 
 ################################################# End Doubt Detection End points ################################################################
 
 
 ################################################# Start Doubt Response End points ###############################################################
-
+doubtResponseService = DoubtResponseService()
 
 @app.route('/scraper', methods=['POST'])
 def webScraper():
@@ -51,6 +59,8 @@ def webScraper():
 
 
 ################################################# Start Question Generation End points ##########################################################
+
+questionGenerationService = QuestionGenerationService()
 
 
 @app.route('/selfEvaluate/questionGeneration/importantSentences', methods=['POST'])
