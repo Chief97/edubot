@@ -2,10 +2,12 @@ from flask import Flask, request, jsonify
 
 from Other_Features.UserAccessManagement import UserAccessManagement
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
+from Service.Self_Learn_Doubt_Response.DoubtResponseService import DoubtResponseService
 
 app = Flask(__name__)
 
 questionGenerationService = QuestionGenerationService()
+doubtResponseService = DoubtResponseService()
 
 
 ################################################# Start User access management End points #######################################################
@@ -36,6 +38,14 @@ def validateUserCredentials():
 
 
 ################################################# Start Doubt Response End points ###############################################################
+
+
+@app.route('/scraper', methods=['POST'])
+def webScraper():
+    doubtResponseService.startScraper()
+
+
+
 
 ################################################# End Doubt Response End points #################################################################
 

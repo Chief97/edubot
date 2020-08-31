@@ -20,9 +20,19 @@ from nltk.stem import SnowballStemmer
 
 # currently loading random documents to show
 def load_data():
-    data_frame = pd.read_csv("D:\SLIIT\Y4S1\CDAP\Develop\2020-100\back-end\chem-backend\General"
-                             "\Self_Learn_Doubt_Response\webScraper\webScraper\spiders\data.csv")
-    return data_frame
+    from collections import defaultdict
+    from pathlib import Path
+    import pandas as df
+
+    my_dir_path = "/parh/to/folder"
+
+    results = defaultdict(list)
+    for file in Path(my_dir_path).iterdir():
+        with open(file, "r") as file_open:
+            results["file_name"] = file.name
+            results["text"].append(file_open.read())
+    df = pd.DataFrame(results)
+    return df
 
 
 # removing html
