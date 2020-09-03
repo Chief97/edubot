@@ -12,6 +12,7 @@ class Preprocess(object):
         for index, row in data_frame.iterrows():
             soup = bs.BeautifulSoup(row['html_text'], 'html.parser')
             data_frame.loc[index, "no_html_text"] = soup.get_text()
+        print('html tags')
         return data_frame
 
     def line_space_removal(self, data_frame):
@@ -24,6 +25,7 @@ class Preprocess(object):
             for line in not_empty_lines:
                 processed_lines += line + "\n"
                 data_frame.loc[index, "text"] = processed_lines
+        print('line space')
         return data_frame
 
     def sentence_punctuation(self, data_frame):
@@ -34,37 +36,40 @@ class Preprocess(object):
             text = rows['text']
             text = ''.join(ch for ch in text if ch not in exclude)
             all_docs_list.append(text)
+        print('punctuation')
         return all_docs_list
 
     def word_tokenizer(self, texts):
         plot_data = [[]] * len(texts)
 
-        nltk.download('punkt')
-
         for text in texts:
             token_text = word_tokenize(text)
             plot_data[len(texts) - 1].append(token_text)
+        print('tokenizer')
         return plot_data
 
     def lowercase(self, data_frame, plot_data):
         for x in range(len(data_frame.name)):
             lowers = [word.lower() for word in plot_data[0][x]]
             plot_data[0][x] = lowers
+        print('lowercase')
         return plot_data
 
     def stopwords(self, data_frame, plot_data):
-        nltk.download('stopwords')
 
         stop_words = set(stopwords.words('english'))
 
         for x in range(len(data_frame.name)):
             filtered_sentence = [w for w in plot_data[0][x] if not w in stop_words]
             plot_data[0][x] = filtered_sentence
+        print('stopwords')
         return plot_data
 
-    def stemming(self, sentences):
+    def stemming(self, data_frame, sentences):
         snowball_stemmer = SnowballStemmer("english")
-        stemmed_sentence = [snowball_stemmer.stem(words) for words in sentences]
+        for x in range(len(data_frame.name)):
+            stemmed_sentence = [snowball_stemmer.stem(w) for w in sentences[0][x]]
+        print('stemming')
         return stemmed_sentence
 
     def preprocess_text(self, data_frame):
@@ -74,6 +79,6 @@ class Preprocess(object):
         tokenize = self.word_tokenizer(punctuation_removal)
         convert_lowercase = self.lowercase(data_frame, tokenize)
         stop_words = self.stopwords(data_frame, convert_lowercase)
-        word_stem = self.stemming(stop_words)
-        print(word_stem)
-        return word_stem
+        stem_words = self.stemming(data_frame, stop_words)
+        print(stem_words)
+        return stem_words

@@ -7,8 +7,6 @@ from Service.Self_Learn_Doubt_Response.DoubtResponseService import DoubtResponse
 
 app = Flask(__name__)
 
-
-
 ################################################# Start User access management End points #######################################################
 
 userAccessManagement = UserAccessManagement()
@@ -27,6 +25,7 @@ def validateUserCredentials():
     textInput = request.get_json()['data']
     response = userAccessManagement.validateUserCredentials(textInput)
     return jsonify(response)
+
 
 ################################################# End User access management End points #########################################################
 
@@ -48,11 +47,17 @@ def detectIntent_id():
 ################################################# Start Doubt Response End points ###############################################################
 doubtResponseService = DoubtResponseService()
 
+
 @app.route('/scraper', methods=['POST'])
 def webScraper():
     doubtResponseService.startScraper()
 
 
+@app.route('/selfLearn/doubtResponse/prepareData', methods=['POST'])
+def prepare_data():
+    # text = request.get_json()['text']
+    data = doubtResponseService.collect_data()
+    return jsonify(data)
 
 
 ################################################# End Doubt Response End points #################################################################
