@@ -65,12 +65,12 @@ class Preprocess(object):
         print('stopwords')
         return plot_data
 
-    def stemming(self, data_frame, sentences):
-        snowball_stemmer = SnowballStemmer("english")
-        for x in range(len(data_frame.name)):
-            stemmed_sentence = [snowball_stemmer.stem(w) for w in sentences[0][x]]
-        print('stemming')
-        return stemmed_sentence
+    # def stemming(self, data_frame, sentences):
+    #     snowball_stemmer = SnowballStemmer("english")
+    #     for x in range(len(data_frame.name)):
+    #         stemmed_sentence = [snowball_stemmer.stem(w) for w in sentences[0][x]]
+    #     print('stemming')
+    #     return stemmed_sentence
 
     def preprocess_text(self, data_frame):
         html_tagless = self.remove_html_tags(data_frame)
@@ -79,6 +79,6 @@ class Preprocess(object):
         tokenize = self.word_tokenizer(punctuation_removal)
         convert_lowercase = self.lowercase(data_frame, tokenize)
         stop_words = self.stopwords(data_frame, convert_lowercase)
-        stem_words = self.stemming(data_frame, stop_words)
-        print(stem_words)
-        return stem_words
+        # stem_words = self.stemming(data_frame, stop_words)
+        print(convert_lowercase)
+        return convert_lowercase

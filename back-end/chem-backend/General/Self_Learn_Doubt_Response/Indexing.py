@@ -8,8 +8,9 @@ class Indexing(object):
         l = plot_data[0]
         flatten = [item for sublist in l for item in sublist]
         words = flatten
-        unique_words = set(words)
-        unique_words = list(unique_words)
+        unique_words = list(words)
+        print("unique words")
+        print(unique_words)
         return unique_words
 
     def tf(self, word, doc):
@@ -42,5 +43,7 @@ class Indexing(object):
                     except:
                         word_dic[word] = []
                         word_dic[word].append([index, positions, idfs])
-
+        np.save('word_dic.npy', word_dic)
+        print('word dictionary')
+        print(word_dic)
         return word_dic
