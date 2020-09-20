@@ -3,6 +3,7 @@ from General.Self_Learn_Doubt_Response.Rank import Rank
 
 class DoubtRespond(object):
     output_value = ""
+    search_query = None
 
     def classify(self, input_query, word_dictionary):
         if input_query == "greeting":
@@ -13,8 +14,13 @@ class DoubtRespond(object):
             return output_value
         if input_query == "thanks":
             output_value = "Hope that was helpful!"
-            return
+            return output_value
         else:
             ranking = Rank()
+            self.search_query = input_query
             rank = ranking.rank(input_query, word_dictionary)
             return rank
+
+    def scraper(self):
+        
+        return self.search_query
