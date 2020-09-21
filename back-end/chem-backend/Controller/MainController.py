@@ -58,8 +58,8 @@ intent_id = ""
 def detectIntent_id():
     textInput = request.get_json()['text']
     intent_id = doubtDetectionService.getIntent(textInput)
-    #response(intent_id)
-    return intent_id
+    response(intent_id)
+
 
 
 ################################################# End Doubt Detection End points ################################################################
