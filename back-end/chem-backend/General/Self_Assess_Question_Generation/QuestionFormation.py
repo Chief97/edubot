@@ -25,35 +25,18 @@ class QuestionFormation(object):
        :param sentence: selected sentence
        :return: the subject of the sentence
        """
-
-        if sent_tokenize(sentence)[0].find("Therefore") != -1 or sent_tokenize(sentence)[0].find("Therefore,") != -1 or sent_tokenize(sentence)[0].find("The") != -1:
-            wordDic={'Therefore':'','Therefore,':''}
-            p = PreProcess()
-            sentence = p.multipleReplace(sentence,wordDic)
-            # print("TRUE")
-        # print(sentence)
-        doc = nlp(sentence);
+        doc = nlp(sentence.lstrip());
         root = [token for token in doc if token.head == token][0]
         sub = ""
         if str(list(root.lefts)) == '[]':
-            return "SUBJECT CANNOT BE DEFINED";
+            sub = "SUBJECT CANNOT BE DEFINED";
         else:
             subject = list(root.lefts)[0]
             for descendant in subject.subtree:
                 assert subject is descendant or subject.is_ancestor(descendant);
                 sub = sub + str(descendant.text) + " ";
-            p = PreProcess()
-            if p.tokenizedSentenceLength(sub) <= 1:
-                stopwords = nltk.corpus.stopwords.words('english');
-                verifyVal = sub.lower()
-                if verifyVal in stopwords:
-                    return "SUBJECT CANNOT BE DEFINED";
-                else:
-                    return verifyVal;
-            else:
-                return sub;
         # print("subject :" + sub)
-
+        return sub;
 
     def _getLabelArray(self, subject):
         """
@@ -116,12 +99,13 @@ class QuestionFormation(object):
         if nltk.word_tokenize(sentence)[0].find("Because") != -1 or nltk.word_tokenize(sentence)[0].find(
                 "Hence") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or \
                 nltk.word_tokenize(sentence)[0].find("But") != -1:
-            wordDic = {'Because of': '', 'Because': '', 'Therefore,': '', 'Therefore': '', 'Hence,': '', 'But if': '', "But": '', 'Hence': ''}
+            wordDic = {'Because of': '', 'Because': '', 'Therefore,': '', 'Therefore': '', 'Hence,': '', 'But if': '',
+                       "But": '', 'Hence': ''}
             preProcess = PreProcess()
             sentence = preProcess.multipleReplace(sentence, wordDic)
             if str(sentence).count(',') > 0:
                 doc = nlp(sentence)
-                pos=''
+                pos = ''
                 for chunk in doc.noun_chunks:
                     if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                         pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
@@ -134,12 +118,15 @@ class QuestionFormation(object):
                 return 'Why is ' + sentence + '?'
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
+            print("SPECIALLLLLL88888888888888888888888888888888888888888888888888888888888888888888888888888888888")
             doc = nlp(sentence)
             headword = []
+            pos=''
             for chunk in doc.noun_chunks:
                 if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                     pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
                     # print(pos)
+                print("POS############################################### " + str(pos))
                 if str(pos).find('PRP') == -1:
                     headword.append(chunk.text)
             headword = headword[0];
@@ -167,20 +154,24 @@ class QuestionFormation(object):
             return ''
 
     def generateWHQuestion(self, sentence):
-        sentence = sentence.lower()
+        # sentence = sentence.lower()
         question = '';
         WHVerbs = ['Who', 'What', 'Where'];
         # p = PreProcess()
         # wordDic = {'But':'','Similarly':'','Thus':'','Therefore,':''}
-        wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '','Therefore,': '', 'But,': '','But': '', 'Similarly': '', 'Therefore':''}
+        wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
+                   'Therefore': ''}
         p = PreProcess()
         sentence = p.multipleReplace(sentence, wordDic)
         # if nltk.word_tokenize(sentence)[0].find("But") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or nltk.word_tokenize(sentence)[0].find("Similarly") != -1 or nltk.word_tokenize(sentence)[0].find("Thus") != -1:
         #     sentence = p.multipleReplace(sentence,wordDic)
-        print("SENTENCE ___________________________ " + sentence)
+        sentence = self.removingFirstDt(sentence)
         subject = self._getSubject(sentence);
-        print("SUBJECT ************ " ,str(subject))
-        if subject == 'SUBJECT CANNOT BE DEFINED' or subject == '':
+        print("")
+        print("SENTENCE inside  WH ___________________________ " + sentence)
+        print("SUBJECT inside WH ----------------------------" + subject)
+        # print("SUBJECT ************ " + str(subject))
+        if subject == 'SUBJECT CANNOT BE DEFINED' or subject == 'none':
             question = '';
         else:
             label = self._getLabelArray(subject);
@@ -190,15 +181,17 @@ class QuestionFormation(object):
                 # p = PreProcess()
                 # question = p.multipleReplace(sentence,wordDict)
                 # print("SUBJECT : " + subject.lstrip())
-                question = str(sentence).replace(subject.lstrip(), "What ");
+                print("SUBJECT::::::::::: " + subject.lstrip())
+                question = str(sentence).replace(subject.lstrip(), "What ",1);
                 question = question + '?'
+                print(question)
                 # question = question.replace(".", "?");
                 # print(question)
             elif label == 'PERSON':
-                question = sentence.replace(subject, "Who ");
+                question = sentence.replace(subject, "Who ",1);
                 question = question + '?'
             elif label == 'LOCATION':
-                question = sentence.replace(subject, "Where ");
+                question = sentence.replace(subject, "Where ",1);
                 question = question + '?'
             # print("QUESTION : " + question)
 
@@ -278,19 +271,19 @@ class QuestionFormation(object):
             sentence = "CANNOT GENERATE MEANINGFUL FILL IN THE BLANKS QUESTION";
             return sentence;
 
-    # def _getLabel(self, word):
-    #     """
-    #     Extracting the entity type of the subject
-    #     :param word:
-    #     :return: entity type
-    #     """
-    #     doc = nlp(word);
-    #     label = "";
-    #     for ent in doc.ents:
-    #         label = ent.label_
-    #         if label == '':
-    #             label = "";
-    #     return label;
+    def _getLabel(self, word):
+        """
+        Extracting the entity type of the subject
+        :param word:
+        :return: entity type
+        """
+        doc = nlp(word);
+        label = "";
+        for ent in doc.ents:
+            label = ent.label_
+            if label == '':
+                label = "";
+        return label;
 
     def slicer1(self, my_str, sub):
         length = len(sub)
@@ -472,7 +465,7 @@ class QuestionFormation(object):
                 # print("ANTONONYM " + antonym)
                 if antonym != '':
                     if str(sentence).find(antonym) == -1:
-                        sentence = sentence.replace(str(adjective), antonym)
+                        sentence = sentence.replace(str(adjective), antonym, 1)
 
                 if len(verb) == 0:
                     return ''
@@ -625,17 +618,22 @@ class QuestionFormation(object):
         entityArray = self._getLabelsForFillInBlanks(sentence)
         nouns = []
         # print(entityArray)
+        wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
+                   'Therefore': ''}
+        p = PreProcess()
+        sentence = p.multipleReplace(sentence, wordDic)
+        sentence = sentence.lstrip()
         if len(entityArray) != 0:
             for i in entityArray:
                 nouns.append(i)
             noun = random.choice(nouns)
-            sentence = sentence.replace(noun, ' @dash ')
+            sentence = sentence.replace(noun, ' @dash ', 1)
             return sentence
         else:
             nouns = self._getNounPhrases(sentence)
             if len(nouns) != 0:
                 noun = random.choice(nouns)
-                sentence = sentence.replace(noun, ' @dash ')
+                sentence = sentence.replace(noun, ' @dash ', 1)
                 return sentence
             else:
                 return ''
@@ -647,3 +645,64 @@ class QuestionFormation(object):
             if i[1] == 'VB' or i[1] == 'VBG' or i[1] == 'VBD' or i[1] == 'VBN' or i[1] == 'VBP' or i[1] == 'VBZ':
                 verb.append(i[0])
         return verb
+
+    def getMainVerb(self, sentence):
+        doc = nlp(sentence)
+        verb = ''
+        for i in doc:
+            if i.pos_ == 'VERB':
+                verb = i
+
+        return verb
+
+    def generateWhoTypeQuestion(self, sentence):
+        personCount = self._checkPersonEntity(sentence)
+        question = ''
+        if personCount != 0:
+            verb = str(self.getMainVerb(sentence))
+            subject = self._getSubject(sentence)
+            label = self._getLabel(subject)
+            print("LABEL   ++++++++++++++++++++++++++++++++++++++++++ " + label)
+            if label == "PERSON" or label == "ORG":
+                question = sentence.replace(subject, "Who ");
+                question = question + '?'
+                print("WHO1 ************************************************************ " + question)
+                return question
+            else:
+                question = question + "Who " + verb + " " + subject + "?"
+                print("WHO2 **************************************************************** " + question)
+                return question
+        else:
+            return question
+
+    def _checkPersonEntity(self, sentence):
+        doc = nlp(sentence)
+        personCount = 0
+        for e in doc.ents:
+            if e.label_ == "PERSON":
+                print(e.text)
+                personCount = personCount + 1
+        return personCount
+        # words = nltk.word_tokenize(sentence);
+        # tagged = nltk.pos_tag(words);
+        # chunks = nltk.ne_chunk(tagged);
+        # personCount = 0;
+        # for chunk in chunks:
+        #     if type(chunk) is nltk.Tree:
+        #         for c in chunk.leaves():
+        #             if str(chunk.label).find('PERSON') != -1:
+        #                 personCount = personCount + 1;
+        #
+        # return personCount;
+
+    def removingFirstDt(self, sentence):
+        words = nltk.word_tokenize(sentence);
+        tagged = nltk.pos_tag(words);
+        # print(tagged)
+        if tagged[0][1] == "DT":
+            # print(tagged[0])
+            word = tagged[0][0]
+            # print("Replaced word : " +word)
+            sentence = sentence.replace(word, " ", 1)
+            # print("REPLACED SENTENCE : " +sentence)
+        return sentence;

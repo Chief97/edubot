@@ -54,16 +54,35 @@ def detectIntent_id():
 questionGenerationService = QuestionGenerationService()
 
 
+@app.route('/selfEvaluate/questionGeneration/getSection', methods=['GET'])
+def allSections():
+    # textInput = request.get_json()['text']
+    sections = questionGenerationService.retrieveSection()
+    return sections
+
+
+@app.route('/selfEvaluate/questionGeneration/getText', methods=['POST'])
+def allText():
+    section_name = request.get_json()['text']
+    print("SECTION NAME : " + section_name)
+    sections = questionGenerationService.retrieveText(section_name)
+    return sections
+
+
 @app.route('/selfEvaluate/questionGeneration/importantSentences', methods=['POST'])
 def allImportantSentences():
-    textInput = request.get_json()['text']
+    # textInput = request.get_json()['text']
+    section_name = request.get_json()['text']
+    textInput = questionGenerationService.retrieveText(section_name)
     sentences = questionGenerationService.importantSentences(textInput)
     return sentences
 
 
 @app.route('/selfEvaluate/questionGeneration/allQuestions', methods=['POST'])
 def allQuestions():
-    textInput = request.get_json()['text']
+    # textInput = request.get_json()['text']
+    section_name = request.get_json()['text']
+    textInput = questionGenerationService.retrieveText(section_name)
     allQuestionsForPara = questionGenerationService.executeQuestionGeneration(textInput)
     return jsonify(allQuestionsForPara)
 
