@@ -1,13 +1,13 @@
 from flask import jsonify
 
-from General.Self_Learn_Doubt_Detection.DoubtDetection import DoubtDetection
+from General.Self_Learn_Doubt_Detection.ClassifyInput import ClassifyInput
 
 
 class DoubtDetectionService(object):
 
     def getIntent(self, inputText):
-        doubtDetection = DoubtDetection()
+        doubtDetection = ClassifyInput()
         result = doubtDetection.classify(inputText)
+        result_ = ' '.join(result)
 
-        print(result)
-        return jsonify(list(result))
+        return jsonify(result_)
