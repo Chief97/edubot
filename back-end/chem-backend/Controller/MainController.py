@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
-
+from flask_cors import CORS
 from Other_Features.UserAccessManagement import UserAccessManagement
 from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetectionService
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
 
 app = Flask(__name__)
-
+cors = CORS(app)
 
 
 ################################################# Start User access management End points #######################################################
@@ -14,14 +14,14 @@ userAccessManagement = UserAccessManagement()
 userAccessManagement.initialization()
 
 
-@app.route('/selfEvaluate/registerUser', methods=['POST'])
+@app.route('/registerUser', methods=['POST'])
 def registerUser():
     textInput = request.get_json()['data']
     response = userAccessManagement.registerUser(textInput)
     return jsonify(response)
 
 
-@app.route('/selfEvaluate/validateUser', methods=['POST'])
+@app.route('/validateUser', methods=['POST'])
 def validateUserCredentials():
     textInput = request.get_json()['data']
     response = userAccessManagement.validateUserCredentials(textInput)
