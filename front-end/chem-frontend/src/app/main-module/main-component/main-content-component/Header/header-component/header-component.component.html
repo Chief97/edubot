@@ -1,0 +1,66 @@
+<div>
+          <div class="row  nav nav-tabs container headerClass" id="Header" style="width: 1200px">
+            <div style="width: 10%;text-align: center">
+                <img class="headerIcon" src="assets/image/logo.png">
+            </div>
+            <a href="#home" data-toggle="tab" class="active">
+              <div  class="header-tab-style"> Home</div>
+            </a>
+            <a href="#profile"  data-toggle="tab" >
+              <div  class=" header-tab-style"> Profile</div>
+            </a>
+            <a href="#about"  data-toggle="tab">
+              <div  class=" header-tab-style"> About Us</div>
+            </a>
+            <a href="#learn"  data-toggle="tab">
+              <div  class="header-tab-style"> Self-Learn</div>
+            </a>
+            <a href="#assess" data-toggle="tab">
+              <div  class=" header-tab-style"> Self-Assess</div>
+            </a>
+          </div>
+
+</div>
+
+<!--<ul class="nav nav-tabs" id="head">-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link active" href="#home">Active</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" href="#profile">Link</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link" href="#learn">Link</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item">-->
+<!--    <a class="nav-link disabled" href="#">Disabled</a>-->
+<!--  </li>-->
+<!--</ul>-->
+
+<div class="tab-content ">
+  <div role="tabpanel"
+    class="tab-pane active"
+    id="home">
+    <app-home-component></app-home-component>
+  </div>
+  <div role="tabpanel"
+    class="tab-pane "
+    id="profile">
+    <app-profile-component></app-profile-component>
+  </div>
+  <div
+    class="tab-pane"
+    id="about">
+    <app-about-component></app-about-component>
+  </div>
+  <div
+    class="tab-pane"
+    id="assess">
+    <app-assess-component></app-assess-component>
+  </div>
+  <div
+    class="tab-pane"
+    id="learn">
+    <app-learn-component></app-learn-component>
+  </div>
+</div>
