@@ -123,6 +123,10 @@ angl{
           }
         }
       }
-    }},
-  "defaultProject": "chem-frontend"
+    }
+  },
+  "defaultProject": "chem-frontend",
+  "cli": {
+    "analytics": "65fe4bec-41ae-491e-9c7e-dce328a64187"
+  }
 }

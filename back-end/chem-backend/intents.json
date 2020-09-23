@@ -1,6 +1,12 @@
 {"intents": [
         {"intent_id": "greeting",
-         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day"]
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello"]
+        },
+        {"intent_id": "How are you?",
+         "patterns": ["How are you", "Is anyone there?", "what's going on?", "how have you been?"]
+        },
+        {"intent_id": "greeting response",
+         "patterns": ["I'm fine", "i am doing fine", "feeling good"]
         },
         {"intent_id": "goodbye",
          "patterns": ["Bye", "See you later", "Goodbye"]
@@ -234,7 +240,8 @@
             "patterns": ["what is neutralisation?", "explain about neutralisation?", "can you explain about neutralisation?"]
         },
         {"intent_id": "what is electrochemical cells",
-		 "patterns": ["what is electrochemical cells?", "define electrochemical cells?", "can you explain electrochemical cells?", "tell about electrochemical cells?"]
+		 "patterns": ["what is electrochemical cells?", "define electrochemical cells?",
+           "can you explain electrochemical cells?", "tell about electrochemical cells?"]
 		},
 		{"intent_id": "equipments powered by electrochemical cells",
          "patterns": ["equipments powered by electrochemical cells", "what are the equipments that use electrochemical cells?", "give few equipments that powered by electroChemical cells?", "can you give name of equipments that are used electro chemical cells?"]
