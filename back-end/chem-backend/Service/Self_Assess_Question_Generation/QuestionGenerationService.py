@@ -246,11 +246,21 @@ class QuestionGenerationService(object):
             yes_question = question.createYesUsingHVerbPhrase(sentence);
             wh_question = question.generateWHQuestion(sentence)
             who_question = question.generateWhoTypeQuestion(sentence)
-            questionList.append(how_question)
-            questionList.append(why_question)
-            questionList.append(who_question)
-            questionList.append(wh_question)
-            questionList.append(yes_question)
+            if how_question is not None and how_question != "":
+                how_question = tool.correct(str(how_question))
+                questionList.append(how_question)
+            if why_question != '':
+                why_question = tool.correct(str(why_question))
+                questionList.append(why_question)
+            if yes_question != '':
+                yes_question = tool.correct(str(yes_question))
+                questionList.append(yes_question)
+            if wh_question != '':
+                wh_question = tool.correct(str(wh_question))
+                questionList.append(wh_question)
+            if who_question is not None and who_question != '':
+                who_question = tool.correct(str(who_question))
+                questionList.append(who_question)
             finalQuestion = random.choice(questionList)
             allQuestionsForPara.append(finalQuestion)
 
