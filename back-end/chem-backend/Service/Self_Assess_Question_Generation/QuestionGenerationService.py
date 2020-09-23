@@ -194,19 +194,54 @@ class QuestionGenerationService(object):
                 answer = data_dic[type1]
                 print("A " + answer)
                 response.correctAnswer = answer
+
+                if type1 != 'symbol':
+                    answerOptions = []
+                    numbersList = random.sample(range(0, 20), 3)
+                    numbersList1 = ['21','22','23','24','25']
+                    for i in numbersList:
+                        if answer == i:
+                            answerOptions.append(str(random.choice(numbersList1)))
+                        answerOptions.append(str(i))
+                    answerOptions.append(answer)
+                    print("random           :::: ", random.shuffle(answerOptions))
+                    for j, i in enumerate(answerOptions):
+                        if i == answer:
+                            response.position = j + 1
+                    response.answerOptions = answerOptions
+                else:
+                    answerOptions = []
+                    numbersList = random.sample(range(0, 19), 3)
+                    numbersList1 = ['21', '22', '23', '24', '25']
+                    symbols = ['H', 'He', 'li', 'Be', 'B', 'N', 'C', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S',
+                               'Cl', 'Ar', 'K', 'Ca', 'Kr', 'Se', 'Ti', 'Co', 'Mn' ,'Cr']
+                    # symbols_copy = symbols
+                    for i in numbersList:
+                        if answer == symbols[i]:
+                            answerOptions.append(symbols[(random.choice(numbersList1))])
+                        answerOptions.append(symbols[i])
+                    answerOptions.append(answer)
+                    print("random           :::: ", random.shuffle(answerOptions))
+                    for j, i in enumerate(answerOptions):
+                        if i == answer:
+                            response.position = j + 1
+                    response.answerOptions = answerOptions
                 mcqQuestionsList.append(response.convertToJson())
-            elif questions[l].find('@element.name') != -1 and questions[l].find('@number'):
-                element = random.choice(elements)
-                question = questions[l].replace('@element.name', element)
-                question = question('@number', random.choice(numbers_list))
-                response.question = question
-                type1 = types[l]
-                doc_ref4 = db.collection(u'element').document(element)
-                doc = doc_ref4.get()
-                data_dic = doc.to_dict()
-                answer = data_dic[type1]
-                response.correctAnswer = answer
-                mcqQuestionsList.append(response.convertToJson())
+            # if questions[l].find('@element.symbol') != -1:
+            #     symbols = ['H','He','li','Be','B','N','C','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca']
+            #     symbol = random.choice(symbols)
+            #     question = questions[l].replace('@element.symbol', symbol)
+            #     response.question = question
+            #     type1 = types[l]
+            #     print("T " + type1)
+            #     doc_ref4 = db.collection(u'element').document(element)
+            #     doc = doc_ref4.get()
+            #     data_dic = doc.to_dict()
+            #     answer = data_dic[type1]
+            #     print("A " + answer)
+            #     response.correctAnswer = answer
+            #     mcqQuestionsList.append(response.convertToJson())
+
 
             # print("TABLE NAME :::::::::::::::::::: " + str(table_name))
             # print("Attribute name :::::::::::::::::: " + str(attribute_name))
@@ -241,14 +276,14 @@ class QuestionGenerationService(object):
             # print(questions.sentence)
             questionList = []
             question = QuestionFormation()
-            how_question = question.generateHowQuestion(sentence);
+            # how_question = question.generateHowQuestion(sentence);
             why_question = question.generateWhyQuestion(sentence);
             yes_question = question.createYesUsingHVerbPhrase(sentence);
             wh_question = question.generateWHQuestion(sentence)
             who_question = question.generateWhoTypeQuestion(sentence)
-            if how_question is not None and how_question != "":
-                how_question = tool.correct(str(how_question))
-                questionList.append(how_question)
+            # if how_question is not None and how_question != "":
+            #     how_question = tool.correct(str(how_question))
+            #     questionList.append(how_question)
             if why_question != '':
                 why_question = tool.correct(str(why_question))
                 questionList.append(why_question)

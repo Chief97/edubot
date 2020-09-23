@@ -5,4 +5,5 @@ class Answer(object):
         self.mcqAnswer = [""]
         self.correctAnswer = ""
         self.isSingle = True
+        self.position = 0
 
