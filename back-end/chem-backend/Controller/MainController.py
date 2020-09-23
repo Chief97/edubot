@@ -1,9 +1,9 @@
-from abc import ABC
-
 from flask import Flask, request, jsonify
 # from flask_script import Manager, Server
 
 from flask_cors import CORS
+
+from General.Self_Assess_Component.SelfAssessResponse import SelfAssessResponse
 from Other_Features.UserAccessManagement import UserAccessManagement
 from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetectionService
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
@@ -24,7 +24,6 @@ from Service.Self_Learn_Doubt_Response.DoubtResponseService import DoubtResponse
 
 app = Flask(__name__)
 cors = CORS(app)
-
 
 ################################################# Start User access management End points #######################################################
 
@@ -48,6 +47,69 @@ def validateUserCredentials():
 
 ################################################# End User access management End points #########################################################
 
+################################################# Start Self Assess Component ###################################################################
+
+questionGenerationService1 = QuestionGenerationService()
+
+
+# @app.route('/selfAssess/getQuestions', methods=['POST'])
+# def retrieveQuestions():
+#     textInput = request.get_json()['data']
+#     questionCategory = textInput["questionCategory"]
+#     sectionName = textInput["sectionName"]
+#     questionType = textInput["questionType"]
+#
+#     if questionCategory != "" and sectionName == "" and questionType == "":
+#         print("get questions from firebase")
+#     elif questionCategory == "" and sectionName != "" and questionType != "":
+#         textParagraph = questionGenerationService.retrieveText(sectionName)
+#         allQuestionsForPara = questionGenerationService.executeQuestionGeneration(textInput)
+#         print("get edubot question")
+
+@app.route('/selfAssess/getQuestions', methods=['POST'])
+def getMcqQuestions():
+
+    textInput = request.get_json()['data']
+    questionCategory = textInput["questionCategory"]
+    sectionName = textInput["sectionName"]
+    paragraph = textInput["paragraph"]
+    questionType = textInput["questionType"]
+
+    if questionCategory == "database" and sectionName == "" and questionType == "" and paragraph == "":
+        return jsonify(questionGenerationService.retrieveQuestionsFromFirebase())
+    elif questionCategory == "section" and sectionName != "" and questionType != "" and paragraph != "":
+        mcqQuestionsList = list()
+        for i in range(2):
+            response = SelfAssessResponse()
+            response.question = "Who invented planetary model?"
+            response.answerOptions = ["Dimitry Mendeleff, Ernest Rutherfurd, Neils Bohr, John Doily"]
+            response.correctAnswer = "Ernest Rutherfurd"
+            response.position = 1
+            mcqQuestionsList.append(response.convertToJson())
+        return jsonify(mcqQuestionsList)
+
+
+@app.route('/selfAssess/getSectionPara', methods=['GET'])
+def getSectionPara():
+    paraForSection = questionGenerationService.retrieveParaForSection()
+    return jsonify(paraForSection)
+
+@app.route('/selfAssess/getAllQuestions', methods=['POST'])
+def getAllQuestions():
+
+    textInput = request.get_json()['data']
+    questionCategory = textInput["questionCategory"]
+    sectionName = textInput["sectionName"]
+    paragraph = textInput["paragraph"]
+    questionType = textInput["questionType"]
+
+    if questionCategory == "database" and sectionName == "" and questionType == "" and paragraph == "":
+        return jsonify(questionGenerationService.retrieveQuestionsFromFirebase())
+    elif questionCategory == "section" and sectionName != "" and questionType != "" and paragraph != "":
+        mcqQuestionsList = questionGenerationService1.retrieveQuestionList(paragraph)
+        return jsonify(mcqQuestionsList)
+
+################################################# End Self Assess Component ###################################################################
 
 ################################################# Start Doubt Detection End points ##############################################################
 doubtDetectionService = DoubtDetectionService()
