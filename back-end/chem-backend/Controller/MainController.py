@@ -56,9 +56,14 @@ intent_id = ""
 
 @app.route('/selfLearn/doubtDetection/getIntent', methods=['POST'])
 def detectIntent_id():
-    textInput = request.get_json()['text']
+    textInput = request.get_json()['data']
+    print(textInput)
     intent_id = doubtDetectionService.getIntent(textInput)
-    response(intent_id)
+    print("intentID")
+    print(intent_id)
+    #response(intent_id)
+    #return intent_id
+    return response(intent_id)
 
 
 
@@ -83,8 +88,12 @@ def prepare_data():
 
 
 @app.route('/selfLearn/doubtResponse/respond', methods=['POST'])
-def response():
-    text_input = request.get_json()['text']
+def response(text_input):
+    #text_input = request.get_json()['text']
+    # print(text)
+    # text_input = text['text']
+    print("text_input")
+    print(text_input)
     doubt_response = doubtResponseService.respond(text_input)
     print("respond hit")
     return doubt_response
