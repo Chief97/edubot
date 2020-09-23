@@ -1,0 +1,80 @@
+<div style ="margin-left: 10px">
+  <link rel = stylesheet href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="container">
+    <div class="msg-header">
+      <div class="msg-header-img">
+        <img src="../../assets/image/chatImage/chatImage.png">
+      </div>
+      <div class="active">
+        <h4>EduBot</h4>
+        <h6><img class="chat-active" src="../../assets/image/chatImage/chat-active-icon.png"> active now</h6>
+      </div>
+    </div>
+    <div class="chat-page">
+      <div class="msg-inbox">
+        <div class="chats">
+          <div class="msg-page">
+            <div class="received-chats">
+              <div class="received-chats-img">
+                <img src="../../assets/image/chatImage/chatImage.png">
+              </div>
+              <div class="received-msg">
+                <div class="received-msg-inbox">
+                  <p>Hi! I am Edubot!</p>
+                  <span class="time">11.01 AM | September 22</span>
+                </div>
+              </div>
+            </div>
+<!--            repeat-->
+            <div *ngFor="let i=index;let message of messages">
+              <div *ngIf="messages[i].userType == 'bot'">
+                <div class="received-chats">
+                  <div class="received-chats-img">
+                    <img src="../../assets/image/chatImage/chatImage.png">
+                  </div>
+                  <div class="received-msg">
+                    <div class="received-msg-inbox">
+                      <p *ngIf="messages[i].dataType == 'textContent'" style="margin-bottom: 5px">{{messages[i].dataTitle}}</p>
+                      <p>{{messages[i].userMsg}}</p>
+                      <span class="time">11.01 AM | September 22</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="messages[i].userType == 'user'">
+                <div class="outgoing-chats">
+                  <div class="outgoing-chats-msg">
+                    <!--                  <div class="outgoing-msg-inbox">-->
+                    <p>{{messages[i].userMsg}}</p>
+                    <span class="time">11.01 AM | September 22</span>
+                    <!--                  </div>-->
+                  </div>
+                  <div class="outgoing-chats-img">
+                    <img src="../../assets/image/chatImage/user-icon.jpg">
+                  </div>
+                </div>
+              </div>
+            </div>
+<!--            repeat end-->
+          </div>
+          <div>
+            <div class="typing" *ngIf="typing" style="margin-left: 35px;">
+              <img src="../../assets/image/typing.gif">
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="msg-bottom">
+          <div class="bottom">
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="data" placeholder="Type your message here.">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-paper-plane fa-2x" (click)="input()"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

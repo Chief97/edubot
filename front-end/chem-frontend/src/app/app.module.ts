@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import {LoginComponentComponent} from "./components/login-component/login-component.component";
 import {MainModuleModule} from "./main-module/main-component/main-module.module";
 import {RegisterModuleModule} from "./register-module/register-main-component/register-module.module";
+import { MainContentComponentComponent } from './main-module/main-component/main-content-component/main-content-component.component';
+import {HttpClientModule} from "@angular/common/http";
+import {GeneralServiceService} from "./services/general-service.service";
+import { SummaryPopupComponent } from './components/summary-popup/summary-popup.component';
+
 
 // import { ParticlesModule } from "../node_modules/angular-particle-updated";
 
@@ -13,15 +18,22 @@ import {RegisterModuleModule} from "./register-module/register-main-component/re
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponentComponent
+
+
   ],
   imports: [
     BrowserModule,
     MainModuleModule,
     routing,
     RegisterModuleModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    GeneralServiceService
+  ],
+  exports: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
