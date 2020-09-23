@@ -51,7 +51,7 @@ def validateUserCredentials():
 ################################################# Start Self Assess Component ###################################################################
 
 questionGenerationService1 = QuestionGenerationService()
-
+answerGenerationService1 = AnswerGenerationService()
 
 # @app.route('/selfAssess/getQuestions', methods=['POST'])
 # def retrieveQuestions():
@@ -108,7 +108,8 @@ def getAllQuestions():
         return jsonify(questionGenerationService.retrieveQuestionsFromFirebase())
     elif questionCategory == "section" and sectionName != "" and questionType != "" and paragraph != "":
         mcqQuestionsList = questionGenerationService1.retrieveQuestionList(paragraph)
-        return jsonify(mcqQuestionsList)
+        # answerGenerationService1.autoAnswerGeneration(paragraph,mcqQuestionsList)
+        return jsonify(answerGenerationService1.autoAnswerGeneration(paragraph,mcqQuestionsList))
 
 ################################################# End Self Assess Component ###################################################################
 

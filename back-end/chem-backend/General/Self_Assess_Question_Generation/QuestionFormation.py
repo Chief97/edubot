@@ -115,7 +115,7 @@ class QuestionFormation(object):
                 question = '';
                 return question
             else:
-                return 'Why is ' + sentence + '?'
+                return 'Why is ' + sentence + ' ?'
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
             print("SPECIALLLLLL88888888888888888888888888888888888888888888888888888888888888888888888888888888888")
@@ -148,7 +148,7 @@ class QuestionFormation(object):
                     s = s + word + " "
                     # s = ''.join(word)
                 # print(s)
-                question = 'Why ' + s + '?';
+                question = 'Why ' + s + ' ?';
                 return question
         else:
             return ''
@@ -183,16 +183,16 @@ class QuestionFormation(object):
                 # print("SUBJECT : " + subject.lstrip())
                 print("SUBJECT::::::::::: " + subject.lstrip())
                 question = str(sentence).replace(subject.lstrip(), "What ",1);
-                question = question + '?'
+                question = question + ' ?'
                 print(question)
                 # question = question.replace(".", "?");
                 # print(question)
             elif label == 'PERSON':
                 question = sentence.replace(subject, "Who ",1);
-                question = question + '?'
+                question = question + ' ?'
             elif label == 'LOCATION':
                 question = sentence.replace(subject, "Where ",1);
-                question = question + '?'
+                question = question + ' ?'
             # print("QUESTION : " + question)
 
         if question is '':
@@ -326,7 +326,7 @@ class QuestionFormation(object):
             if str(sentence).find('Therefore') != -1 or str(sentence).find('it') != -1:
                 return question
             elif all(i in dict for i in l1):
-                question = 'How' + ' ' + dict['MD'] + ' ' + subject.lower() + ' ' + dict['VB'] + ' ' + dict['VBN'] + '?'
+                question = 'How' + ' ' + dict['MD'] + ' ' + subject.lower() + ' ' + dict['VB'] + ' ' + dict['VBN'] + ' ?'
                 return question
                 # print(question)
         else:
@@ -367,7 +367,7 @@ class QuestionFormation(object):
                 if verb[0] in hverb:
                     # print("VERB " + verb[0])
                     sentence = sentence.replace(verb[0], '')
-                    question = verb[0].capitalize() + ' ' + sentence.lower() + "?"
+                    question = verb[0].capitalize() + ' ' + sentence.lower() + " ?"
                     return question;
                 else:
                     v = ''
@@ -379,10 +379,10 @@ class QuestionFormation(object):
                     if v != '':
                         if inflect.singular_noun(nltk.word_tokenize(sentence)[0]) is False and inflect.singular_noun(
                                 v) is False:
-                            return v.capitalize() + ' ' + sentence.lower() + "?"
+                            return v.capitalize() + ' ' + sentence.lower() + " ?"
                         elif inflect.singular_noun(nltk.word_tokenize(sentence)[0]) is True and inflect.singular_noun(
                                 v) is True:
-                            return v.capitalize() + ' ' + sentence.lower() + "?"
+                            return v.capitalize() + ' ' + sentence.lower() + " ?"
                         else:
                             if self._determineTenseInput(sentence) == "past":
                                 words = nltk.word_tokenize(sentence);
@@ -394,7 +394,7 @@ class QuestionFormation(object):
                                         break;
                                 if len(vb) != 0:
                                     sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
-                                    question = 'Did' + ' ' + sentence.lower() + "?"
+                                    question = 'Did' + ' ' + sentence.lower() + " ?"
                                     return question;
                                 else:
                                     return ''
@@ -402,10 +402,10 @@ class QuestionFormation(object):
                                 words = nltk.word_tokenize(sentence);
                                 if inflect.singular_noun(words[0]) is False:
                                     # print(noun[0])
-                                    question = 'Does' + ' ' + sentence.lower() + "?"
+                                    question = 'Does' + ' ' + sentence.lower() + " ?"
                                     return question;
                                 else:
-                                    question = 'Do' + ' ' + sentence.lower() + "?"
+                                    question = 'Do' + ' ' + sentence.lower() + " ?"
                                     return question;
                     else:
                         if self._determineTenseInput(sentence) == "past":
@@ -418,7 +418,7 @@ class QuestionFormation(object):
                                     break;
                             if len(vb) != 0:
                                 sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
-                                question = 'Did' + ' ' + sentence.lower() + "?"
+                                question = 'Did' + ' ' + sentence.lower() + " ?"
                                 return question;
                             else:
                                 return ''
@@ -426,10 +426,10 @@ class QuestionFormation(object):
                             words = nltk.word_tokenize(sentence);
                             if inflect.singular_noun(words[0]) is False:
                                 # print(noun[0])
-                                question = 'Does' + ' ' + sentence.lower() + "?"
+                                question = 'Does' + ' ' + sentence.lower() + " ?"
                                 return question;
                             else:
-                                question = 'Do' + ' ' + sentence.lower() + "?"
+                                question = 'Do' + ' ' + sentence.lower() + " ?"
                                 return question;
 
     def createNoUsingHVerbPhrase(self, sentence):
@@ -473,7 +473,7 @@ class QuestionFormation(object):
                     if verb[0] in hverb:
                         # print("VERB " + verb[0])
                         sentence = sentence.replace(verb[0], '')
-                        question = verb[0].capitalize() + ' ' + sentence.lower() + "?"
+                        question = verb[0].capitalize() + ' ' + sentence.lower() + " ?"
                         return question;
                     else:
                         v = ''
@@ -486,11 +486,11 @@ class QuestionFormation(object):
                             if inflect.singular_noun(
                                     nltk.word_tokenize(sentence)[0]) is False and inflect.singular_noun(
                                 v) is False:
-                                return v.capitalize() + ' ' + sentence.lower() + "?"
+                                return v.capitalize() + ' ' + sentence.lower() + " ?"
                             elif inflect.singular_noun(
                                     nltk.word_tokenize(sentence)[0]) is True and inflect.singular_noun(
                                 v) is True:
-                                return v.capitalize() + ' ' + sentence.lower() + "?"
+                                return v.capitalize() + ' ' + sentence.lower() + " ?"
                             else:
                                 if self._determineTenseInput(sentence) == "past":
                                     words = nltk.word_tokenize(sentence);
@@ -502,17 +502,17 @@ class QuestionFormation(object):
                                             break;
                                     if len(vb) != 0:
                                         sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
-                                        question = 'Did' + ' ' + sentence.lower() + "?"
+                                        question = 'Did' + ' ' + sentence.lower() + " ?"
                                         return question;
                                     else:
                                         return ''
                                 else:
                                     words = nltk.word_tokenize(sentence);
                                     if inflect.singular_noun(words[0]) is False:
-                                        question = 'Does' + ' ' + sentence.lower() + "?"
+                                        question = 'Does' + ' ' + sentence.lower() + " ?"
                                         return question;
                                     else:
-                                        question = 'Do' + ' ' + sentence.lower() + "?"
+                                        question = 'Do' + ' ' + sentence.lower() + " ?"
                                         return question;
                         else:
                             if self._determineTenseInput(sentence) == "past":
@@ -525,17 +525,17 @@ class QuestionFormation(object):
                                         break;
                                 if len(vb) != 0:
                                     sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
-                                    question = 'Did' + ' ' + sentence.lower() + "?"
+                                    question = 'Did' + ' ' + sentence.lower() + " ?"
                                     return question;
                                 else:
                                     return ''
                             else:
                                 words = nltk.word_tokenize(sentence);
                                 if inflect.singular_noun(words[0]) is False:
-                                    question = 'Does' + ' ' + sentence.lower() + "?"
+                                    question = 'Does' + ' ' + sentence.lower() + " ?"
                                     return question;
                                 else:
-                                    question = 'Do' + ' ' + sentence.lower() + "?"
+                                    question = 'Do' + ' ' + sentence.lower() + " ?"
                                     return question;
             else:
                 return ''
@@ -665,11 +665,11 @@ class QuestionFormation(object):
             print("LABEL   ++++++++++++++++++++++++++++++++++++++++++ " + label)
             if label == "PERSON" or label == "ORG":
                 question = sentence.replace(subject, "Who ");
-                question = question + '?'
+                question = question + ' ?'
                 print("WHO1 ************************************************************ " + question)
                 return question
             else:
-                question = question + "Who " + verb + " " + subject + "?"
+                question = question + "Who " + verb + " " + subject + " ?"
                 print("WHO2 **************************************************************** " + question)
                 return question
         else:

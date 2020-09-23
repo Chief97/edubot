@@ -8,3 +8,11 @@ class Question(object):
         self.answerObject = Answer()
         self.sentence = ""
         self.question_start = ""
+
+    def convertToJson(self):
+        return {
+            'question': self.value,
+            'correctAnswer': self.answerObject.correctAnswer,
+            'answerOptions' : self.answerObject.mcqAnswer,
+            'position' : self.answerObject.position
+        }
