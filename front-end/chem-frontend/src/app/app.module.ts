@@ -9,6 +9,7 @@ import {RegisterModuleModule} from "./register-module/register-main-component/re
 import { MainContentComponentComponent } from './main-module/main-component/main-content-component/main-content-component.component';
 import {HttpClientModule} from "@angular/common/http";
 import {GeneralServiceService} from "./services/general-service.service";
+import { SummaryPopupComponent } from './components/summary-popup/summary-popup.component';
 
 
 // import { ParticlesModule } from "../node_modules/angular-particle-updated";

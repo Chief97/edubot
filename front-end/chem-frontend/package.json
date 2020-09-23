@@ -23,7 +23,9 @@
     "angular-particle": "^1.0.4",
     "angular-particle-updated": "^1.0.4-1",
     "bootstrap": "^4.5.2",
+    "chart.js": "^2.9.3",
     "jquery": "^3.5.1",
+    "ng2-charts": "^2.4.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from Other_Features.UserAccessManagement import UserAccessManagement
+from Service.Self_Assess_Answer_Generation.AnswerGenerationService import AnswerGenerationService
 from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetectionService
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
 
@@ -91,6 +92,16 @@ def allQuestions():
 
 
 ################################################# Start Answer Generation End points ##############################################################
+
+autoAnswerGenerationService = AnswerGenerationService()
+@app.route('/selfEvaluate/answerGeneration/answer', methods=['POST'])
+def allAnswers():
+    textInput = request.get_json()['text']
+    paragraph = textInput["paragraph"]
+    questionList = textInput["questionList"]
+    print("Initial ", questionList)
+    allAnswersForQuestions = autoAnswerGenerationService.autoAnswerGeneration(paragraph,questionList)
+    return jsonify(allAnswersForQuestions)
 
 ################################################# End Question Generation End points ##############################################################
 

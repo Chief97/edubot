@@ -1,5 +1,139 @@
-<br>
-<br>
-<br>
-<br>
-<p>assess-component works!</p>
+
+<div>
+  <div class="row  nav nav-tabs container headerClass" id="assess-header" style="width: 1200px">
+
+    <a href="#chapter" data-toggle="tab" class="active">
+      <div  class="header-tab-style"> Chapter Questions</div>
+    </a>
+    <a href="#symbol"  data-toggle="tab" >
+      <div  class=" header-tab-style"> Symbol Based Question</div>
+    </a>
+
+  </div>
+
+</div>
+
+<div class="tab-content ">
+  <div role="tabpanel"
+       class="tab-pane active"
+       id="chapter">
+    <div class="nav nav-tabs container headerClass" style="border: none">
+      <div style="align-items: center" class="row">
+        <div style="color: #FFFFFF;margin-left: 10px"><strong>Select Chapter : &nbsp; </strong></div>
+        <div>
+          <select class="form-control chapter-type-dropdown" id="chapterType" (change)="fetchQuestionForChapter()">
+            <option value="none" >None</option>
+            <option  *ngFor="let chapter of chapterList" value="{{chapter.name}}">
+              {{chapter.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div *ngIf="showParagraph" class="row paragraph-block" >
+        <div style="text-align: center;font-weight: bold">
+         Following paragraph will be the content for the quiz. Study Well and Press "Start" to start the quiz. All the best :)
+        </div>
+        <br>
+        <br>
+        <div style="text-align: center">
+          {{seletedParagraph}}
+        </div>
+        <div style="margin-left: 45%">
+          <br>
+            <button class="start-button" (click)="displayQuestions()">Start Quiz</button>
+          <br><br>
+        </div>
+      </div>
+      <br>
+      <div *ngIf="showQuestions" class="row question-block">
+        <br>
+
+        <div class="col-sm-12">
+          <br>
+          <div *ngFor="let i=index; let questionAnswer of questionAnswerList">
+            <div>{{i+1}}) {{questionAnswer.question}}</div>
+            <div class="row">
+              <div style="width: 22%;text-align: center" *ngFor="let x = index;let answer of questionAnswer.answerOptions">
+                <input  ngModel hidden><strong>{{ x == 0 ? 'A' : x == 1 ? 'B' : x == 2 ? 'C': x == 3 ? 'D': 'E'}} </strong>{{answer}}
+              </div>
+              <select style="width: 10%" class="form-control chapter-type-dropdown" id="{{questionAnswer.question}}" (change)="getValue(questionAnswer.question)" >
+                <option value="1" >A</option>
+                <option value="2" >B</option>
+                <option value="3" >C</option>
+                <option value="4" >D</option>
+              </select>
+            </div>
+            <br>
+          </div>
+          <div style="margin-left: 45%">
+            <br>
+            <button class="start-button" (click)="submitQuiz()">Submit Quiz</button>
+          </div>
+          <br>
+        </div>
+      </div>
+
+      <div *ngIf="showSummary" class="row summary-block">
+        <div  style="text-align: center;font-weight: bold;width: 100%"> Summary of the Quiz
+        <br>
+        <br>
+        <canvas baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [legend]="pieChartLegend"
+                [colors]="pieChartColors"
+                height="60px">
+        </canvas>
+        </div>
+        <div style="width: 100%">
+          <p style="font-weight: bold">Correctly Answered</p>
+
+          <div *ngFor="let i=index; let questionAnswer of correctAnswerArray">
+            <div>{{i+1}}) {{questionAnswer.question}}</div>
+            <div class="row" style="margin-left: 20px">
+                Correct Answer  : {{questionAnswer.correctAnswer}}
+              <br>
+                Entered Answer  : {{questionAnswer.correctAnswer}}
+            </div>
+            <br>
+          </div>
+        </div>
+        <div style="width: 100%">
+          <p style="font-weight: bold">Incorrectly Answered</p>
+
+          <div *ngFor="let i=index; let questionAnswerIncorrect of incorrectAnswerArray">
+            <div>{{i+1}}) {{questionAnswerIncorrect.question}}</div>
+            <div class="row" style="margin-left: 20px">
+              Correct Answer  : {{questionAnswerIncorrect.correctAnswer}}
+              <br>
+              Entered Answer  : {{ questionAnswerList[questionAnswerIncorrect.enteredAnswer].correctAnswer }}
+            </div>
+            <br>
+          </div>
+
+        </div>
+        <br>
+
+      </div>
+
+    </div>
+  </div>
+  <div role="tabpanel"
+       class="tab-pane "
+       id="symbol">
+    <br>
+    <br>
+    <br>
+    <br> symbol
+  </div>
+
+</div>
+
+
+
+

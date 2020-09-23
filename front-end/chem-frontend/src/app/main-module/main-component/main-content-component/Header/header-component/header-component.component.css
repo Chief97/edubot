@@ -17,8 +17,8 @@
 }
 
 .headerIcon {
-  height: 32px;
-  width: 32px;
+  height: 50px;
+  width: 50px;
 }
 
 .navbar-brand-custom {
@@ -547,7 +547,7 @@
 
 
 .header-tab-style {
-  color: #006eff;
+  color: #001b34;
   align-content:center;
   font-family: 'Century Gothic';
   padding: 15px 0px;
@@ -654,5 +654,10 @@
 
 .headerClass{
   margin-left: 200px;
-  margin-top: 1%;
+  margin-top: 2%;
+  background-color: #FFFFFF;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 25px;
 }
