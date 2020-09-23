@@ -14,6 +14,7 @@ export class LoginComponentComponent implements OnInit {
   username;
   password;
   ngOnInit(): void {
+    this.httpService.dataLoad().subscribe();
   }
 
   checkLoginValidation() {
