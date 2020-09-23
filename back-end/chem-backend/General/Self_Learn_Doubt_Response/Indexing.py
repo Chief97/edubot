@@ -13,8 +13,8 @@ class Indexing(object):
         print(unique_words)
         return unique_words
 
-    def tf(self, word, doc):
-        return doc.count(word) / len(doc)
+    def tf(self, word1, doc):
+        return doc.count(word1) / len(doc)
 
     def n_containing(self, word, document_list):
         return sum(1 for doc in document_list if word in doc)

@@ -1,0 +1,85 @@
+topic,image,definition,activity,notes,reaction,electro,cells
+Electro Chemical Cells,"electro chemical cells - toy car,electro chemical cells - torch,electro chemical cells - mobile phone,electro chemical cells - calculator,electro chemical cells - computer","In our everyday life, we frequently use equipment powered by domestic electricity as well as appliances operated by electrochemical cells or batteries. Toy cars, electric torches, calculators, computers and mobile phones are a few examples for equipment that are powered by electrochemical cells.","
+                ,
+                ,
+                ,
+                ,
+            ,In this, it can be observed that the Ammeter pointer is deflected, zinc strip is dissolved and gas bubbles are evolved at the copper strip. Let us explore the reasons for these observations. Here too, zinc atoms become zinc ions (Zn,) leaving electrons on the metal. Therefore, the zinc strip dissolves.,
+                   ,The electrons accumulated on the zinc strip, flow towards the copper strip through an external wire. This flow of electrons is considered an electric current. Deflection of the Ammeter shows that an electric current flows through the circuit. Hence in this set up, H, ions in the solution move toward the copper strip and receive electrons from it. Therefore, hydrogen gas bubbles are liberated at the copper strip.,Reaction at the zinc strip,
+                   Zn (s)→Zn,(aq)+ 2e⇢①
+                   ,Reaction at the copper strip,
+                   2H,(aq)+ 2e→H,(g)⇢②,
+                   ,In the above reaction it was confirmed that an electron current flows from zinc to copper in the external wire. A current of electrons means an electric current. In this, a chemical reaction has generated an electric current. A set up of this kind used to generate electricity by a chemical reaction is known as an electrochemical cell. The conducting substances dipped in the electrolyte here are called electrodes.,
+                   ,In the above cell, zinc strip and copper strip act as electrodes. The balanced ionic equation obtained by adding the half reactions ① and ② above is the electrochemical reaction taking place in the cell.
+                   ,① + ② ⇒ Zn (s) + 2H,(aq)→Zn,(aq)+ H,(g),
+                   ,Let us further consider the reaction occurring at the zinc electrode in the above cell.
+                   ,Zn (s)→Zn,(aq)+ 2e⇢①
+                   ,Loss of electrons from a given species (atoms, molecules or ions) is referred to as oxidation. Therefore, what is happening at the zinc strip is ,. If oxidation occurs at a certain electrode, that electrode is defined as the ,. Accordingly, the zinc strip is the anode of the above cell. Equation 1 represents the , taking place at the anode. Since zinc atoms dissolve into the solution leaving electrons on the zinc plate, the zinc plate gets negatively charged relative to the copper plate. Therefore, zinc electrode is the , of the cell.
+                   ,Next let us consider the reaction occurring at the copper strip.
+                   ,2H,(aq) + 2e→H2(g)⇢②
+                   ,The hydrogen ions (H,) gaining electrons turn into hydrogen gas molecules (H,). Gaining electrons by a given species (atoms, molecules, ions) is described as a ,. Since gaining of electrons or a reduction occurs at the copper electrode, reaction ② is the ,.,
+                   ,If reduction occurs at a certain electrode, it is defined as the ,. Therefore, copper strip is the cathode of the cell. Since electrons flow to the copper strip, it is positively charged relative to the zinc strip. Therefore, copper electrode is the positive terminal of the cell.,
+                   ,The electrochemical reaction of the cell can be obtained by adding the reactions ① and ②.,At the zinc electrode/negative terminal:,Zn (s)→Zn2+(aq)+ 2e⇢① Anodic reaction
+                   ,At the copper electrode/positive terminal:
+                   ,2H,(aq) + 2e→H2(g)⇢② Cathodic reaction
+                   ,① + ② ⇒ Zn(s) + 2H,(aq)→Zn,(aq) + H,(g)   Overall cell reaction
+                   ,The following comparisons would be important for you to identify the anode and cathode of a given electrochemical cell.,
+                ","
+                ","
+                Next, let us consider a cell constructed using iron and copper electrodes.,
+                ,
+                ,
+                In the activity series, iron lies above copper. Therefore, what is subjected to , and acts as
+                the , is the more reactive metal, iron.
+                ,
+                Fe(s)→Fe,(aq)+ 2e⇢④
+                ,
+                Since iron atoms dissolve into the solution leaving electrons on the iron strip, it is negatively
+                charged relative to copper. Thus, iron electrode is the , of the cell.
+                ,
+                In this cell also, the following reduction half reaction occurs at the less reactive copper metal.
+                Therefore, copper electrode acts as the cathode of this cell.
+                ,
+                2H,(aq) + 2e→H,(g)⇢⑤
+                ,
+                Electrons flow to the copper electrode across the external wire. Therefore, copper electrode is the
+                , of the cell.,
+                The overall ionic reaction of the cell can be obtained by adding the two half reactions ④ and ⑤.
+                ,
+                Fe(s) + 2H,(aq)→Fe,(aq) + H,(g)
+                ,
+                When a current is drawn from this cell it can be observed that the iron electrode dissolves and gas
+                bubbles evolve at the copper electrode.
+                
+            ,
+                ,
+                ,
+                In the activity series, zinc metal is placed above iron. Therefore, zinc which is the more reactive
+                metal, undergoes oxidation and acts as the anode.
+                ,
+                Reaction at the zinc electrode/anode.
+                ,
+                Zn(s)→Zn,(aq) + 2e⇢⑥
+                ,
+                Here too, as the zinc atoms dissolve into the solution leaving electrons on the zinc electrode, zinc
+                becomes negatively charged relative to iron. For this reason, zinc electrode becomes the negative
+                terminal of the cell.,
+                ,
+                Reaction at the iron electrode/cathode.
+                ,
+                2H,(aq) + 2e→H2(g)⇢⑦
+                ,
+                Because reduction occurs at iron, it acts as the cathode.
+                ,
+                Electrons flow towards the iron electrode along the connecting wire. Hence iron electrode is the
+                positive terminal of the cell.
+                ,
+                The overall ionic reaction of the cell can be obtained by adding the reactions ⑥ and ⑦.
+                ,
+                Zn(s) + 2H,(aq)→Zn,(aq) + H2(g)
+                ,
+                When this cell operates, we will be able to see that the zinc electrode dissolves and gas bubbles
+                evolve at the iron electrode.
+                
+            ","electrochemical,electrochemical,electrochemical,electrochemical,electrochemical,electrochemical,electrons,electrons,electrons,electrons,electrons,electrons,electrons,electrons,electrons,electron,electrons,electrochemical,electrolyte,electrodes,electrodes,electrochemical,electrode,electrons,electrode,electrode,electrons,electrode,electrons,electrons,electrons,electrode,electrode,electrons,electrode,electrochemical,electrode,electrode,electrochemical,electrodes","cells,cells,cells,cells,cells,cells,cells,cells"
+Electrolysis,,,,,,"electrode,electrode,electrolytic,electrolysis",
