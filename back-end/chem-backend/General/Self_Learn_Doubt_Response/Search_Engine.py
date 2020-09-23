@@ -7,9 +7,15 @@ from flask import jsonify
 class SearchEngine(object):
     def search(self, searchsentence, word_dictionary):
         """need to load word_dictionary"""
+        print("word dictionary")
+        print(word_dictionary)
+        print("search sentence")
+        print(searchsentence)
+
         results1 = list()
         results1.append(searchsentence)
-
+        print('search sentence 1')
+        print(results1[0])
         try:
             # split sentence into individual words
             searchsentence = searchsentence.lower()
@@ -21,6 +27,9 @@ class SearchEngine(object):
             enddic = {}
             idfdic = {}
             results1.append(words)
+
+            print('search words')
+            print(results1[1])
 
             # remove words if not in worddic
             realwords = []
