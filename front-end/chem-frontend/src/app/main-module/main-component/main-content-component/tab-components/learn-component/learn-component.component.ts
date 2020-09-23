@@ -12,6 +12,8 @@ export class LearnComponentComponent implements OnInit {
   private date: Date;
   messages = [];
   data = '';
+  typing = false;
+  type = '../../assets/image/typing.gif';
 
   // providers: [DatePipe];
   // constructor(public datePipe: DatePipe){}
@@ -24,6 +26,11 @@ export class LearnComponentComponent implements OnInit {
   //   return latestDate;
   // }
 
+
+  delay(ms: number){
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   input(){
     console.log('method initiated');
     // const timer = this.getDate();
@@ -35,15 +42,22 @@ export class LearnComponentComponent implements OnInit {
         data: this.data
       };
       console.log(json);
-      this.httpService.generateReply(json).subscribe((data: any) => {
+      this.httpService.generateReply(json).subscribe(async (data: any) => {
         console.log('content sent');
-        if (data.type === 'textContent'){
+        this.data = '';
+        this.typing = true;
+        this.messages.push(this.type);
+        if (data.type === 'textContent') {
+          await this.delay(5000);
           this.messages.push({userType: 'bot', dataTitle: data.name, userMsg: data.html_text, dataType: data.type});
-        }else if (data.type === 'ConversationReply') {
+        } else if (data.type === 'ConversationReply') {
+          await this.delay(1500);
           this.messages.push({userType: 'bot', userMsg: data.output_value, dataType: data.type});
-        }else {
+        } else {
+          await this.delay(800);
           this.messages.push({userType: 'bot', userMsg: data.output_value});
         }
+        this.typing = false;
       });
       console.log(this.messages);
     }

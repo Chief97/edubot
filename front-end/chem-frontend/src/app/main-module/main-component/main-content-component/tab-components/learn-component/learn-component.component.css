@@ -157,4 +157,9 @@ img.chat-active{
   box-shadow: none !important;
   border-radius: 20px;
 }
+.typing{
+  display: inline-block;;
+  width: 50px;
+  float: left;
+}
 
