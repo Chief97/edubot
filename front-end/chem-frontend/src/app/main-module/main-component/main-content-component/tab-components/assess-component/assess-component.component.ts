@@ -90,6 +90,7 @@ export class AssessComponentComponent implements OnInit {
         console.log("Entered answer " + this.questionAnswerList[i].enteredAnswer)
       }
     }
+    console.log(this.questionAnswerList)
   }
 
   displayQuestions(){
