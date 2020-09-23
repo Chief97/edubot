@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import {SelfLearnServiceService} from '../../../../../services/self-learn-service.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-learn-component',
@@ -6,8 +9,45 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./learn-component.component.css']
 })
 export class LearnComponentComponent implements OnInit {
+  private date: Date;
+  messages = [];
+  data = '';
 
-  constructor() { }
+  // providers: [DatePipe];
+  // constructor(public datePipe: DatePipe){}
+
+  constructor(private httpService: SelfLearnServiceService, public router: Router){}
+  // getDate(){
+  //   this.date = new Date();
+  //   const latestDate = this.datePipe.transform(this.date, 'yyyy-MM-dd HH:mm:ss');
+  //   console.log(latestDate);
+  //   return latestDate;
+  // }
+
+  input(){
+    console.log('method initiated');
+    // const timer = this.getDate();
+    // this.messages.push({user: 'user', userMsg: text, time: timer});
+    if (this.data !== ''){
+      this.messages.push({userType: 'user', userMsg: this.data});
+      console.log(this.messages);
+      const json = {
+        data: this.data
+      };
+      console.log(json);
+      this.httpService.generateReply(json).subscribe((data: any) => {
+        console.log('content sent');
+        if (data.type === 'textContent'){
+          this.messages.push({userType: 'bot', dataTitle: data.name, userMsg: data.html_text, dataType: data.type});
+        }else if (data.type === 'ConversationReply') {
+          this.messages.push({userType: 'bot', userMsg: data.output_value, dataType: data.type});
+        }else {
+          this.messages.push({userType: 'bot', userMsg: data.output_value});
+        }
+      });
+      console.log(this.messages);
+    }
+    }
 
   ngOnInit(): void {
   }

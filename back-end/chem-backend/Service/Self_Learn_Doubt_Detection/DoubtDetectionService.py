@@ -9,5 +9,8 @@ class DoubtDetectionService(object):
         doubtDetection = ClassifyInput()
         result = doubtDetection.classify(inputText)
         result_ = ' '.join(result)
+        # result_ = {
+        #     "text": result1
+        # }
 
-        return jsonify(result_)
+        return str(result_)

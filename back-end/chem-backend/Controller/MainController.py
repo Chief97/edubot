@@ -1,8 +1,26 @@
+from abc import ABC
+
 from flask import Flask, request, jsonify
+# from flask_script import Manager, Server
+
 from flask_cors import CORS
 from Other_Features.UserAccessManagement import UserAccessManagement
 from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetectionService
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
+from Service.Self_Learn_Doubt_Response.DoubtResponseService import DoubtResponseService
+
+
+# def prepare_data():
+#     data = doubtResponseService.collect_data()
+#     processing = doubtResponseService.process_data(data)
+#     pass
+#
+#
+# class CustomServer(Server):
+#     def __call__(self, app, *args, **kwargs):
+#         prepare_data()
+#         return Server.__call__(self, app, *args, **kwargs)
+
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -27,24 +45,59 @@ def validateUserCredentials():
     response = userAccessManagement.validateUserCredentials(textInput)
     return jsonify(response)
 
+
 ################################################# End User access management End points #########################################################
 
 
 ################################################# Start Doubt Detection End points ##############################################################
 doubtDetectionService = DoubtDetectionService()
+intent_id = ""
 
 
 @app.route('/selfLearn/doubtDetection/getIntent', methods=['POST'])
 def detectIntent_id():
-    textInput = request.get_json()['text']
+    textInput = request.get_json()['data']
+    print(textInput)
     intent_id = doubtDetectionService.getIntent(textInput)
-    return intent_id
+    print("intentID")
+    print(intent_id)
+    #response(intent_id)
+    #return intent_id
+    return response(intent_id)
+
 
 
 ################################################# End Doubt Detection End points ################################################################
 
 
 ################################################# Start Doubt Response End points ###############################################################
+doubtResponseService = DoubtResponseService()
+
+
+@app.route('/scraper', methods=['POST'])
+def webScraper():
+    doubtResponseService.startScraper()
+
+
+@app.route('/selfLearn/doubtResponse/prepareData', methods=['POST'])
+def prepare_data():
+    # text = request.get_json()['text']
+    data = doubtResponseService.collect_data()
+    processing = doubtResponseService.process_data(data)
+    return processing
+
+
+@app.route('/selfLearn/doubtResponse/respond', methods=['POST'])
+def response(text_input):
+    #text_input = request.get_json()['text']
+    # print(text)
+    # text_input = text['text']
+    print("text_input")
+    print(text_input)
+    doubt_response = doubtResponseService.respond(text_input)
+    print("respond hit")
+    return doubt_response
+
 
 ################################################# End Doubt Response End points #################################################################
 
