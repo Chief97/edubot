@@ -29,8 +29,8 @@ class DoubtRespond(object):
         else:
             ranking = Rank()
             self.search_query = input_query
-            rank = ranking.rank(input_query, word_dictionary)
-            return rank
+            rank1 = ranking.rank(input_query, word_dictionary)
+            return rank1
 
     def scraper(self):
         

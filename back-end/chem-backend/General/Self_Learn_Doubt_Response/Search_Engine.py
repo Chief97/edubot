@@ -5,20 +5,20 @@ from flask import jsonify
 
 
 class SearchEngine(object):
-    def search(self, searchsentence, word_dictionary):
+    def search(self, searchsent, word_dictionary):
         """need to load word_dictionary"""
         print("word dictionary")
         print(word_dictionary)
         print("search sentence")
-        print(searchsentence)
+        print(searchsent)
 
         results1 = list()
-        results1.append(searchsentence)
+        results1.append(searchsent)
         print('search sentence 1')
         print(results1[0])
         try:
             # split sentence into individual words
-            searchsentence = searchsentence.lower()
+            searchsentence = searchsent.lower()
             words = searchsentence
             try:
                 words = words.split(' ')

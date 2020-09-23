@@ -15,10 +15,10 @@ class read_data(object):
 class Rank(object):
 
     def rank(self, term, word_dictionary):
-        search_engine = SearchEngine()
+        search_engine1 = SearchEngine()
         print("term")
         print(term)
-        results = search_engine.search(term, word_dictionary)
+        results = search_engine1.search(term, word_dictionary)
         print(results)
 
         # get metrics
