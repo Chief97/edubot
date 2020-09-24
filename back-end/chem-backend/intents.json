@@ -240,7 +240,8 @@
             "patterns": ["what is neutralisation?", "explain about neutralisation?", "can you explain about neutralisation?"]
         },
         {"intent_id": "what is electrochemical cells",
-		 "patterns": ["what is electrochemical cells?", "define electrochemical cells?", "can you explain electrochemical cells?", "tell about electrochemical cells?"]
+		 "patterns": ["what is electrochemical cells?", "define electrochemical cells?",
+           "can you explain electrochemical cells?", "tell about electrochemical cells?"]
 		},
 		{"intent_id": "equipments powered by electrochemical cells",
          "patterns": ["equipments powered by electrochemical cells", "what are the equipments that use electrochemical cells?", "give few equipments that powered by electroChemical cells?", "can you give name of equipments that are used electro chemical cells?"]
