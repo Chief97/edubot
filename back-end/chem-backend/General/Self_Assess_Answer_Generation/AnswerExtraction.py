@@ -11,7 +11,22 @@ class AnswerExtraction(object):
 
         if(question.question_start == "what"):
             print("what")
-            sent_POS = nltk.pos_tag(nltk.word_tokenize(question.sentence))
+            sent_POS = nltk.pos_tag(nltk.word_tokenize(paragraoh))
+            question1 = question.value
+            print("QUESTION1 :::::::::::::::::" + question1)
+            if str(question1).find("what") != -1:
+                question1 = str(question1).replace("what","")
+                question1 = str(question1).replace("?", "")
+                print("QUESTION1 ::::::::::::::::: " +question1)
+                sentence = question.sentence
+                print("SENTENCE ::::::::::::::::: " + sentence)
+                question1 = question1.rstrip() + '.'
+                print("1111111111111111111111111 " + question1)
+                if str(sentence).find(question1) != -1 :
+                    answer = str(sentence).replace(question1 ,"")
+                    print("ANSWER &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& " + answer)
+                    synonym = self.getSynonymsAndAntonyms(answer)
+                    print("SYNONYM :::::::::::::::::::: " + str(synonym))
             # print(sent_POS)
             for tag in sent_POS:
                 print(tag)
@@ -27,12 +42,22 @@ class AnswerExtraction(object):
                     possibleAnswer.append(noun)
             print(possibleAnswer)
             answer_obj = Answer
-            answer_obj.mcqAnswer = sentence_NN
-            answer_obj.correctAnswer = random.randint(0, 3)
-            answer_obj.smallAnswer = answer_obj.mcqAnswer[answer_obj.correctAnswer]
-            question.answerObject = answer_obj
-            print("POSSIBLE_ANSWER : ", sentence_NN.__str__())
+            numbersList = random.sample(range(0,len(sentence_NN)-1), 3)
+            answerOptions = list()
+            for i in numbersList:
+                answerOptions.append(sentence_NN[i])
+            answerOptions.append(answer)
+            print("random           :::: ",random.shuffle(answerOptions))
+            answer_obj.mcqAnswer = answerOptions
+            for j,i in enumerate(answerOptions):
+                if i == answer:
+                    answer_obj.position = j+1
 
+            answer_obj.correctAnswer = answer
+            # answer_obj.smallAnswer = answer_obj.mcqAnswer[answer_obj.correctAnswer]
+            question.answerObject = answer_obj
+            print("POSSIBLE_ANSWER : ", answerOptions)
+            print("CORRECT_ANSWER : ", answer)
             print(question.sentence, question.value)
 
 
@@ -41,15 +66,33 @@ class AnswerExtraction(object):
             [self.to_nltk_tree(sent.root).pretty_print() for sent in doc.sents]
         elif(question.question_start == "who"):
             print("who")
+            namesList = ['Ernest Rutherfurd','Neils Bohr','John Doily','Dimitri Mendeleeff','Albert Einstein','Marie Curie',
+            'Isaac Newton','Charles Darwin','Nikola Tesla','Galileo Galilei','Ada Lovelace','Pythagoras']
             initialSentence = ""
             for sent_para in nltk.sent_tokenize(paragraoh):
                 if sent_para.lower() == question.sentence:
                     initialSentence = sent_para
             entityList = self.getLabel(initialSentence)
             print(entityList)
+            answerOptions = list()
+            answer = ''
+            answer_obj = Answer
             for entity in entityList:
                 if entity[0] == "PERSON":
-                    question.answerObject.smallAnswer = entity[1]
+                    answer_obj.correctAnswer = entity[1]
+                    answerOptions.append(entity[1])
+                    answer = entity[1]
+
+            numbersList = random.sample(range(0, len(namesList) - 1), 3)
+            for i in numbersList:
+                answerOptions.append(namesList[i])
+            print("random           :::: ", random.shuffle(answerOptions))
+            answer_obj.mcqAnswer = answerOptions
+            answer_obj.correctAnswer = answer
+            for j, i in enumerate(answerOptions):
+                if i == answer:
+                    answer_obj.position = j + 1
+            question.answerObject = answer_obj
 
         elif (question.question_start == "when"):
             print("when")
@@ -86,6 +129,16 @@ class AnswerExtraction(object):
             for entity in entityList:
                 if entity[0] == "CARDINAL":
                     question.answerObject.smallAnswer = entity[1]
+
+        elif question.question_start != "what" and question.question_start != "who" and question.question_start != "when" and question.question_start != "where" and question.question_start != "howMany":
+            print("YES NO")
+            answer_obj = Answer
+            answer_obj.mcqAnswer = ['Yes','No']
+            # answer_obj.mcqAnswer = answerOptions
+            answer_obj.position = 1
+            answer_obj.correctAnswer = 'Yes'
+            question.answerObject = answer_obj
+        question.value = question.value.capitalize()
         return question
 
     def to_nltk_tree(self,node):

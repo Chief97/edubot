@@ -21,7 +21,7 @@ class AnswerGenerationService(object):
             q = q.lower()
             print(q)
             question_object_array.append(Question(q))
-
+        mcqQuestions = []
         for index, o in enumerate(question_object_array):
             # o.questionType = identify_question_type(str(o.value))
             questionTypeIdentification = QuestionTypeIdentification()
@@ -47,8 +47,9 @@ class AnswerGenerationService(object):
             print("-------- OUT AutoAnswerGeneration ----------------------")
             print("QUESTION : ", o.value)
             print("QUESTION-TYPE : ", o.questionType)
-            print("ANSWER-SMALL : ", o.answerObject.smallAnswer)
-            print("ANSWER-MCQ-OPTIONS : ", o.answerObject.mcqAnswer)
-            print("ANSWER-Correct-MCQ : ", o.answerObject.correctAnswer)
-            print("QUESTION_START: ", o.question_start)
-        return "sample"
+            mcqQuestions.append(o.convertToJson())
+            # print("ANSWER-SMALL : ", o.answerObject.smallAnswer)
+            # print("ANSWER-MCQ-OPTIONS : ", o.answerObject.mcqAnswer)
+            # print("ANSWER-Correct-MCQ : ", o.answerObject.correctAnswer)
+            # print("QUESTION_START: ", o.question_start)
+        return mcqQuestions
