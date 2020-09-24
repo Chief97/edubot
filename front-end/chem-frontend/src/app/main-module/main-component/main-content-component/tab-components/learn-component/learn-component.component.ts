@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./learn-component.component.css']
 })
 export class LearnComponentComponent implements OnInit {
-  private date: Date;
+  date = Date;
   messages = [];
   data = '';
   typing = false;
@@ -36,7 +36,7 @@ export class LearnComponentComponent implements OnInit {
     // const timer = this.getDate();
     // this.messages.push({user: 'user', userMsg: text, time: timer});
     if (this.data !== ''){
-      this.messages.push({userType: 'user', userMsg: this.data});
+      this.messages.push({userType: 'user', userMsg: this.data, date: this.date.now()});
       console.log(this.messages);
       const json = {
         data: this.data
@@ -49,13 +49,13 @@ export class LearnComponentComponent implements OnInit {
         this.messages.push(this.type);
         if (data.type === 'textContent') {
           await this.delay(5000);
-          this.messages.push({userType: 'bot', dataTitle: data.name, userMsg: data.html_text, dataType: data.type});
+          this.messages.push({userType: 'bot', dataTitle: data.name, userMsg: data.html_text, dataType: data.type, date: this.date.now()});
         } else if (data.type === 'ConversationReply') {
           await this.delay(1500);
-          this.messages.push({userType: 'bot', userMsg: data.output_value, dataType: data.type});
+          this.messages.push({userType: 'bot', userMsg: data.output_value, dataType: data.type, date: this.date.now()});
         } else {
           await this.delay(800);
-          this.messages.push({userType: 'bot', userMsg: data.output_value});
+          this.messages.push({userType: 'bot', userMsg: data.output_value, date: this.date.now()});
         }
         this.typing = false;
       });
@@ -64,6 +64,7 @@ export class LearnComponentComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.messages.push({userType: 'bot', userMsg: 'Hi! I am Edubot!', date: this.date.now()});
   }
 
 }
