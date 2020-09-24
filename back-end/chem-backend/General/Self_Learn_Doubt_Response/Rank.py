@@ -5,6 +5,7 @@ from flask import jsonify
 
 from General.Self_Learn_Doubt_Response.DataLoading import DataLoading
 from General.Self_Learn_Doubt_Response.Search_Engine import SearchEngine
+from General.Self_Learn_Doubt_Response.Preprocess import Preprocess
 
 
 class read_data(object):
@@ -96,10 +97,13 @@ class Rank(object):
                 # return the most appropriate document
                 load_data = DataLoading()
                 data = load_data.load_file()
+                preprocess = Preprocess()
+                preprocessed = preprocess.remove_html_tags(data)
+                print(preprocessed)
                 final_results = {
                     "type": "textContent",
                     "name": data.iloc[final_candidates[0]]['name'],
-                    "html_text": data.iloc[final_candidates[0]]['html_text']
+                    "html_text": preprocessed.iloc[final_candidates[0]]['no_html_text']
                 }
                 print("final candidates 6")
                 print(final_candidates[0])
