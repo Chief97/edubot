@@ -10,6 +10,7 @@ import { MainContentComponentComponent } from './main-module/main-component/main
 import {HttpClientModule} from "@angular/common/http";
 import {GeneralServiceService} from "./services/general-service.service";
 import { SummaryPopupComponent } from './components/summary-popup/summary-popup.component';
+import { DataDisplayComponent } from './components/data-display/data-display.component';
 
 
 // import { ParticlesModule } from "../node_modules/angular-particle-updated";
@@ -18,6 +19,7 @@ import { ParticlesModule } from 'ngx-particle';
 @NgModule({
   declarations: [
     AppComponent,
+    DataDisplayComponent,
 
 
   ],
