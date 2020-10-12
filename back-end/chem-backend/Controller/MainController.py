@@ -35,16 +35,29 @@ userAccessManagement.initialization()
 @app.route('/registerUser', methods=['POST'])
 def registerUser():
     textInput = request.get_json()['data']
-    response = userAccessManagement.registerUser(textInput)
-    return jsonify(response)
+    registration_response = userAccessManagement.registerUser(textInput)
+    return jsonify(registration_response)
 
 
 @app.route('/validateUser', methods=['POST'])
 def validateUserCredentials():
     textInput = request.get_json()['data']
-    response = userAccessManagement.validateUserCredentials(textInput)
-    return jsonify(response)
+    validation_response = userAccessManagement.validateUserCredentials(textInput)
+    return jsonify(validation_response)
 
+
+@app.route('/getUser', methods=['POST'])
+def retrieveUserDetails():
+    textInput = request.get_json()['data']
+    user_details = userAccessManagement.retrieveUserDetails(textInput)
+    return jsonify(user_details)
+
+
+@app.route('/updateUser', methods=['POST'])
+def updateUserDetails():
+    textInput = request.get_json()['data']
+    user_details = userAccessManagement.updateUserDetails(textInput)
+    return jsonify(user_details)
 
 ################################################# End User access management End points #########################################################
 
@@ -219,6 +232,6 @@ def allAnswers():
     allAnswersForQuestions = autoAnswerGenerationService.autoAnswerGeneration(paragraph,questionList)
     return jsonify(allAnswersForQuestions)
 
-################################################# End Question Generation End points ##############################################################
+################################################# End Answer Generation End points ##############################################################
 
 app.run(debug=True)

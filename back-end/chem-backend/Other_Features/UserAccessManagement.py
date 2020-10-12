@@ -65,3 +65,53 @@ class UserAccessManagement(object):
         else:
             print("User does not exists")
             return "User does not exists"
+
+    def retrieveUserDetails(self, userObject):
+        """
+           retrieving user profile details
+           :param userObject: username
+           :return: response of user profile details
+        """
+        db = firestore.client()
+        doc_ref = db.collection('user').document(userObject['username'])
+        doc = doc_ref.get()
+        if doc.exists:
+            print("User exists")
+            data_dic = doc.to_dict()
+            response = {
+                'firstName': data_dic["firstName"],
+                'lastName': data_dic["lastName"],
+                'username': data_dic["username"],
+                'dob': data_dic["dob"],
+                'email': data_dic["email"]
+            }
+            return response;
+        else:
+            print("User does not exists")
+            return ""
+
+    def updateUserDetails(self, userObject):
+        """
+           Updating user profile details
+           :param userObject: username
+           :return: user details updating response
+        """
+        db = firestore.client()
+        doc_ref = db.collection('user').document(userObject['username'])
+        doc = doc_ref.get()
+        if doc.exists:
+            print("User exists")
+            first_name = userObject["firstName"]
+            last_name = userObject["lastName"]
+            username = userObject["username"]
+            dob = userObject["dob"]
+            email = userObject["email"]
+            if first_name != "" and last_name != "" and dob != "" and email != "":
+                field_updates = {'firstName': first_name, 'lastName': last_name, 'dob': dob, 'email': email}
+                doc_ref.update(field_updates)
+                return "User successfully updated"
+            else:
+                return "User not successfully updated"
+        else:
+            print("User does not exists")
+            return "User does not exists to update"
