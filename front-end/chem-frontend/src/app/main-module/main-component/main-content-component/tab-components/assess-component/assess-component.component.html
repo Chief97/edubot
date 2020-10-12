@@ -19,11 +19,11 @@
        id="chapter">
     <div class="nav nav-tabs container headerClass" style="border: none">
       <div style="align-items: center" class="row">
-        <div style="color: #FFFFFF;margin-left: 10px"><strong>Select Chapter : &nbsp; </strong></div>
-        <div>
+        <div *ngIf="showQuestions == false" style="color: #FFFFFF;margin-left: 10px"><strong>Select Chapter : &nbsp; </strong></div>
+        <div *ngIf="showQuestions == false">
           <select class="form-control chapter-type-dropdown" id="chapterType" (change)="fetchQuestionForChapter()">
-            <option value="none" >None</option>
-            <option  *ngFor="let chapter of chapterList" value="{{chapter.name}}">
+            <option value="none" style="font-size: 15px" >None</option>
+            <option  *ngFor="let chapter of chapterList" value="{{chapter.name}}" style="font-size: 15px">
               {{chapter.name}}
             </option>
           </select>
@@ -42,7 +42,7 @@
         </div>
         <div style="margin-left: 45%">
           <br>
-            <button class="start-button" (click)="displayQuestions()">Start Quiz</button>
+            <button class="start-button" (click)="displayChapterQuestions()">Start Quiz</button>
           <br><br>
         </div>
       </div>
@@ -52,23 +52,30 @@
 
         <div class="col-sm-12">
           <br>
-          <div *ngFor="let i=index; let questionAnswer of questionAnswerList">
-            <div>{{i+1}}) {{questionAnswer.question}}</div>
-            <div class="row">
-              <div style="width: 22%;text-align: center" *ngFor="let x = index;let answer of questionAnswer.answerOptions">
-                <input  ngModel hidden><strong>{{ x == 0 ? 'A' : x == 1 ? 'B' : x == 2 ? 'C': x == 3 ? 'D': 'E'}} </strong>{{answer}}
-              </div>
-              <select style="width: 10%" class="form-control chapter-type-dropdown" id="{{questionAnswer.question}}" (change)="getValue(questionAnswer.question)" >
-                <option value="1" >A</option>
-                <option value="2" >B</option>
-                <option value="3" >C</option>
-                <option value="4" >D</option>
-              </select>
-            </div>
-            <br>
+          <div *ngIf="questionAnswerList == null">
+                <img style="margin-left: 40%" src="../../../../../../assets/loading.gif">
           </div>
-          <div style="margin-left: 45%">
+          <div *ngIf="questionAnswerList !=null">
+            <div *ngFor="let i=index; let questionAnswer of questionAnswerList">
+              <div>{{i+1}}) {{questionAnswer.question}}</div>
+              <div class="row">
+                <div style="width: 22%;text-align: center" *ngFor="let x = index;let answer of questionAnswer.answerOptions">
+                  <input  ngModel hidden><strong>{{ x == 0 ? 'A' : x == 1 ? 'B' : x == 2 ? 'C': x == 3 ? 'D': 'E'}} </strong>{{answer}}
+                </div>
+                <select style="width: 10%" class="form-control chapter-type-dropdown" id="{{questionAnswer.question}}" (change)="getValue(questionAnswer.question)" >
+                  <option value="1" >A</option>
+                  <option value="2" >B</option>
+                  <option value="3" *ngIf="questionAnswer.answerOptions.length > 2" >C</option>
+                  <option value="4" *ngIf="questionAnswer.answerOptions.length > 2">D</option>
+                </select>
+              </div>
+              <br>
+            </div>
+          </div>
+
+          <div *ngIf="questionAnswerList != null" style="margin-left: 45%">
             <br>
+            <button class="start-button" (click)="returnToParagraph()">Return</button> &nbsp;
             <button class="start-button" (click)="submitQuiz()">Submit Quiz</button>
           </div>
           <br>
@@ -96,9 +103,7 @@
           <div *ngFor="let i=index; let questionAnswer of correctAnswerArray">
             <div>{{i+1}}) {{questionAnswer.question}}</div>
             <div class="row" style="margin-left: 20px">
-                Correct Answer  : {{questionAnswer.correctAnswer}}
-              <br>
-                Entered Answer  : {{questionAnswer.correctAnswer}}
+                Correct Answer  : {{questionAnswer.correctAnswer}}s
             </div>
             <br>
           </div>
@@ -111,12 +116,15 @@
             <div class="row" style="margin-left: 20px">
               Correct Answer  : {{questionAnswerIncorrect.correctAnswer}}
               <br>
-<!--              Entered Answer  : {{ questionAnswerList[questionAnswerIncorrect.enteredAnswer].correctAnswer }}-->
             </div>
             <br>
           </div>
 
         </div>
+        <div style="margin-left: 45%">
+          <button class="start-button" (click)="returnParagraph()"> Return to Paragraph</button>
+        </div>
+        <br>
         <br>
 
       </div>
@@ -127,9 +135,97 @@
        class="tab-pane "
        id="symbol">
     <br>
-    <br>
-    <br>
-    <br> symbol
+
+    <div class="nav nav-tabs container headerClass" style="border: none">
+
+
+      <br>
+
+      <br>
+      <div *ngIf="showSymbolQuestions" class="row question-block">
+        <br>
+
+        <div class="col-sm-12">
+          <br>
+          <div *ngIf="questionSymbolAnswerList == null">
+            <img style="margin-left: 40%" src="../../../../../../assets/loading.gif">
+          </div>
+          <div *ngIf="questionSymbolAnswerList !=null">
+            <div *ngFor="let i=index; let questionSymbolAnswer of questionSymbolAnswerList">
+              <div>{{i+1}}) {{questionSymbolAnswer.question}}</div>
+              <div class="row">
+                <div style="width: 22%;text-align: center" *ngFor="let x = index;let answer of questionSymbolAnswer.answerOptions">
+                  <input  ngModel hidden><strong>{{ x == 0 ? 'A' : x == 1 ? 'B' : x == 2 ? 'C': x == 3 ? 'D': 'E'}} </strong>{{answer}}
+                </div>
+                <select style="width: 10%" class="form-control chapter-type-dropdown" id="{{questionSymbolAnswer.question}}" (change)="getValue(questionSymbolAnswer.question)" >
+                  <option value="1" >A</option>
+                  <option value="2" >B</option>
+                  <option value="3" *ngIf="questionSymbolAnswer.answerOptions.length > 2" >C</option>
+                  <option value="4" *ngIf="questionSymbolAnswer.answerOptions.length > 2">D</option>
+                </select>
+              </div>
+              <br>
+            </div>
+          </div>
+
+          <div *ngIf="questionSymbolAnswerList != null" style="margin-left: 45%">
+            <br>
+
+            <button class="start-button" (click)="submitSymbolQuiz()">Submit Quiz</button>
+          </div>
+          <br>
+        </div>
+      </div>
+
+      <div *ngIf="showSymbolSummary" class="row summary-block">
+        <div  style="text-align: center;font-weight: bold;width: 100%"> Summary of the Quiz
+          <br>
+          <br>
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [legend]="pieChartLegend"
+                  [colors]="pieChartColors"
+                  height="60px">
+          </canvas>
+        </div>
+        <div style="width: 100%">
+          <p style="font-weight: bold">Correctly Answered</p>
+
+          <div *ngFor="let i=index; let questionAnswer of correctSymbolAnswerArray">
+            <div>{{i+1}}) {{questionAnswer.question}}</div>
+            <div class="row" style="margin-left: 20px">
+              Correct Answer  : {{questionAnswer.correctAnswer}}
+            </div>
+            <br>
+          </div>
+        </div>
+        <div style="width: 100%">
+          <p style="font-weight: bold">Incorrectly Answered</p>
+
+          <div *ngFor="let i=index; let questionAnswerIncorrect of incorrectSymbolAnswerArray">
+            <div>{{i+1}}) {{questionAnswerIncorrect.question}}</div>
+            <div class="row" style="margin-left: 20px">
+              Correct Answer  : {{questionAnswerIncorrect.correctAnswer}}
+
+            </div>
+            <br>
+          </div>
+
+        </div>
+        <div style="margin-left: 45%">
+          <button class="start-button" (click)="reloadQuestions()"> Try Again</button>
+        </div>
+        <br>
+
+      </div>
+
+    </div>
+
+
   </div>
 
 </div>

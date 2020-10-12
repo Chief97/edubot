@@ -296,8 +296,9 @@ class QuestionGenerationService(object):
             if who_question is not None and who_question != '':
                 who_question = tool.correct(str(who_question))
                 questionList.append(who_question)
-            finalQuestion = random.choice(questionList)
-            allQuestionsForPara.append(finalQuestion)
+            if len(questionList) != 0:
+                finalQuestion = random.choice(questionList)
+                allQuestionsForPara.append(finalQuestion)
 
         return allQuestionsForPara
 

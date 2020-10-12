@@ -11,6 +11,7 @@ class AnswerExtraction(object):
 
         if(question.question_start == "what"):
             print("what")
+            answer = ""
             sent_POS = nltk.pos_tag(nltk.word_tokenize(paragraoh))
             question1 = question.value
             print("QUESTION1 :::::::::::::::::" + question1)
@@ -28,6 +29,14 @@ class AnswerExtraction(object):
                     synonym = self.getSynonymsAndAntonyms(answer)
                     print("SYNONYM :::::::::::::::::::: " + str(synonym))
             # print(sent_POS)
+            if answer == "":
+                sent_pos1 = nltk.pos_tag(nltk.word_tokenize(sentence))
+                for tag in sent_pos1:
+                    if (tag[1] == "NN"):
+                        answer = (tag[0])
+                        break;
+                if answer == "":
+                    answer = "Not Found"
             for tag in sent_POS:
                 print(tag)
             sentence_NN = []
@@ -80,12 +89,13 @@ class AnswerExtraction(object):
             for entity in entityList:
                 if entity[0] == "PERSON":
                     answer_obj.correctAnswer = entity[1]
-                    answerOptions.append(entity[1])
+                    # answerOptions.append(entity[1])
                     answer = entity[1]
 
             numbersList = random.sample(range(0, len(namesList) - 1), 3)
             for i in numbersList:
                 answerOptions.append(namesList[i])
+            answerOptions.append(answer)
             print("random           :::: ", random.shuffle(answerOptions))
             answer_obj.mcqAnswer = answerOptions
             answer_obj.correctAnswer = answer

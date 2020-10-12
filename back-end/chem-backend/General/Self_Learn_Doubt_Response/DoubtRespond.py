@@ -19,6 +19,11 @@ class DoubtRespond(object):
                 "type": "ConversationReply",
                 "output_value": "Goodbye! Have a nice day"
             }
+        elif input_query == "greeting response":
+            final_results = {
+                "type": "ConversationReply",
+                "output_value": "How may I help you today?"
+            }
             return jsonify(final_results)
         if input_query == "thanks":
             final_results = {

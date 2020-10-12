@@ -5,7 +5,7 @@ import pandas as pd
 class DataLoading(object):
 
     def load_file(self):
-        my_dir_path = Path("D:\SLIIT\Y4S1\CDAP\Develop\Data")
+        my_dir_path = Path("D:\Data")
         df1 = pd.DataFrame(columns=['name', 'html_text'])
         for file in my_dir_path.iterdir():
             my_file = open(file, 'r')

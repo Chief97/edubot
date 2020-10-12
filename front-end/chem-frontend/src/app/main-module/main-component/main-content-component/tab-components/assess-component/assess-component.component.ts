@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
+import {SelfEvaluateServiceService} from "../../../../../services/self-evaluate-service.service";
 @Component({
   selector: 'app-assess-component',
   templateUrl: './assess-component.component.html',
@@ -15,6 +16,8 @@ export class AssessComponentComponent implements OnInit {
 
   correctAnswer = 0
   inCorrectAnswer = 0
+  correctSymbolAnswer = 0
+  inCorrectSymbolAnswer = 0
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -28,39 +31,66 @@ export class AssessComponentComponent implements OnInit {
 
 
   correctAnswerArray = []
+  correctSymbolAnswerArray = []
   incorrectAnswerArray = []
+  incorrectSymbolAnswerArray = []
   seletedParagraph = null
-  questionAnswerList =
-    [
-      {
-        "answerOptions": ["Dimitry Mendeleff", "Ernest Rutherfurd", "Neils Bohr", "John Doily"
-        ],
-        "correctAnswer": "Ernest Rutherfurd",
-        "position": 1,
-        "enteredAnswer": 0,
-        "question": "Who invented planetary model?"
-      },
-      {
-        "answerOptions": [
-          "Dimitry Mend", "Neils B", "Ernest Rutherfurd", "John ily"
-        ],
-        "correctAnswer": "Ernest Rutherfurd",
-        "position": 2,
-        "enteredAnswer": 0,
-        "question": "Who made planetary model?"
-      }
-    ]
-  chapterList =
-    [
-      {"name" : "Activity Series","paragraph" : "The series obtained by the arrangement of metals in the descending order of their reactivity is referred to as the activity series. The Activity Series has been built up by comparing the reactions of metals with air, water, dilute acids and salt solutions. Deciding on the methods of metal extraction, identification of methods that prevent corrosion of metals, selection of metals to construct electrochemical cells according to requirement are uses made from the activity series"},
-      {"name" : "Atomic Number","paragraph" : "The atomic number is the number of protons in an atom of the element. Atomic number of the element is equal to the number of protons in an atom of the element. The atomic number of sodium is 11. The number of protons in every atom of the same element is equal. The number of protons in different elements is different. Therefore, the atomic numbers of two atoms of different elements will never be the same. The atomic number of an element is a unique characteristic of an element. The atomic number of an element is symbolized by Z. In a neutral atom, the number of protons is equal to the number of electrons. So, it implies that the atomic number of an element is equal to the number of electrons in an atom of that element. In chemical reactions electrons may be either lost from or gained by atoms and are called ions. The number of electrons in an ion may be less or more than the number of protons. But the number of protons in an ion formed by a particular atom does not change, its atomic number remains unchanged."},
-    ]
+  // questionAnswerList =
+  //   [
+  //     {
+  //       "answerOptions": ["Dimitry Mendeleff", "Ernest Rutherfurd", "Neils Bohr", "John Doily"
+  //       ],
+  //       "correctAnswer": "Ernest Rutherfurd",
+  //       "position": 1,
+  //       "enteredAnswer": 0,
+  //       "question": "Who invented planetary model?"
+  //     },
+  //     {
+  //       "answerOptions": [
+  //         "Dimitry Mend", "Neils B", "Ernest Rutherfurd", "John ily"
+  //       ],
+  //       "correctAnswer": "Ernest Rutherfurd",
+  //       "position": 2,
+  //       "enteredAnswer": 0,
+  //       "question": "Who made planetary model?"
+  //     }
+  //   ]
+  questionSymbolAnswerList = null
+  questionAnswerList = null
+  chapterList =[]
   showQuestions = false
   showParagraph = false
   showSummary = false
-  constructor() { }
+  showSymbolSummary = false
+  showSymbolQuestions = true
+  constructor(private httpService : SelfEvaluateServiceService) { }
 
   ngOnInit(): void {
+  this.fetchChapterListandContent()
+
+    let json = {
+      "data": {
+        "questionType": "sample",
+        "sectionName": "sample",
+        "questionCategory": "section",
+        "paragraph": "Sodium, potassium and calcium are highly reactive metals. Highly reactive metals are stored in kerosene and liquid paraffin. zinc and magnesium contacts will prevent rusting of iorn. Highly reactive metals are extracted by the electrolysis of the metals fused chloride. Moderate reactive metals are extracted by reducing the compounds by other elements. Silver, gold platinum are low reactive  metals. Low reactive metals are extracted using physical methods."
+      }
+    }
+
+    // let json = {
+    //   "data": {
+    //     "questionType": "",
+    //     "sectionName": "",
+    //     "questionCategory": "database",
+    //     "paragraph": ""
+    //   }
+    // }
+
+    this.httpService.allquestions(json).subscribe((data:any)=>{
+      console.log(data)
+    })
+
+    this.fetchSymbolQuestions()
   }
 
   fetchQuestionForChapter(){
@@ -93,12 +123,28 @@ export class AssessComponentComponent implements OnInit {
     console.log(this.questionAnswerList)
   }
 
-  displayQuestions(){
+  displayChapterQuestions(){
+    this.questionAnswerList = null
     this.showParagraph = false;
     this.showQuestions = true;
+
+    let json = {
+      "data": {
+        "questionType": "sample",
+        "sectionName": "sample",
+        "questionCategory": "section",
+        "paragraph": this.seletedParagraph
+      }
+    }
+
+    this.httpService.allquestions(json).subscribe((data:any) =>{
+      this.questionAnswerList = data
+      console.log(data)
+    })
   }
   submitQuiz(){
-
+    this.correctAnswer =0
+    this.inCorrectAnswer =0
     console.log(this.questionAnswerList.length)
     for(let i = 0; i< this.questionAnswerList.length;i++){
       let e = (<HTMLSelectElement>document.getElementById(this.questionAnswerList[i].question)).options;
@@ -117,5 +163,68 @@ export class AssessComponentComponent implements OnInit {
     console.log("Correct Answer : " + this.correctAnswer)
     console.log("Incorrect Answer : " + this.inCorrectAnswer)
     console.log("Questions : " + (this.inCorrectAnswer+this.correctAnswer) )
+  }
+
+  fetchChapterListandContent(){
+    this.httpService.getChapterContent().subscribe((data:any) => {
+      console.log(data)
+      this.chapterList = data
+    })
+  }
+
+  returnToParagraph(){
+    this.showParagraph =true
+    this.showQuestions =false
+    this.showSummary =false
+  }
+
+  submitSymbolQuiz(){
+
+    this.showSymbolQuestions =false
+    this.showSymbolSummary = true
+    this.correctSymbolAnswer =0
+    this.inCorrectSymbolAnswer =0
+    console.log(this.questionSymbolAnswerList.length)
+    for(let i = 0; i< this.questionSymbolAnswerList.length;i++){
+      let e = (<HTMLSelectElement>document.getElementById(this.questionSymbolAnswerList[i].question)).options;
+      let answerValue = (<HTMLSelectElement>document.getElementById(this.questionSymbolAnswerList[i].question)).options[e.selectedIndex].value
+      if(answerValue == this.questionSymbolAnswerList[i].position.toString()){
+        this.correctSymbolAnswer = this.correctSymbolAnswer +1
+        this.correctSymbolAnswerArray.push(this.questionSymbolAnswerList[i])
+      }else {
+        this.inCorrectSymbolAnswer = this.inCorrectSymbolAnswer +1
+        this.incorrectSymbolAnswerArray.push(this.questionSymbolAnswerList[i])
+      }
+    }
+    this.pieChartData = [this.correctSymbolAnswer,this.inCorrectSymbolAnswer];
+    this.showQuestions =false
+    this.showSummary =true
+    console.log("Correct Answer : " + this.correctSymbolAnswer)
+    console.log("Incorrect Answer : " + this.inCorrectSymbolAnswer)
+    console.log("Questions : " + (this.inCorrectSymbolAnswer+this.correctSymbolAnswer) )
+  }
+  fetchSymbolQuestions(){
+    let json = {
+        "data": {
+          "questionType": "",
+          "sectionName": "",
+          "questionCategory": "database",
+          "paragraph": ""
+        }
+      }
+      this.httpService.allquestions(json).subscribe((data:any) => {
+        this.questionSymbolAnswerList = data
+      })
+  }
+
+  reloadQuestions() {
+    this.showSymbolSummary =false
+    this.questionSymbolAnswerList = null
+    this.showSymbolQuestions = true
+    this.fetchSymbolQuestions()
+  }
+  returnParagraph(){
+    this.showParagraph = true
+    this.showSummary = false
   }
 }

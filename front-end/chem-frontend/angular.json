@@ -1,4 +1,4 @@
-angl{
+{
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
@@ -123,10 +123,6 @@ angl{
           }
         }
       }
-    }
-  },
-  "defaultProject": "chem-frontend",
-  "cli": {
-    "analytics": "65fe4bec-41ae-491e-9c7e-dce328a64187"
-  }
+    }},
+  "defaultProject": "chem-frontend"
 }
