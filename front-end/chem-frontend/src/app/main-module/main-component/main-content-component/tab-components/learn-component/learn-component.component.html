@@ -15,17 +15,17 @@
       <div class="msg-inbox">
         <div class="chats">
           <div class="msg-page">
-            <div class="received-chats">
-              <div class="received-chats-img">
-                <img src="../../assets/image/chatImage/chatImage.png">
-              </div>
-              <div class="received-msg">
-                <div class="received-msg-inbox">
-                  <p>Hi! I am Edubot!</p>
-                  <span class="time">11.01 AM | September 22</span>
-                </div>
-              </div>
-            </div>
+<!--            <div class="received-chats">-->
+<!--              <div class="received-chats-img">-->
+<!--                <img src="../../assets/image/chatImage/chatImage.png">-->
+<!--              </div>-->
+<!--              <div class="received-msg">-->
+<!--                <div class="received-msg-inbox">-->
+<!--                  <p>Hi! I am Edubot!</p>-->
+<!--                  <span class="time">{{date | date:'medium'}}</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 <!--            repeat-->
             <div *ngFor="let i=index;let message of messages">
               <div *ngIf="messages[i].userType == 'bot'">
@@ -37,7 +37,7 @@
                     <div class="received-msg-inbox">
                       <p *ngIf="messages[i].dataType == 'textContent'" style="margin-bottom: 5px">{{messages[i].dataTitle}}</p>
                       <p>{{messages[i].userMsg}}</p>
-                      <span class="time">11.01 AM | September 22</span>
+                      <span class="time">{{message.date | date:'medium'}}</span>
                     </div>
                   </div>
                 </div>
@@ -47,7 +47,7 @@
                   <div class="outgoing-chats-msg">
                     <!--                  <div class="outgoing-msg-inbox">-->
                     <p>{{messages[i].userMsg}}</p>
-                    <span class="time">11.01 AM | September 22</span>
+                    <span class="time">{{message.date | date:'medium'}}</span>
                     <!--                  </div>-->
                   </div>
                   <div class="outgoing-chats-img">

@@ -25,10 +25,16 @@ class DoubtRespond(object):
                 "output_value": "How may I help you today?"
             }
             return jsonify(final_results)
-        if input_query == "thanks":
+        elif input_query == "thanks":
             final_results = {
                 "type": "ConversationReply",
                 "output_value": "Hope that was helpful!"
+            }
+            return jsonify(final_results)
+        elif input_query == "greeting response":
+            final_results = {
+                "type": "ConversationReply",
+                "output_value": "What can I help you with today?"
             }
             return jsonify(final_results)
         else:
