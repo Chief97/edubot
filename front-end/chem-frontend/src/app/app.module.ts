@@ -13,7 +13,7 @@ import { SummaryPopupComponent } from './components/summary-popup/summary-popup.
 
 
 // import { ParticlesModule } from "../node_modules/angular-particle-updated";
-
+import { ParticlesModule } from 'ngx-particle';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { SummaryPopupComponent } from './components/summary-popup/summary-popup.
     MainModuleModule,
     routing,
     RegisterModuleModule,
-    HttpClientModule
+    HttpClientModule,
+    ParticlesModule
   ],
   providers: [
     GeneralServiceService
