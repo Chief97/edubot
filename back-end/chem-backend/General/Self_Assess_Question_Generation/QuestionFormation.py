@@ -7,10 +7,10 @@ import spacy
 import inflect
 import random
 
+from General.Self_Assess_Question_Generation.Helping_Classes.QuestionFormationHelper import QuestionFormationHelper
 from General.Self_Assess_Question_Generation.PreProcess import PreProcess
 
-from nltk.corpus import wordnet
-from nltk import sent_tokenize, RegexpParser, pos_tag
+from nltk import sent_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
 
 inflect = inflect.engine()
@@ -18,62 +18,6 @@ nlp = spacy.load("en_core_web_sm")
 
 
 class QuestionFormation(object):
-
-    def _getSubject(self, sentence):
-        """
-       Extracting the subject from the sentence
-       :param sentence: selected sentence
-       :return: the subject of the sentence
-       """
-        doc = nlp(sentence.lstrip());
-        root = [token for token in doc if token.head == token][0]
-        sub = ""
-        if str(list(root.lefts)) == '[]':
-            sub = "SUBJECT CANNOT BE DEFINED";
-        else:
-            subject = list(root.lefts)[0]
-            for descendant in subject.subtree:
-                assert subject is descendant or subject.is_ancestor(descendant);
-                sub = sub + str(descendant.text) + " ";
-        # print("subject :" + sub)
-        return sub;
-
-    def _getLabelArray(self, subject):
-        """
-        generating the entity label for the subject
-        :param subject: subject phrase of a sentence
-        :return: a string including the entity label
-                of the subject
-        """
-        words = nltk.word_tokenize(subject);
-        tagged = nltk.pos_tag(words);
-        chunks = nltk.ne_chunk(tagged);
-        label = '';
-        labels = [];
-        for chunk in chunks:
-            if type(chunk) is nltk.Tree:
-                for c in chunk.leaves():
-                    if str(chunk.label).find('PERSON') != -1:
-                        label = 'PERSON'
-
-                    elif str(chunk.label).find('ORGANIZATION') != -1:
-                        label = 'ORGANIZATION'
-
-                    elif str(chunk.label).find('LOCATION') != -1:
-                        label = 'LOCATION'
-            labels.append(label);
-
-        label = str(labels);
-        if label.find("PERSON") != -1 and label.find("ORGANIZATION") != -1:
-            label = "PERSON"
-        elif label.find("PERSON") != -1 and label.find("ORGANIZATION") == -1:
-            label = "ORGANIZATION"
-        elif label.find("PERSON") == -1 and label.find("LOCATION") != -1:
-            label = 'LOCATION'
-        elif label.find("PERSON") == -1 and label.find("ORGANIZATION") == -1:
-            label = ''
-
-        return str(label);
 
     def yesNoQuestions(self, sentence):
         hverbs = ["is", "have", "had", "was", "could", "would", "will", "do", "did", "should", "shall", "can", "are"]
@@ -94,18 +38,25 @@ class QuestionFormation(object):
         return question;
 
     def generateWhyQuestion(self, sentence):
+        """
+        generation of why type of questions. initially will be checking for conjunctions in the sentence.
+        If a conjunction is present genrating ehy type question
+        :param sentence: input sentence
+        :return: question
+        """
         # print(nltk.word_tokenize(sentence)[0])
-        ##newly added
+        # identification for conjunctions at the beginning of the sentence
         if nltk.word_tokenize(sentence)[0].find("Because") != -1 or nltk.word_tokenize(sentence)[0].find(
                 "Hence") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or \
                 nltk.word_tokenize(sentence)[0].find("But") != -1:
             wordDic = {'Because of': '', 'Because': '', 'Therefore,': '', 'Therefore': '', 'Hence,': '', 'But if': '',
                        "But": '', 'Hence': ''}
             preProcess = PreProcess()
-            sentence = preProcess.multipleReplace(sentence, wordDic)
+            sentence = preProcess.multipleReplace(sentence,
+                                                  wordDic)  # replacing the conjunction according to the worddic
             if str(sentence).count(',') > 0:
-                doc = nlp(sentence)
-                pos = ''
+                doc = nlp(sentence)  # document representation of the sentence
+                pos = ''  # post tag
                 for chunk in doc.noun_chunks:
                     if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                         pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
@@ -115,13 +66,14 @@ class QuestionFormation(object):
                 question = '';
                 return question
             else:
-                return 'Why is ' + sentence + ' ?'
+                return 'Why is ' + sentence + ' ?'  # question
+        # identifying a conjunction is present in the middle of sentence
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
             print("SPECIALLLLLL88888888888888888888888888888888888888888888888888888888888888888888888888888888888")
-            doc = nlp(sentence)
-            headword = []
-            pos=''
+            doc = nlp(sentence)  # document representation of the sentence
+            headword = []  # the head word of the pronoun
+            pos = ''  # pos tag
             for chunk in doc.noun_chunks:
                 if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                     pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
@@ -130,13 +82,14 @@ class QuestionFormation(object):
                 if str(pos).find('PRP') == -1:
                     headword.append(chunk.text)
             headword = headword[0];
-            sentencePart = self._slicer(sentence, 'because');
+            helper = QuestionFormationHelper()
+            sentencePart = helper.slicer(sentence, 'because');
             # print("hii1 " + sentencePart)
             if len(sent_tokenize(sentencePart)) <= 2:
                 return ''
             else:
                 if str(sentencePart).count(',') > 0:
-                    sentencePart = self.slicer1(sentencePart, ',');
+                    sentencePart = helper.slicer1(sentencePart, ',');
                 # print("hii " + sentencePart)
                 s = ''
                 for word, pos in nltk.pos_tag(nltk.word_tokenize(str(sentencePart))):
@@ -154,19 +107,26 @@ class QuestionFormation(object):
             return ''
 
     def generateWHQuestion(self, sentence):
+        """
+        Generating wh type questions( mainly who, what)
+        :param sentence: inpurt sentence
+        :return: wh question
+        """
         # sentence = sentence.lower()
-        question = '';
-        WHVerbs = ['Who', 'What', 'Where'];
+        question = '';  # question
+        WHVerbs = ['Who', 'What', 'Where'];  # wh verb list
         # p = PreProcess()
         # wordDic = {'But':'','Similarly':'','Thus':'','Therefore,':''}
         wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
-                   'Therefore': ''}
+                   'Therefore': ''}  # word dictionary of conjunctions
         p = PreProcess()
-        sentence = p.multipleReplace(sentence, wordDic)
+        sentence = p.multipleReplace(sentence,
+                                     wordDic)  # replacing conjunctions in word dictionary if found in sentence
+        helper = QuestionFormationHelper()
         # if nltk.word_tokenize(sentence)[0].find("But") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or nltk.word_tokenize(sentence)[0].find("Similarly") != -1 or nltk.word_tokenize(sentence)[0].find("Thus") != -1:
         #     sentence = p.multipleReplace(sentence,wordDic)
-        sentence = self.removingFirstDt(sentence)
-        subject = self._getSubject(sentence);
+        sentence = helper.removingFirstDt(sentence)  # removing the first determiner
+        subject = helper.getSubject(sentence);  # identifying the subject of the sentence
         print("")
         print("SENTENCE inside  WH ___________________________ " + sentence)
         print("SUBJECT inside WH ----------------------------" + subject)
@@ -174,24 +134,27 @@ class QuestionFormation(object):
         if subject == 'SUBJECT CANNOT BE DEFINED' or subject == 'none':
             question = '';
         else:
-            label = self._getLabelArray(subject);
+            label = helper.getLabelArray(subject);  # identifying the named entity label for the subject
             # print("LABLE : " + label)
             if label == '':
                 # wordDict = {'%subject%': 'What '}
                 # p = PreProcess()
                 # question = p.multipleReplace(sentence,wordDict)
                 # print("SUBJECT : " + subject.lstrip())
+                # when there is no particular label the question will be what type
                 print("SUBJECT::::::::::: " + subject.lstrip())
-                question = str(sentence).replace(subject.lstrip(), "What ",1);
+                question = str(sentence).replace(subject.lstrip(), "What ", 1);
                 question = question + ' ?'
                 print(question)
                 # question = question.replace(".", "?");
                 # print(question)
+            # when the named entity label is person the question will be who type
             elif label == 'PERSON':
-                question = sentence.replace(subject, "Who ",1);
+                question = sentence.replace(subject, "Who ", 1);
                 question = question + ' ?'
+            # when the named entity label is location the question will be where type
             elif label == 'LOCATION':
-                question = sentence.replace(subject, "Where ",1);
+                question = sentence.replace(subject, "Where ", 1);
                 question = question + ' ?'
             # print("QUESTION : " + question)
 
@@ -204,44 +167,6 @@ class QuestionFormation(object):
         else:
             return question
 
-    def _getNounPhrases(self, sentence):
-        """
-        Extracting all the nouns in the sentence
-        :param sentence: selected sentence
-        :return: list of nouns in the sentence
-        """
-        stopwords = nltk.corpus.stopwords.words('english');
-
-        pattern = r"""
-            NP:{<DT>?<JJ>*<NN>}
-               {<NNP>+}
-               {<NNS>+}
-               {<NN>+}
-               {<NNP><NN>}
-            """
-        noun_list = [];
-        for sent in sent_tokenize(sentence):
-            subject = self._getSubject(sent);
-            sentence = sent.split();
-            PChunker = RegexpParser(pattern);
-            output = PChunker.parse(pos_tag(sentence));
-            for subtree in output.subtrees(filter=lambda t: t.label() == 'NP'):
-                for x in subtree:
-                    if subject.find(x[0]) == -1 and x[0] not in stopwords:
-                        noun_list.append(x[0]);
-        # print(noun_list);
-        return noun_list;
-
-    def _slicer(self, my_str, sub):
-        length = len(sub)
-        index = my_str.find(sub)
-        index = index + len(sub)
-        if index != -1:
-            # print("WORD :::::" , my_str[index])
-            return my_str[:index - length]
-        else:
-            raise Exception('Sub string not found!')
-
     def generateFillInTheBlanksQuestion(self, sentence):
 
         """
@@ -250,7 +175,8 @@ class QuestionFormation(object):
         :return: filling the blank question
         """
 
-        noun_list = self._getNounPhrases(sentence);
+        helper = QuestionFormationHelper();
+        noun_list = helper.getNounPhrases(sentence);  # identifying the noun list for the sentence
         # stopwords = nltk.corpus.stopwords.words('english');
         #
         # for noun in noun_list:
@@ -263,7 +189,7 @@ class QuestionFormation(object):
             # if key == 'the' or key == 'of' or key == 'an' or 'it':
             #     continue
             # print(key)
-            sentence = sentence.replace(key, "__________")
+            sentence = sentence.replace(key, "__________")  # replacing the noun with a dash
 
         if str(sentence).find("__________") != -1:
             return sentence;
@@ -271,43 +197,24 @@ class QuestionFormation(object):
             sentence = "CANNOT GENERATE MEANINGFUL FILL IN THE BLANKS QUESTION";
             return sentence;
 
-    def _getLabel(self, word):
-        """
-        Extracting the entity type of the subject
-        :param word:
-        :return: entity type
-        """
-        doc = nlp(word);
-        label = "";
-        for ent in doc.ents:
-            label = ent.label_
-            if label == '':
-                label = "";
-        return label;
-
-    def slicer1(self, my_str, sub):
-        length = len(sub)
-        index = my_str.find(sub)
-        index = index + len(sub)
-        if index != -1:
-            # print("WORD :::::" , my_str[index])
-            return my_str[index:]
-        else:
-            raise Exception('Sub string not found!')
-
     def generateHowQuestion(self, sentence):
+        """
+        generation of how type questions
+        :param sentence: input sentence
+        :return: question
+        """
         # qf = QuestionFormation()
-        c = str(sentence).count(',')
-
+        c = str(sentence).count(',')  # count of commas present in the sentence
+        helper = QuestionFormationHelper()
         # print(c)
         if c == 1:
-            sentence = self.slicer1(sentence, ",")
+            sentence = helper.slicer1(sentence, ",")  # slicing the sentence
         # print(sent)
-        words = nltk.word_tokenize(sentence);
-        tagged = nltk.pos_tag(words);
-        subject = self._getSubject(sentence)
-        dict = {}
-        l1 = ['MD', 'NN', 'VB', 'VBN']
+        words = nltk.word_tokenize(sentence);  # identifying the words in the sentence
+        tagged = nltk.pos_tag(words);  # tagging the words
+        subject = helper.getSubject(sentence)  # identification of  the subject for the sentence
+        dict = {}  # dictionary
+        l1 = ['MD', 'NN', 'VB', 'VBN']  # rule defined to identify how question type
         l2 = ['MD', 'NN', 'NNS', 'VB', 'VBN']
         noun = []
         q = "How "
@@ -321,12 +228,13 @@ class QuestionFormation(object):
         #     question = 'How' + ' ' + dict['MD'] + ' ' + noun[0] + ' ' + dict['VB'] + ' ' + dict['VBN'] + '?'
         #     return question
         #     # print(question)
-        question = ''
-        if subject != '':
+        question = ''  # question
+        if subject != '':  # verifying the subject is not null
             if str(sentence).find('Therefore') != -1 or str(sentence).find('it') != -1:
                 return question
             elif all(i in dict for i in l1):
-                question = 'How' + ' ' + dict['MD'] + ' ' + subject.lower() + ' ' + dict['VB'] + ' ' + dict['VBN'] + ' ?'
+                question = 'How' + ' ' + dict['MD'] + ' ' + subject.lower() + ' ' + dict['VB'] + ' ' + dict[
+                    'VBN'] + ' ?'
                 return question
                 # print(question)
         else:
@@ -334,24 +242,29 @@ class QuestionFormation(object):
             # print(word)
 
     def createYesUsingHVerbPhrase(self, sentence):
-
+        """
+        generating yes type questions
+        :param sentence: input sentence
+        :return: yes type question
+        """
+        helper = QuestionFormationHelper()
         if str(sentence).find("This") != -1 or str(sentence).find("this") != -1 or str(sentence).find(
                 "them") != -1 or str(sentence).find("them,") != -1:
             question = ''
             return question
         else:
-            ##newly added
+            # word dictionary
             wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': ''}
             p = PreProcess()
             sentence = p.multipleReplace(sentence, wordDic)
-            words = nltk.word_tokenize(sentence);
-            tagged = nltk.pos_tag(words);
-            verb = []
+            words = nltk.word_tokenize(sentence);  # word tokenizing
+            tagged = nltk.pos_tag(words);  # words tagging
+            verb = []  # verb list
             adjectives = []
             synonym = ''
-            hverb = ['is', 'are', 'can', 'was', 'were']
+            hverb = ['is', 'are', 'can', 'was', 'were']  # helping verb list
             for x, y in enumerate(tagged):
-                if y[1] == 'MD' or y[1] == 'VBZ' or y[1] == 'VBP':
+                if y[1] == 'MD' or y[1] == 'VBZ' or y[1] == 'VBP':  # identifying helping verbs using rule base approach
                     verb.append(y[0])
 
             # noun = self._getNounPhrasesWithSubject(sentence)
@@ -364,14 +277,14 @@ class QuestionFormation(object):
             if len(verb) == 0:
                 return ''
             else:
-                if verb[0] in hverb:
+                if verb[0] in hverb:  # identifying whether the verb list contains a hverb defined above
                     # print("VERB " + verb[0])
                     sentence = sentence.replace(verb[0], '')
                     question = verb[0].capitalize() + ' ' + sentence.lower() + " ?"
                     return question;
                 else:
                     v = ''
-                    for h in hverb:
+                    for h in hverb:  # finding whether the sentence contains a hverb defined above
                         if str(sentence).find(h) != -1:
                             v = h
                             break;
@@ -384,7 +297,7 @@ class QuestionFormation(object):
                                 v) is True:
                             return v.capitalize() + ' ' + sentence.lower() + " ?"
                         else:
-                            if self._determineTenseInput(sentence) == "past":
+                            if helper.determineTenseInput(sentence) == "past":
                                 words = nltk.word_tokenize(sentence);
                                 tagged = nltk.pos_tag(words);
                                 vb = []
@@ -408,7 +321,7 @@ class QuestionFormation(object):
                                     question = 'Do' + ' ' + sentence.lower() + " ?"
                                     return question;
                     else:
-                        if self._determineTenseInput(sentence) == "past":
+                        if helper.determineTenseInput(sentence) == "past":
                             words = nltk.word_tokenize(sentence);
                             tagged = nltk.pos_tag(words);
                             vb = []
@@ -433,6 +346,12 @@ class QuestionFormation(object):
                                 return question;
 
     def createNoUsingHVerbPhrase(self, sentence):
+        """
+        generating no questions
+        :param sentence: input sentence
+        :return: no type question
+        """
+        helper = QuestionFormationHelper()
         if str(sentence).find("This") != -1 or str(sentence).find("this") != -1 or str(sentence).find(
                 "them") != -1 or str(sentence).find("them,") != -1:
             question = ''
@@ -460,7 +379,7 @@ class QuestionFormation(object):
                 adjective = random.choice(adjectives)
                 # print("ADJECTIVE " + adjective);
                 # print("SYNONYM " + str(self._getSynonym(adjective)))
-                antonym = str(self._getAntonym(adjective, sentence));
+                antonym = str(helper.getAntonym(adjective, sentence));
                 # print("ADJECTIVE " + adjective)
                 # print("ANTONONYM " + antonym)
                 if antonym != '':
@@ -492,7 +411,7 @@ class QuestionFormation(object):
                                 v) is True:
                                 return v.capitalize() + ' ' + sentence.lower() + " ?"
                             else:
-                                if self._determineTenseInput(sentence) == "past":
+                                if helper.determineTenseInput(sentence) == "past":
                                     words = nltk.word_tokenize(sentence);
                                     tagged = nltk.pos_tag(words);
                                     vb = []
@@ -515,7 +434,7 @@ class QuestionFormation(object):
                                         question = 'Do' + ' ' + sentence.lower() + " ?"
                                         return question;
                         else:
-                            if self._determineTenseInput(sentence) == "past":
+                            if helper.determineTenseInput(sentence) == "past":
                                 words = nltk.word_tokenize(sentence);
                                 tagged = nltk.pos_tag(words);
                                 vb = []
@@ -540,129 +459,55 @@ class QuestionFormation(object):
             else:
                 return ''
 
-    def _getNounPhrasesWithSubject(self, sentence):
-        """
-              Extracting all the nouns in the sentence
-              :param sentence: selected sentence
-              :return: list of nouns in the sentence
-              """
-
-        pattern = r"""
-                  NP:{<DT>?<JJ>*<NN>}
-                     {<NNP>+}
-                     {<NN>+}
-                     {<NNP><NN>}
-                  """
-        noun_list = [];
-        for sent in sent_tokenize(sentence):
-            # subject = self._getSubject(sent);
-            sentence = sent.split();
-            PChunker = RegexpParser(pattern);
-            output = PChunker.parse(pos_tag(sentence));
-            for subtree in output.subtrees(filter=lambda t: t.label() == 'NP'):
-                for x in subtree:
-                    # if subject.find(x[0]) == -1:
-                    noun_list.append(x[0]);
-        # print(noun_list);
-        return noun_list;
-
-    def _determineTenseInput(self, sentence):
-        text = nltk.word_tokenize(sentence)
-        tagged = pos_tag(text)
-
-        fc = len([word for word in tagged if word[1] == "MD"])
-        prec = len([word for word in tagged if word[1] in ["VBP", "VBZ", "VBG"]])
-        pc = len([word for word in tagged if word[1] in ["VBD", "VBN"]])
-        if fc > prec and fc > pc:
-            return "future";
-        elif prec > fc and prec > pc:
-            return "present"
-        else:
-            return "past"
-
-    def _getSynonym(self, word):
-        # Creating a list
-        synonyms = []
-        for syn in wordnet.synsets(word):
-            for lm in syn.lemmas():
-                synonyms.append(lm.name())  # adding into synonyms
-        # print(set(synonyms))
-        if len(random.choice(list(set(synonyms)))) != 0:
-            return random.choice(list(set(synonyms)))
-        else:
-            return ''
-
-    def _getAntonym(self, word, sentence):
-        antonyms = []
-        for syn in wordnet.synsets(word):
-            for lm in syn.lemmas():
-                if lm.antonyms():
-                    antonyms.append(lm.antonyms()[0].name())  # adding into antonyms
-        # print(set(antonyms))
-
-        if len(list(set(antonyms))) != 0:
-            return random.choice(list(set(antonyms)))
-        else:
-            return ''
-
-    def _getLabelsForFillInBlanks(self, sentence):
-        doc = nlp(sentence)
-        # doc=nlp("Ada lovlace was born in london")
-        # document level
-        entityArray = []
-        for e in doc.ents:
-            entityArray.append(e.text)
-        return entityArray
-
     def fillInBlanks(self, sentence):
-        entityArray = self._getLabelsForFillInBlanks(sentence)
-        nouns = []
+
+        """
+        generating filling the blanks questions
+        :param sentence: input sentence
+        :return: filling the blank question
+        """
+        helper = QuestionFormationHelper()
+        entityArray = helper.getLabelsForFillInBlanks(sentence)  # identifying words that is a special names entity
+        nouns = []  # nouns list
         # print(entityArray)
         wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
-                   'Therefore': ''}
+                   'Therefore': ''}  # word dictionary
         p = PreProcess()
-        sentence = p.multipleReplace(sentence, wordDic)
-        sentence = sentence.lstrip()
+        sentence = p.multipleReplace(sentence, wordDic)  # replacing the conjunctions according to word dic
+        sentence = sentence.lstrip()  # removing left space/s if contains in the sentence
         if len(entityArray) != 0:
             for i in entityArray:
                 nouns.append(i)
             noun = random.choice(nouns)
-            sentence = sentence.replace(noun, ' @dash ', 1)
+            sentence = sentence.replace(noun, ' @dash ',
+                                        1)  # replacing a random word that is a special named entity using @dash sign
             return sentence
         else:
-            nouns = self._getNounPhrases(sentence)
+            nouns = helper.getNounPhrases(sentence)
             if len(nouns) != 0:
                 noun = random.choice(nouns)
-                sentence = sentence.replace(noun, ' @dash ', 1)
+                sentence = sentence.replace(noun, ' @dash ', 1)  # replacing a random noun using @dash sign
                 return sentence
             else:
                 return ''
 
-    def _getVerb(self, sentence):
-        words = nltk.word_tokenize(sentence)
-        verb = []
-        for i in words:
-            if i[1] == 'VB' or i[1] == 'VBG' or i[1] == 'VBD' or i[1] == 'VBN' or i[1] == 'VBP' or i[1] == 'VBZ':
-                verb.append(i[0])
-        return verb
-
-    def getMainVerb(self, sentence):
-        doc = nlp(sentence)
-        verb = ''
-        for i in doc:
-            if i.pos_ == 'VERB':
-                verb = i
-
-        return verb
-
     def generateWhoTypeQuestion(self, sentence):
-        personCount = self._checkPersonEntity(sentence)
-        question = ''
+        """
+        Generating who type questions
+        :param sentence: input sentence
+        :return:  question
+        """
+
+        helper = QuestionFormationHelper()
+        personCount = helper.checkPersonEntity(sentence)  # identifying  the person count
+        question = ''  # question
+        # verifying the person count is not 0
         if personCount != 0:
-            verb = str(self.getMainVerb(sentence))
-            subject = self._getSubject(sentence)
-            label = self._getLabel(subject)
+            verb = str(helper.getMainVerb(sentence))  # identifying the main verb
+            subject = helper.getSubject(sentence)  # identifying the subject
+            label = helper.getLabel(subject)  # identifying the named entity label
             print("LABEL   ++++++++++++++++++++++++++++++++++++++++++ " + label)
+            # question generation according to the person named entity
             if label == "PERSON" or label == "ORG":
                 question = sentence.replace(subject, "Who ");
                 question = question + ' ?'
@@ -674,35 +519,3 @@ class QuestionFormation(object):
                 return question
         else:
             return question
-
-    def _checkPersonEntity(self, sentence):
-        doc = nlp(sentence)
-        personCount = 0
-        for e in doc.ents:
-            if e.label_ == "PERSON":
-                print(e.text)
-                personCount = personCount + 1
-        return personCount
-        # words = nltk.word_tokenize(sentence);
-        # tagged = nltk.pos_tag(words);
-        # chunks = nltk.ne_chunk(tagged);
-        # personCount = 0;
-        # for chunk in chunks:
-        #     if type(chunk) is nltk.Tree:
-        #         for c in chunk.leaves():
-        #             if str(chunk.label).find('PERSON') != -1:
-        #                 personCount = personCount + 1;
-        #
-        # return personCount;
-
-    def removingFirstDt(self, sentence):
-        words = nltk.word_tokenize(sentence);
-        tagged = nltk.pos_tag(words);
-        # print(tagged)
-        if tagged[0][1] == "DT":
-            # print(tagged[0])
-            word = tagged[0][0]
-            # print("Replaced word : " +word)
-            sentence = sentence.replace(word, " ", 1)
-            # print("REPLACED SENTENCE : " +sentence)
-        return sentence;

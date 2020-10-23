@@ -1,16 +1,18 @@
+"""
+    QuestionGenerationService class executes the methods
+    related to question generation.
+"""
+
 import language_tool_python
-import firebase_admin
 import random
-import re
 from flask import jsonify
-from firebase_admin import credentials
 from firebase_admin import firestore
 
 from General.Self_Assess_Component.SelfAssessInput import SelfAssessInput
 from General.Self_Assess_Component.SelfAssessResponse import SelfAssessResponse
 from General.Self_Assess_Question_Generation.FetchImportantSentences import FetchImportantSentences
 from General.Self_Assess_Question_Generation.PreProcess import PreProcess
-from General.Self_Assess_Question_Generation.Question import Question
+from General.Self_Assess_Question_Generation.Helping_Classes.Question import Question
 from General.Self_Assess_Question_Generation.QuestionFormation import QuestionFormation
 
 
