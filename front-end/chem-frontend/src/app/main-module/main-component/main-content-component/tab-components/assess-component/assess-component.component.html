@@ -19,8 +19,8 @@
        id="chapter">
     <div class="nav nav-tabs container headerClass" style="border: none">
       <div style="align-items: center" class="row">
-        <div *ngIf="showQuestions == false" style="color: #FFFFFF;margin-left: 10px"><strong>Select Chapter : &nbsp; </strong></div>
-        <div *ngIf="showQuestions == false">
+        <div *ngIf="showQuestions == false && showSummary == false" style="color: #FFFFFF;margin-left: 10px"><strong>Select Chapter : &nbsp; </strong></div>
+        <div *ngIf="showQuestions == false && showSummary == false">
           <select class="form-control chapter-type-dropdown" id="chapterType" (change)="fetchQuestionForChapter()">
             <option value="none" style="font-size: 15px" >None</option>
             <option  *ngFor="let chapter of chapterList" value="{{chapter.name}}" style="font-size: 15px">
@@ -103,7 +103,7 @@
           <div *ngFor="let i=index; let questionAnswer of correctAnswerArray">
             <div>{{i+1}}) {{questionAnswer.question}}</div>
             <div class="row" style="margin-left: 20px">
-                Correct Answer  : {{questionAnswer.correctAnswer}}s
+                Correct Answer  : {{questionAnswer.correctAnswer}}
             </div>
             <br>
           </div>
