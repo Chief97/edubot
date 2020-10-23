@@ -23,7 +23,7 @@
         <div *ngIf="showQuestions == false && showSummary == false">
           <select class="form-control chapter-type-dropdown" id="chapterType" (change)="fetchQuestionForChapter()">
             <option value="none" style="font-size: 15px" >None</option>
-            <option  *ngFor="let chapter of chapterList" value="{{chapter.name}}" style="font-size: 15px">
+            <option  *ngFor="let chapter of chapterList" value="{{chapter.name}}" style="font-size: 15px" [selected]="chapter.name == chapterSelection">
               {{chapter.name}}
             </option>
           </select>

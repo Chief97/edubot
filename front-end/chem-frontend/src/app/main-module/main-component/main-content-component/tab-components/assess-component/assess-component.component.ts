@@ -14,6 +14,7 @@ export class AssessComponentComponent implements OnInit {
     borderColor: ['rgba(144, 238, 144, 1)', 'rgba(255, 127, 127, 1)']
   }];
 
+  chapterSelection;
   correctAnswer = 0
   inCorrectAnswer = 0
   correctSymbolAnswer = 0
@@ -97,6 +98,7 @@ export class AssessComponentComponent implements OnInit {
   fetchQuestionForChapter(){
     let e =(<HTMLSelectElement>document.getElementById("chapterType")).options
     let selectedChapter = (<HTMLSelectElement>document.getElementById("chapterType")).options[e.selectedIndex].value
+    this.chapterSelection = selectedChapter
     console.log(selectedChapter)
     for(let i=0;i < this.chapterList.length;i++){
       if(this.chapterList[i].name == selectedChapter){
