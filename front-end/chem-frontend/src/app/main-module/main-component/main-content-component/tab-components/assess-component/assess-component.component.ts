@@ -58,6 +58,7 @@ export class AssessComponentComponent implements OnInit {
   questionSymbolAnswerList = null
   questionAnswerList = null
   chapterList =[]
+  showDropdown = false
   showQuestions = false
   showParagraph = false
   showSummary = false
@@ -145,6 +146,8 @@ export class AssessComponentComponent implements OnInit {
   submitQuiz(){
     this.correctAnswer =0
     this.inCorrectAnswer =0
+    this.correctAnswerArray = []
+    this.incorrectAnswerArray = []
     console.log(this.questionAnswerList.length)
     for(let i = 0; i< this.questionAnswerList.length;i++){
       let e = (<HTMLSelectElement>document.getElementById(this.questionAnswerList[i].question)).options;
@@ -180,6 +183,8 @@ export class AssessComponentComponent implements OnInit {
 
   submitSymbolQuiz(){
 
+    this.correctSymbolAnswerArray = []
+    this.incorrectSymbolAnswerArray = []
     this.showSymbolQuestions =false
     this.showSymbolSummary = true
     this.correctSymbolAnswer =0
