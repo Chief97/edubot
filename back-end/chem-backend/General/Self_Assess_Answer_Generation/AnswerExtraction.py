@@ -5,6 +5,9 @@ import spacy
 
 from General.Self_Assess_Answer_Generation.HelpingClasses.Answer import Answer
 from nltk.corpus import wordnet
+
+from General.Self_Assess_Question_Generation.PreProcess import PreProcess
+
 nlp = spacy.load("en_core_web_sm")
 class AnswerExtraction(object):
     def answer_extraction_from_sentences(self,question,paragraoh):
@@ -23,11 +26,16 @@ class AnswerExtraction(object):
                 print("SENTENCE ::::::::::::::::: " + sentence)
                 question1 = question1.rstrip() + '.'
                 print("1111111111111111111111111 " + question1)
-                if str(sentence).find(question1) != -1 :
-                    answer = str(sentence).replace(question1 ,"")
-                    print("ANSWER &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& " + answer)
-                    synonym = self.getSynonymsAndAntonyms(answer)
-                    print("SYNONYM :::::::::::::::::::: " + str(synonym))
+                answer = self.extracting(sentence,question1)
+                print("ANSWER &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& " + answer)
+                # synonym = self.getSynonymsAndAntonyms(answer)
+                # print("SYNONYM :::::::::::::::::::: " + str(synonym))
+                # if str(sentence).find(question1) != -1 :
+                #     print("worked")
+                #     answer = str(sentence).replace(question1 ,"")
+                #     print("ANSWER &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& " + answer)
+                #     synonym = self.getSynonymsAndAntonyms(answer)
+                #     print("SYNONYM :::::::::::::::::::: " + str(synonym))
             # print(sent_POS)
             if answer == "":
                 sent_pos1 = nltk.pos_tag(nltk.word_tokenize(sentence))
@@ -37,8 +45,8 @@ class AnswerExtraction(object):
                         break;
                 if answer == "":
                     answer = "Not Found"
-            for tag in sent_POS:
-                print(tag)
+            # for tag in sent_POS:
+                # print(tag)
             sentence_NN = []
             for tag in sent_POS:
                 if (tag[1] == "NN"):
@@ -73,6 +81,7 @@ class AnswerExtraction(object):
             en_nlp = spacy.load('en_core_web_sm')
             doc = en_nlp(question.sentence)
             [self.to_nltk_tree(sent.root).pretty_print() for sent in doc.sents]
+
         elif(question.question_start == "who"):
             print("who")
             namesList = ['Ernest Rutherfurd','Neils Bohr','John Doily','Dimitri Mendeleeff','Albert Einstein','Marie Curie',
@@ -181,3 +190,32 @@ class AnswerExtraction(object):
                     antonyms.append(l.antonyms()[0].name())
 
         return  synonyms,antonyms
+
+    def extracting(self,sentence,question):
+        answer=""
+        print("SENTENCE IN EXTRACTION :::::::::  ",sentence )
+        print("QUESTION IN EXTRACTION :::::::::  ", question)
+        # if sentence.find(question) != -1:
+        #     answer = sentence.replace(question,"",1)
+        #     print("ANSWER important : " + answer)
+        # if question in sentence:
+        #     answer = sentence.replace(question, "", 1)
+        #     print("ANSWER important : " + answer)
+        question = question.lstrip()
+        wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
+                   'Therefore': '', ',': ''}
+        p = PreProcess()
+        question = p.multipleReplace(question, wordDic)
+        if sentence.find(question) != -1:
+            answer = sentence.replace(question," ",1)
+        # words = question.lstrip().split(" ")
+        # print(words)
+        # for w in words:
+        #     if sentence.find(w) != -1:
+        #         print("INSIDE IF ")
+        #         answer = sentence.replace(w,"")
+        # answer = re.sub(question," ")
+        print("ANSWER VERY IMPORTANT : " + answer)
+        return answer
+
+    #answer generation for why,fillinblanks,yes no
