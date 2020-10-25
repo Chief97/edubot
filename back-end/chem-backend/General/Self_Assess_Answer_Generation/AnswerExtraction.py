@@ -201,11 +201,13 @@ class AnswerExtraction(object):
         # if question in sentence:
         #     answer = sentence.replace(question, "", 1)
         #     print("ANSWER important : " + answer)
-        question = question.lstrip()
         wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
-                   'Therefore': '', ',': ''}
+                   'Therefore': '', 'thus, ': '', 'hence, ': '', 'hence ': '', 'therefore,': ' ', 'but,': '', 'but': '', 'similarly': '',
+                   'therefore': ''}
         p = PreProcess()
-        question = p.multipleReplace(question, wordDic)
+        sentence = p.multipleReplace(sentence, wordDic)
+        print("replaced question :::: " + sentence)
+        question = question.lstrip()
         if sentence.find(question) != -1:
             answer = sentence.replace(question," ",1)
         # words = question.lstrip().split(" ")
