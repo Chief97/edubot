@@ -24,9 +24,16 @@ class AnswerExtraction(object):
                 print("QUESTION1 ::::::::::::::::: " +question1)
                 sentence = question.sentence
                 print("SENTENCE ::::::::::::::::: " + sentence)
-                question1 = question1.rstrip() + '.'
+                question1 = question1.rstrip()
                 print("1111111111111111111111111 " + question1)
                 answer = self.extracting(sentence,question1)
+                dotRemovedAnswer = "";
+                for l in answer:
+                    if l =="." :
+                        dotRemovedAnswer = dotRemovedAnswer + " "
+                    else:
+                        dotRemovedAnswer = dotRemovedAnswer + l
+                answer = dotRemovedAnswer
                 print("ANSWER &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& " + answer)
                 # synonym = self.getSynonymsAndAntonyms(answer)
                 # print("SYNONYM :::::::::::::::::::: " + str(synonym))
@@ -100,7 +107,7 @@ class AnswerExtraction(object):
                     answer_obj.correctAnswer = entity[1]
                     # answerOptions.append(entity[1])
                     answer = entity[1]
-
+            print(answer)
             numbersList = random.sample(range(0, len(namesList) - 1), 3)
             for i in numbersList:
                 answerOptions.append(namesList[i])
@@ -136,6 +143,10 @@ class AnswerExtraction(object):
             for entity in entityList:
                 if entity[0] == "GPE":
                     question.answerObject.smallAnswer = entity[1]
+        elif (question.question_start == "why"):
+            print("why")
+            initialSentence = ""
+
 
         elif (question.questionType[0] == "howMany"):
             print("howMany")
@@ -149,7 +160,7 @@ class AnswerExtraction(object):
                 if entity[0] == "CARDINAL":
                     question.answerObject.smallAnswer = entity[1]
 
-        elif question.question_start != "what" and question.question_start != "who" and question.question_start != "when" and question.question_start != "where" and question.question_start != "howMany":
+        elif question.question_start != "what" and question.question_start != "who" and question.question_start != "when" and question.question_start != "where" and question.question_start != "why" and question.question_start != "howMany":
             print("YES NO")
             answer_obj = Answer
             answer_obj.mcqAnswer = ['Yes','No']
@@ -218,6 +229,13 @@ class AnswerExtraction(object):
         #         answer = sentence.replace(w,"")
         # answer = re.sub(question," ")
         print("ANSWER VERY IMPORTANT : " + answer)
+        if answer == "":
+            tokens = question.split(" ")
+            print("TOKENS :::::::::::::::: " + str(tokens))
+            for t in tokens:
+                sentence = sentence.replace(t,"",1)
+                answer= sentence
+                print("ANSWER??????? " + answer)
         return answer
 
     #answer generation for why,fillinblanks,yes no
