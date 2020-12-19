@@ -70,7 +70,7 @@ class QuestionFormation(object):
         # identifying a conjunction is present in the middle of sentence
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
-            print("SPECIALLLLLL88888888888888888888888888888888888888888888888888888888888888888888888888888888888")
+            # print("SPECIALLLLLL88888888888888888888888888888888888888888888888888888888888888888888888888888888888")
             doc = nlp(sentence)  # document representation of the sentence
             headword = []  # the head word of the pronoun
             pos = ''  # pos tag
@@ -78,10 +78,10 @@ class QuestionFormation(object):
                 if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                     pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
                     # print(pos)
-                print("POS############################################### " + str(pos))
+                # print("POS############################################### " + str(pos))
                 if str(pos).find('PRP') == -1:
                     headword.append(chunk.text)
-            headword = headword[0];
+            headword = headword[0];  # replacing the pronoun with the headword
             helper = QuestionFormationHelper()
             sentencePart = helper.slicer(sentence, 'because');
             # print("hii1 " + sentencePart)
@@ -290,9 +290,11 @@ class QuestionFormation(object):
                             break;
                     # print(inflect.singular_noun(v))
                     if v != '':
+                        # when the hverb is plural and not in past tense
                         if inflect.singular_noun(nltk.word_tokenize(sentence)[0]) is False and inflect.singular_noun(
                                 v) is False:
                             return v.capitalize() + ' ' + sentence.lower() + " ?"
+                        # when the hverb is singular and not in past tense
                         elif inflect.singular_noun(nltk.word_tokenize(sentence)[0]) is True and inflect.singular_noun(
                                 v) is True:
                             return v.capitalize() + ' ' + sentence.lower() + " ?"
@@ -301,11 +303,13 @@ class QuestionFormation(object):
                                 words = nltk.word_tokenize(sentence);
                                 tagged = nltk.pos_tag(words);
                                 vb = []
+                                # identification of the main verb that is past in tense
                                 for i in tagged:
                                     if i[1] == 'VBD':
                                         vb.append(i[0])
                                         break;
                                 if len(vb) != 0:
+                                    # getting the lemma of the main verb
                                     sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
                                     question = 'Did' + ' ' + sentence.lower() + " ?"
                                     return question;
@@ -321,15 +325,18 @@ class QuestionFormation(object):
                                     question = 'Do' + ' ' + sentence.lower() + " ?"
                                     return question;
                     else:
+                        # when the hverb is in past tense
                         if helper.determineTenseInput(sentence) == "past":
                             words = nltk.word_tokenize(sentence);
                             tagged = nltk.pos_tag(words);
                             vb = []
                             for i in tagged:
+                                # identification of the main verb that is past in tense
                                 if i[1] == 'VBD':
                                     vb.append(i[0])
                                     break;
                             if len(vb) != 0:
+                                # getting the lemma of the main verb. and replacing the verb in past tense with the lemma
                                 sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
                                 question = 'Did' + ' ' + sentence.lower() + " ?"
                                 return question;
@@ -337,11 +344,13 @@ class QuestionFormation(object):
                                 return ''
                         else:
                             words = nltk.word_tokenize(sentence);
+                            # when the main noun is singular
                             if inflect.singular_noun(words[0]) is False:
                                 # print(noun[0])
                                 question = 'Does' + ' ' + sentence.lower() + " ?"
                                 return question;
                             else:
+                                # when the main noun is plural
                                 question = 'Do' + ' ' + sentence.lower() + " ?"
                                 return question;
 
@@ -402,24 +411,29 @@ class QuestionFormation(object):
                                 break;
                         # print(v)
                         if v != '':
+                            # when the hverb is plural and not in past tense
                             if inflect.singular_noun(
                                     nltk.word_tokenize(sentence)[0]) is False and inflect.singular_noun(
                                 v) is False:
                                 return v.capitalize() + ' ' + sentence.lower() + " ?"
+                            # when the hverb is singular and not in past tense
                             elif inflect.singular_noun(
                                     nltk.word_tokenize(sentence)[0]) is True and inflect.singular_noun(
                                 v) is True:
                                 return v.capitalize() + ' ' + sentence.lower() + " ?"
                             else:
+                                # when the sentence is past in tense
                                 if helper.determineTenseInput(sentence) == "past":
                                     words = nltk.word_tokenize(sentence);
                                     tagged = nltk.pos_tag(words);
                                     vb = []
+                                    # identifying the main verb in past in tense
                                     for i in tagged:
                                         if i[1] == 'VBD':
                                             vb.append(i[0])
                                             break;
                                     if len(vb) != 0:
+                                        # identifying the lemma of the past tensed verb and replacing the original
                                         sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
                                         question = 'Did' + ' ' + sentence.lower() + " ?"
                                         return question;
@@ -428,21 +442,26 @@ class QuestionFormation(object):
                                 else:
                                     words = nltk.word_tokenize(sentence);
                                     if inflect.singular_noun(words[0]) is False:
+                                        # main noun is singular
                                         question = 'Does' + ' ' + sentence.lower() + " ?"
                                         return question;
                                     else:
+                                        # main noun is plural
                                         question = 'Do' + ' ' + sentence.lower() + " ?"
                                         return question;
                         else:
+                            # when the sentence is past in tense
                             if helper.determineTenseInput(sentence) == "past":
                                 words = nltk.word_tokenize(sentence);
                                 tagged = nltk.pos_tag(words);
                                 vb = []
+                                # identifying the main verb in past in tense
                                 for i in tagged:
                                     if i[1] == 'VBD':
                                         vb.append(i[0])
                                         break;
                                 if len(vb) != 0:
+                                    # identifying the lemma of the past tensed verb and replacing the original
                                     sentence = sentence.replace(vb[0], WordNetLemmatizer().lemmatize(vb[0], 'v'))
                                     question = 'Did' + ' ' + sentence.lower() + " ?"
                                     return question;
@@ -450,9 +469,11 @@ class QuestionFormation(object):
                                     return ''
                             else:
                                 words = nltk.word_tokenize(sentence);
+                                # main noun is singular
                                 if inflect.singular_noun(words[0]) is False:
                                     question = 'Does' + ' ' + sentence.lower() + " ?"
                                     return question;
+                                # main noun is plural
                                 else:
                                     question = 'Do' + ' ' + sentence.lower() + " ?"
                                     return question;
