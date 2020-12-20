@@ -170,7 +170,7 @@ class QuestionFormationHelper(object):
         for e in doc.ents:
             # identifying the entity is person
             if e.label_ == "PERSON":
-                print(e.text)
+                # print(e.text)
                 personCount = personCount + 1
         return personCount
         # words = nltk.word_tokenize(sentence);
@@ -241,7 +241,14 @@ class QuestionFormationHelper(object):
         # print(set(antonyms))
 
         if len(list(set(antonyms))) != 0:
-            return random.choice(list(set(antonyms)))
+            if word == "physical":
+                return "non-physical"
+            elif word == "single":
+                return "double"
+            elif word == "poor":
+                return "rich"
+            else:
+                return random.choice(list(set(antonyms)))
         else:
             return ''
 

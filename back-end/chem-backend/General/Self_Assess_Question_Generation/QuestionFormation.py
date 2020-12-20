@@ -66,7 +66,21 @@ class QuestionFormation(object):
                 question = '';
                 return question
             else:
-                return 'Why is ' + sentence + ' ?'  # question
+                ## cheching for hverb
+                hverb = ['is', 'are', 'can', 'was', 'were']
+                words = nltk.word_tokenize(sentence);  # word tokenizing
+                tagged = nltk.pos_tag(words);  # words tagging
+                verb = []
+                for x, y in enumerate(tagged):
+                    if y[1] == 'MD' or y[1] == 'VBZ' or y[1] == 'VBP':  # identifying helping verbs using rule base approach
+                        verb.append(y[0])
+                if verb[0] in hverb:  # identifying whether the verb list contains a hverb defined above
+                    # print("VERB " + verb[0])
+                    sentence = sentence.replace(verb[0], '')
+                #     return "Why " + sentence + " ?"
+                # else:
+                    return 'Why is ' + sentence + ' ?'  # question
+
         # identifying a conjunction is present in the middle of sentence
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
@@ -127,10 +141,10 @@ class QuestionFormation(object):
         #     sentence = p.multipleReplace(sentence,wordDic)
         sentence = helper.removingFirstDt(sentence)  # removing the first determiner
         subject = helper.getSubject(sentence);  # identifying the subject of the sentence
-        print("")
-        print("SENTENCE inside  WH ___________________________ " + sentence)
-        print("SUBJECT inside WH ----------------------------" + subject)
-        # print("SUBJECT ************ " + str(subject))
+        # print("")
+        # print("SENTENCE inside  WH ___________________________ " + sentence)
+        # print("SUBJECT inside WH ----------------------------" + subject)
+        # # print("SUBJECT ************ " + str(subject))
         if subject == 'SUBJECT CANNOT BE DEFINED' or subject == 'none':
             question = '';
         else:
@@ -142,10 +156,10 @@ class QuestionFormation(object):
                 # question = p.multipleReplace(sentence,wordDict)
                 # print("SUBJECT : " + subject.lstrip())
                 # when there is no particular label the question will be what type
-                print("SUBJECT::::::::::: " + subject.lstrip())
+                # print("SUBJECT::::::::::: " + subject.lstrip())
                 question = str(sentence).replace(subject.lstrip(), "What ", 1);
                 question = question + ' ?'
-                print(question)
+                # print(question)
                 # question = question.replace(".", "?");
                 # print(question)
             # when the named entity label is person the question will be who type
@@ -527,16 +541,16 @@ class QuestionFormation(object):
             verb = str(helper.getMainVerb(sentence))  # identifying the main verb
             subject = helper.getSubject(sentence)  # identifying the subject
             label = helper.getLabel(subject)  # identifying the named entity label
-            print("LABEL   ++++++++++++++++++++++++++++++++++++++++++ " + label)
+            # print("LABEL   ++++++++++++++++++++++++++++++++++++++++++ " + label)
             # question generation according to the person named entity
             if label == "PERSON" or label == "ORG":
                 question = sentence.replace(subject, "Who ");
                 question = question + ' ?'
-                print("WHO1 ************************************************************ " + question)
+                # print("WHO1 ************************************************************ " + question)
                 return question
             else:
                 question = question + "Who " + verb + " " + subject + " ?"
-                print("WHO2 **************************************************************** " + question)
+                # print("WHO2 **************************************************************** " + question)
                 return question
         else:
             return question
