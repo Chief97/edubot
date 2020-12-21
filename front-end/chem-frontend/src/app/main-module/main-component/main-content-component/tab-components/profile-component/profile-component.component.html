@@ -45,6 +45,8 @@
               Username : {{this.profileDetails.username}}
             </p>
             <button class="start-button" (click)="enableUpdateOption()" >Update</button>
+            &nbsp;&nbsp;
+            <button class="start-button" (click)="logout()" >Logout</button>
           </div>
 
           <div *ngIf="isUpdate" class="col-md-6 mb-6" style="font-family: 'Century Gothic'" >

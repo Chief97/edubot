@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GeneralServiceService} from "../../../../../services/general-service.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile-component',
@@ -14,7 +15,7 @@ export class ProfileComponentComponent implements OnInit {
   updateEmail = null
   updateDob = null
 
-  constructor(private httpService: GeneralServiceService) { }
+  constructor(private httpService: GeneralServiceService,public router: Router) { }
 
   ngOnInit(): void {
 
@@ -35,6 +36,10 @@ export class ProfileComponentComponent implements OnInit {
 
   enableUpdateOption () {
     this.isUpdate = true;
+  }
+  logout () {
+    window.localStorage.clear();
+    this.router.navigate(["/login"]);
   }
   confirmUpdate () {
 
