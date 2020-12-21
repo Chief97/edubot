@@ -284,7 +284,7 @@ class QuestionGenerationService(object):
             no_question = question.createNoUsingHVerbPhrase(sentence)
             wh_question = question.generateWHQuestion(sentence)
             who_question = question.generateWhoTypeQuestion(sentence)
-            fill_in_blanks = question.generateFillInTheBlanksQuestion(sentence)
+            fill_in_blanks = question.fillInBlanks(sentence)
             if how_question is not None and how_question != "":
                 how_question = tool.correct(str(how_question))
                 questionList.append(how_question)
