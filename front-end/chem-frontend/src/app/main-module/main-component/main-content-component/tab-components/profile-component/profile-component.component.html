@@ -1,6 +1,68 @@
-<br>
-<br>
-<br>
-<br>
-<br>
-<p>profile-component works!</p>
+<div class="nav nav-tabs container headerClass">
+
+    <div class="container">
+      <div class="main-body">
+        <div class="row gutters-sm">
+          <div *ngIf="!isUpdate" class="col-md-4 mb-3" style="margin-left: 180px">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+
+                  <img  src="../../../../../../assets/image/profile/male.png"  class="rounded-circle" width="150">
+                  <div class="mt-3" style="font-family: 'Century Gothic';font-weight: bold">
+                    <p class="text-secondary mb-1">{{this.profileDetails.firstName}} {{this.profileDetails.lastName}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div *ngIf="isUpdate" class="col-md-4 mb-3" style="margin-left: 180px">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+
+                  <img  src="../../../../../../assets/image/profile/male.png"  class="rounded-circle" width="150">
+                  <div class="mt-3" style="font-family: 'Century Gothic';font-weight: bold">
+                    <p class="text-secondary mb-1"><input  style="font-size: 16px;width: 120px" id ="firstNameUpdate"  value="{{this.profileDetails.firstName}}"> <input  style="font-size: 16px;width: 120px" id ="lastNameUpdate"  value="{{this.profileDetails.lastName}}"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div *ngIf="!isUpdate" class="col-md-6 mb-6" style="font-family: 'Century Gothic'" >
+            <br>
+            <p>
+               Email : {{this.profileDetails.email}}
+             </p>
+
+            <p>
+              Date of Birth : {{this.profileDetails.dob}}
+            </p>
+
+            <p>
+              Username : {{this.profileDetails.username}}
+            </p>
+            <button class="start-button" (click)="enableUpdateOption()" >Update</button>
+          </div>
+
+          <div *ngIf="isUpdate" class="col-md-6 mb-6" style="font-family: 'Century Gothic'" >
+            <br>
+            <p>
+              Email : <input  style="font-size: 16px;width: 250px" id ="emailUpdate"  value="{{this.profileDetails.email}}">
+            </p>
+
+            <p>
+              Date of Birth : <input  style="font-size: 16px;width: 250px" id ="dobUpdate"  value="{{this.profileDetails.dob}}">
+            </p>
+
+            <p>
+              Username : {{this.profileDetails.username}}
+            </p>
+            <button class="start-button" (click)="confirmUpdate()" >Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

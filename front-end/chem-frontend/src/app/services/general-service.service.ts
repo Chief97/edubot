@@ -26,6 +26,12 @@ export class GeneralServiceService {
   validateUser(data) {
     return this.http.post(`${BASE_URL}/validateUser`,data,this.httpOptions)
   }
+  getUser(data) {
+    return this.http.post(`${BASE_URL}/getUser`,data,this.httpOptions)
+  }
+  updateUser(data) {
+    return this.http.post(`${BASE_URL}/updateUser`,data,this.httpOptions)
+  }
 
   dataLoad() {
     return this.http.post(`${BASE_URL}/selfLearn/doubtResponse/prepareData`, null , this.httpOptions)

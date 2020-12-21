@@ -44,6 +44,7 @@ export class LoginComponentComponent implements OnInit {
           }
           if (data == 'User is successfully logged in') {
             console.log(data)
+            localStorage.setItem("username",this.username)
             this.router.navigate(["/content/main"])
           }
       })
