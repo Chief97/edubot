@@ -245,6 +245,10 @@ class QuestionFormationHelper(object):
                 return "non-physical"
             elif word == "single":
                 return "double"
+            elif word == "light":
+                return "heavy"
+            elif word == "native":
+                return "non-native"
             elif word == "poor":
                 return "rich"
             else:

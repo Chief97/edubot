@@ -268,7 +268,7 @@ class QuestionFormation(object):
             return question
         else:
             # word dictionary
-            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': ''}
+            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': '', 'Therefore':''}
             p = PreProcess()
             sentence = p.multipleReplace(sentence, wordDic)
             words = nltk.word_tokenize(sentence);  # word tokenizing
@@ -381,7 +381,7 @@ class QuestionFormation(object):
             return question
         else:
             ##newly added
-            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': ''}
+            wordDic = {'Thus, ': '', 'Hence, ': '', 'Therefore,': '', 'But': '', 'Similarly': '','Therefore':''}
             p = PreProcess()
             sentence = p.multipleReplace(sentence, wordDic)
             words = nltk.word_tokenize(sentence);

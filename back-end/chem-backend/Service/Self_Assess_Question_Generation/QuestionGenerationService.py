@@ -284,6 +284,7 @@ class QuestionGenerationService(object):
             no_question = question.createNoUsingHVerbPhrase(sentence)
             wh_question = question.generateWHQuestion(sentence)
             who_question = question.generateWhoTypeQuestion(sentence)
+            fill_in_blanks = question.generateFillInTheBlanksQuestion(sentence)
             if how_question is not None and how_question != "":
                 how_question = tool.correct(str(how_question))
                 questionList.append(how_question)
@@ -296,13 +297,15 @@ class QuestionGenerationService(object):
             if no_question is not None and no_question != '':
                 no_question = tool.correct(str(no_question))
                 questionList.append(no_question)
-                # print("NO QUESTION : " +no_question)
             if wh_question != '':
                 wh_question = tool.correct(str(wh_question))
                 questionList.append(wh_question)
             if who_question is not None and who_question != '':
                 who_question = tool.correct(str(who_question))
                 questionList.append(who_question)
+            if fill_in_blanks is not None and fill_in_blanks != '':
+                fill_in_blanks = tool.correct(str(fill_in_blanks))
+                questionList.append(fill_in_blanks)
             if len(questionList) != 0:
                 print(questionList)
                 finalQuestion = random.choice(questionList)
