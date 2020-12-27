@@ -97,10 +97,10 @@ class QuestionFormation(object):
                     headword.append(chunk.text)
             headword = headword[0];  # replacing the pronoun with the headword
             helper = QuestionFormationHelper()
-            sentencePart = helper.slicer(sentence, 'because');
+            sentencePart = helper.helperForWhyQuestions(sentence);
             # print("hii1 " + sentencePart)
             if len(sent_tokenize(sentencePart)) <= 2:
-                return ''
+                return 'Why ' + sentencePart + " ?"
             else:
                 if str(sentencePart).count(',') > 0:
                     sentencePart = helper.slicer1(sentencePart, ',');

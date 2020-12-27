@@ -326,3 +326,17 @@ class QuestionFormationHelper(object):
             return my_str[index:]
         else:
             raise Exception('Sub string not found!')
+
+    def helperForWhyQuestions(self, sentence):
+        sentencePart = ""
+        if str(sentence).find('because') != -1:
+            sentencePart = self.slicer(sentence, 'because');
+        elif str(sentence).find('therefore') != -1:
+            sentencePart = self.slicer(sentence, 'therefore');
+        elif str(sentence).find('therefore,') != -1:
+            sentencePart = self.slicer(sentence, 'therefore,');
+        elif str(sentence).find('since,') != -1:
+            sentencePart = self.slicer(sentence, 'since,');
+        elif str(sentence).find('since') != -1:
+            sentencePart = self.slicer(sentence, 'since');
+        return sentencePart
