@@ -44,7 +44,7 @@ class QuestionFormation(object):
         :param sentence: input sentence
         :return: question
         """
-        # print(nltk.word_tokenize(sentence)[0])
+
         # identification for conjunctions at the beginning of the sentence
         if nltk.word_tokenize(sentence)[0].find("Because") != -1 or nltk.word_tokenize(sentence)[0].find(
                 "Hence") != -1 or nltk.word_tokenize(sentence)[0].find("Therefore") != -1 or \
@@ -60,7 +60,7 @@ class QuestionFormation(object):
                 for chunk in doc.noun_chunks:
                     if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                         pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
-                        # print(pos)
+
                     if str(pos).find('PRP') == -1:
                         break;
                 question = '';
@@ -75,7 +75,7 @@ class QuestionFormation(object):
                     if y[1] == 'MD' or y[1] == 'VBZ' or y[1] == 'VBP':  # identifying helping verbs using rule base approach
                         verb.append(y[0])
                 if verb[0] in hverb:  # identifying whether the verb list contains a hverb defined above
-                    # print("VERB " + verb[0])
+
                     sentence = sentence.replace(verb[0], '')
                 #     return "Why " + sentence + " ?"
                 # else:
@@ -84,37 +84,34 @@ class QuestionFormation(object):
         # identifying a conjunction is present in the middle of sentence
         elif str(sentence).find('because') != -1 or str(sentence).find('therefore') != -1 or str(sentence).find(
                 'although') != -1 or str(sentence).find('since') != -1:
-            # print("SPECIALLLLLL88888888888888888888888888888888888888888888888888888888888888888888888888888888888")
+
             doc = nlp(sentence)  # document representation of the sentence
             headword = []  # the head word of the pronoun
             pos = ''  # pos tag
             for chunk in doc.noun_chunks:
                 if chunk.root.dep_ == 'nsubjpass' or chunk.root.dep_ == 'nsubj':
                     pos = nltk.pos_tag(nltk.word_tokenize(chunk.text))
-                    # print(pos)
-                # print("POS############################################### " + str(pos))
+
                 if str(pos).find('PRP') == -1:
                     headword.append(chunk.text)
             headword = headword[0];  # replacing the pronoun with the headword
             helper = QuestionFormationHelper()
-            sentencePart = helper.slicer(sentence, 'because');
-            # print("hii1 " + sentencePart)
+            sentencePart = helper.helperForWhyQuestions(sentence);
+
             if len(sent_tokenize(sentencePart)) <= 2:
-                return ''
+                return 'Why ' + sentencePart + " ?"
             else:
                 if str(sentencePart).count(',') > 0:
                     sentencePart = helper.slicer1(sentencePart, ',');
-                # print("hii " + sentencePart)
+
                 s = ''
                 for word, pos in nltk.pos_tag(nltk.word_tokenize(str(sentencePart))):
                     if (pos == 'PRP'):
-                        # print(word)
                         word = headword
-                        # print(word)
-                    # print(word)
+
                     s = s + word + " "
                     # s = ''.join(word)
-                # print(s)
+
                 question = 'Why ' + s + ' ?';
                 return question
         else:
@@ -141,15 +138,12 @@ class QuestionFormation(object):
         #     sentence = p.multipleReplace(sentence,wordDic)
         sentence = helper.removingFirstDt(sentence)  # removing the first determiner
         subject = helper.getSubject(sentence);  # identifying the subject of the sentence
-        # print("")
-        # print("SENTENCE inside  WH ___________________________ " + sentence)
-        # print("SUBJECT inside WH ----------------------------" + subject)
-        # # print("SUBJECT ************ " + str(subject))
+
         if subject == 'SUBJECT CANNOT BE DEFINED' or subject == 'none':
             question = '';
         else:
             label = helper.getLabelArray(subject);  # identifying the named entity label for the subject
-            # print("LABLE : " + label)
+
             if label == '':
                 # wordDict = {'%subject%': 'What '}
                 # p = PreProcess()
@@ -170,7 +164,7 @@ class QuestionFormation(object):
             elif label == 'LOCATION':
                 question = sentence.replace(subject, "Where ", 1);
                 question = question + ' ?'
-            # print("QUESTION : " + question)
+
 
         if question is '':
             # question = "CANNOT GENERATE MEANINGFUL WH TYPE QUESTION";
@@ -236,12 +230,12 @@ class QuestionFormation(object):
             if pos[1][1] == 'NN':
                 noun.append(pos[1][0])
             dict[pos[1][1]] = pos[1][0]
-        # print(str(dict))
+
 
         # if all(i in dict for i in l1):
         #     question = 'How' + ' ' + dict['MD'] + ' ' + noun[0] + ' ' + dict['VB'] + ' ' + dict['VBN'] + '?'
         #     return question
-        #     # print(question)
+
         question = ''  # question
         if subject != '':  # verifying the subject is not null
             if str(sentence).find('Therefore') != -1 or str(sentence).find('it') != -1:
@@ -250,10 +244,10 @@ class QuestionFormation(object):
                 question = 'How' + ' ' + dict['MD'] + ' ' + subject.lower() + ' ' + dict['VB'] + ' ' + dict[
                     'VBN'] + ' ?'
                 return question
-                # print(question)
+
         else:
             return question
-            # print(word)
+
 
     def createYesUsingHVerbPhrase(self, sentence):
         """
@@ -292,7 +286,6 @@ class QuestionFormation(object):
                 return ''
             else:
                 if verb[0] in hverb:  # identifying whether the verb list contains a hverb defined above
-                    # print("VERB " + verb[0])
                     sentence = sentence.replace(verb[0], '')
                     question = verb[0].capitalize() + ' ' + sentence.lower() + " ?"
                     return question;
@@ -395,16 +388,12 @@ class QuestionFormation(object):
                     verb.append(y[0])
                 if y[1] == 'JJ' or y[1] == 'JJS' or y[1] == 'JJR':
                     adjectives.append(y[0])
-            # print("ADJECTIVE : " ,adjectives)
+
             # noun = self._getNounPhrasesWithSubject(sentence)
             # print(noun)
             if len(adjectives) != 0:
                 adjective = random.choice(adjectives)
-                # print("ADJECTIVE " + adjective);
-                # print("SYNONYM " + str(self._getSynonym(adjective)))
                 antonym = str(helper.getAntonym(adjective, sentence));
-                # print("ADJECTIVE " + adjective)
-                # print("ANTONONYM " + antonym)
                 if antonym != '':
                     if str(sentence).find(antonym) == -1:
                         sentence = sentence.replace(str(adjective), antonym, 1)
@@ -504,7 +493,7 @@ class QuestionFormation(object):
         helper = QuestionFormationHelper()
         entityArray = helper.getLabelsForFillInBlanks(sentence)  # identifying words that is a special names entity
         nouns = []  # nouns list
-        # print(entityArray)
+
         wordDic = {'Thus, ': '', 'Hence, ': '', 'Hence ': '', 'Therefore,': '', 'But,': '', 'But': '', 'Similarly': '',
                    'Therefore': ''}  # word dictionary
         p = PreProcess()
@@ -541,7 +530,7 @@ class QuestionFormation(object):
             verb = str(helper.getMainVerb(sentence))  # identifying the main verb
             subject = helper.getSubject(sentence)  # identifying the subject
             label = helper.getLabel(subject)  # identifying the named entity label
-            # print("LABEL   ++++++++++++++++++++++++++++++++++++++++++ " + label)
+            
             # question generation according to the person named entity
             if label == "PERSON" or label == "ORG":
                 question = sentence.replace(subject, "Who ");
