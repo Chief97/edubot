@@ -26,11 +26,12 @@ class AnswerGenerationService(object):
             # o.questionType = identify_question_type(str(o.value))
             questionTypeIdentification = QuestionTypeIdentification()
             o.questionType = questionTypeIdentification.identify_question_type(str(o.value))
-            if o.questionType[0] != "yes-no":
+            if o.questionType[0] != "yes-no" and o.questionType[0] != "dash":
                 o.question_start = questionTypeIdentification.identify_question_start(str(o.value))
 
             o = questionTypeIdentification.identify_singleOrMultipleAnswer(o)
             print(o.answerObject.isSingle)
+            print("Identify Type properly ")
             print(o.questionType)
             print(o.question_start)
             sentenceIdentification = SentenceIdentification()
