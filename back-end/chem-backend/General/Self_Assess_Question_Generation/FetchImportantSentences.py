@@ -117,28 +117,58 @@ class FetchImportantSentences(object):
         return personCount;
 
     def importantSentences(self,text):
+        print("")
+        print("-----------------QUESTION GENERATABLE SENTENCE SELECT START")
+        print("")
+        print("----------TERM FREQUENCY BASED ALGORITHM START-----------")
+        print("")
+        print("-------INPUT PARAGRAPH START--------")
+        print(text)
+        print("-------INPUT PARAGRAPH END--------")
         # calculates TF
         TFVals = self._termFrequency(text);
+        print("")
+        print("-------CALCULATED TERM FREQUENCY VALUES START--------")
+        for tfVal in TFVals:
+            print(tfVal + " : " + str(TFVals[tfVal]))
+        print("-------CALCULATED TERM FREQUENCY VALUES END--------")
         important_sentence_list = set();
         count=0.0
         for tf in TFVals:
             count = count + TFVals[tf]
         if len(TFVals) != 0:
             average = count / len(TFVals)
+            print("")
+            print("AVERAGE TF VALUE TO PARAGRAPH : " + str(average))
         # print("AVERAGE :" + str(average))
             sentences = str(text).split(".")
             optimalVal = 10
             for tf in TFVals:
                 if len(sentences) < optimalVal:
+                    print("")
+                    print("----------SENTENCE THAT IS NOT OPTIMAL START ----------")
+                    print("")
                     percentage = (optimalVal - len(sentences)) / optimalVal
                     variable = (average - (average * percentage))
+                    print("UPDATED AVERAGE : " + str(average))
+                    print("-----IMPORTANT SENTENCE AFTER UPDATING AVERAGE START ------")
                     # print("DECREASED AVERAGE " + str(variable))
                     if TFVals[tf] >= variable:
                         important_sentence_list.add(str(tf))
+                        print(tf + " : " + str(TFVals[tf]))
+                    print("-----IMPORTANT SENTENCE AFTER UPDATING AVERAGE END ------")
+                    print("")
+                    print("----------SENTENCE THAT IS NOT OPTIMAL END ----------")
+                    print("")
                 else:
-                    if TFVals[tf] >= average:
-                        important_sentence_list.add(str(tf))
 
+                    if TFVals[tf] >= average:
+                        print("")
+                        print("-----IMPORTANT SENTENCE WITHOUT UPDATING AVERAGE START ------")
+                        important_sentence_list.add(str(tf))
+                        print(tf + " : " + str(TFVals[tf]))
+                        print("-----IMPORTANT SENTENCE WITHOUT UPDATING AVERAGE END ------")
+                        print("")
                 count = self._checkPersonEntity(str(tf));
                 if count != 0:
                     important_sentence_list.add(str(tf));
@@ -151,6 +181,18 @@ class FetchImportantSentences(object):
                     important_sentence_list.add(str(tf));
                 if str(tf).find("because") != -1:
                     important_sentence_list.add(str(tf));
+        print("")
+        print("------------IMPORTANT SENTENCES START-----------")
+        print("")
+        for sentence in important_sentence_list:
+            print(sentence)
+        print("")
+        print("------------IMPORTANT SENTENCES END-----------")
+        print("")
+        print("----------TERM FREQUENCY BASED ALGORITHM END-----------")
+        print("")
+        print("-----------------QUESTION GENERATABLE SENTENCE SELECT END")
+        print("")
         return important_sentence_list;
 
     def testImportantSentences(self,text,optimalval):
