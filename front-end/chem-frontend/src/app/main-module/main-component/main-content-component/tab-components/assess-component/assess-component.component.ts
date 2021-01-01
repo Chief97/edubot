@@ -88,9 +88,9 @@ export class AssessComponentComponent implements OnInit {
     //   }
     // }
 
-    this.httpService.allquestions(json).subscribe((data:any)=>{
-      console.log(data)
-    })
+    // this.httpService.allquestions(json).subscribe((data:any)=>{
+    //   console.log(data)
+    // })
 
     this.fetchSymbolQuestions()
   }
