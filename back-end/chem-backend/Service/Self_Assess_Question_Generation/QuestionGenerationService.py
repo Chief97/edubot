@@ -264,6 +264,7 @@ class QuestionGenerationService(object):
         #         response.question = question_type.replace()
 
     def retrieveQuestionList(self, textPara):
+        print("QUESTION GENERATION PROCESS START")
         preProcess = PreProcess()
         pretext = preProcess.preProcessPara(textPara)
         tool = language_tool_python.LanguageToolPublicAPI('en-US')
@@ -278,17 +279,17 @@ class QuestionGenerationService(object):
             # print(questions.sentence)
             questionList = []
             question = QuestionFormation()
-            how_question = question.generateHowQuestion(sentence);
+            # how_question = question.generateHowQuestion(sentence);
             why_question = question.generateWhyQuestion(sentence);
             yes_question = question.createYesUsingHVerbPhrase(sentence);
             no_question = question.createNoUsingHVerbPhrase(sentence)
             wh_question = question.generateWHQuestion(sentence)
             who_question = question.generateWhoTypeQuestion(sentence)
             fill_in_blanks = question.fillInBlanks(sentence)
-            if how_question is not None and how_question != "":
-                how_question = tool.correct(str(how_question))
-                questionList.append(how_question)
-            if why_question != '':
+            # if how_question is not None and how_question != "":
+            #     how_question = tool.correct(str(how_question))
+            #     questionList.append(how_question)
+            if why_question is not None and why_question != '':
                 why_question = tool.correct(str(why_question))
                 questionList.append(why_question)
             if yes_question is not None and yes_question != '':
@@ -297,7 +298,7 @@ class QuestionGenerationService(object):
             if no_question is not None and no_question != '':
                 no_question = tool.correct(str(no_question))
                 questionList.append(no_question)
-            if wh_question != '':
+            if wh_question is not None and wh_question != '':
                 wh_question = tool.correct(str(wh_question))
                 questionList.append(wh_question)
             if who_question is not None and who_question != '':
@@ -308,9 +309,11 @@ class QuestionGenerationService(object):
                 questionList.append(fill_in_blanks)
             if len(questionList) != 0:
                 print(questionList)
+                print("")
                 finalQuestion = random.choice(questionList)
                 allQuestionsForPara.append(finalQuestion)
-
+        print("QUESTION GENERATION PROCESS END")
+        print("")
         return allQuestionsForPara
 
 

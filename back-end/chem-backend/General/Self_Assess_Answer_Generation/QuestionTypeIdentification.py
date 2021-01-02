@@ -3,23 +3,40 @@ import nltk
 
 class QuestionTypeIdentification(object):
     def identify_question_type(self,question):
-        words = question.split()
-        length = len(words)
-        hverbs = ["is", "have", "had", "was", "could", "would", "will", "do", "did", "should", "shall", "can", "are"]
-        print(question)
+
+        # words = question.split()
+        words = nltk.word_tokenize(question)
+
+        hverbs = ["is", "have", "had", "was", "could", "would", "will", "do", "did", "should", "shall", "can", "are", "does","do"]
+        isWhType = False
+        isDash = False
+        isYesNo = False
+        isHow = False
+        isNone = False
         for word in words:
             if word == "what" or word == "where" or word == "who" or word == "which" or word == "why":
-                return ["wh", "mcq"]
-            elif word == "@dash":
-                return ["blank", "mcq"]
+
+                isWhType = True
+            elif word == "dash":
+                isDash = True
             elif word in hverbs:
-                return ["yes-no"]
-            elif (nltk.word_tokenize(question)[0] == "how") and (nltk.word_tokenize(question)[1] == "many"):
-                return ["howMany"]
+                if isHow == False:
+                    isYesNo = True
+            elif (nltk.word_tokenize(question)[0] == "how"):
+                isHow = True
             else:
-                return ["None"]
+                isNone = True
 
-
+        if isWhType :
+            return ["wh", "mcq"]
+        if isDash:
+            return ["blank", "mcq"]
+        if isYesNo:
+            return ["yes-no"]
+        if isHow:
+            return ["how"]
+        if isNone:
+            return ["None"]
 
     def identify_question_start(self,question):
         question_words = nltk.word_tokenize(question)
@@ -31,6 +48,10 @@ class QuestionTypeIdentification(object):
             return "when"
         elif "where" in question_words:
             return "where"
+        elif "why" in question_words:
+            return "why"
+        elif "how" in question_words:
+            return "how"
         else:
             return "none"
 
