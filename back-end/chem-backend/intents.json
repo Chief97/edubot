@@ -1,15 +1,18 @@
 {"intents": [
         {"intent_id": "greeting",
-         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello"]
+         "patterns": ["Hi", "Is anyone there?", "Hello", "hey", "what's new?"]
         },
         {"intent_id": "How are you?",
-         "patterns": ["How are you", "Is anyone there?", "what's going on?", "how have you been?"]
+         "patterns": ["How are you", "what's going on?", "how have you been?"]
         },
-        {"intent_id": "greeting response",
-         "patterns": ["I'm fine", "i am doing fine", "feeling good"]
+        {"intent_id": "positive greeting response",
+         "patterns": ["I'm fine", "i am doing fine", "feeling good", "great"]
+        },
+        {"intent_id": "negative greeting response",
+         "patterns": ["not so good", "i am really tired", "i feel sick", "i'm upset"]
         },
         {"intent_id": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye"]
+         "patterns": ["Bye", "See you later", "Goodbye", "good bye"]
         },
         {"intent_id": "thanks",
          "patterns": ["Thanks", "Thank you", "That's helpful"]
@@ -54,13 +57,13 @@
             "patterns": ["give few examples of heterogeneous mixture?", "can you tell few examples of heterogeneous mixture?", "examples for heterogeneous mixture?", "examples of heterogeneous mixture?", "what are the examples for heterogeneous mixture?"]
         },
         {"intent_id": "what is solvent",
-            "patterns": ["what is solvent?", "explain solvent?", "state about solvent?", "explain about solvent?", "can you explain about solvent?"]
+            "patterns": ["what is solvent?", "explain solvent?", "state about solvent?", "explain about solvent?", "can you explain about solvent?", "what is the definition for solvent?"]
         },
         {"intent_id": "what is solution",
-            "patterns": ["what is solution?", "explain solution?", "state about solution?", "explain about solution?", "can you explain about solution?"]
+            "patterns": ["what is solution?", "explain solution?", "state about solution?", "explain about solution?", "can you explain about solution?", "what is the definition for solution?"]
         },
         {"intent_id": "what is solute",
-            "patterns": ["what is solute?", "explain solute?", "state about solute?", "explain about solute?", "can you explain about solute?"]
+            "patterns": ["what is solute?", "explain solute?", "state about solute?", "explain about solute?", "can you explain about solute?", "what is the definition for solute?"]
         },
         {"intent_id": "relationship between solvent, solution and solute",
             "patterns": ["relationship between solvent, solution and solute?", "how solution, solvent and solute are connected?"]
@@ -132,10 +135,10 @@
             "patterns": ["what are the real world examples where components should be separated from mixtures?", "real world examples where components separated from mixtures?"]
         },
         {"intent_id": "what are the physical properties should consider when separate components from mixture",
-            "patterns": ["what are the physical properties should consider when separate components from mixture?"]
+            "patterns": ["what are the physical properties should consider when separate components from mixture?", "physical properties should consider when separate components from mixture?", "give some examples for physical properties when separate components from mixture?"]
         },
         {"intent_id": "what are the separation methods that used to separate components from mixtures",
-            "patterns": ["what are the separation methods that used to separate components from mixtures?"]
+            "patterns": ["what are the separation methods that used to separate components from mixtures?", "separation methods should use when separate components from mixture?"]
         },
         {"intent_id": "explain about mechanical separation for separate components from mixtures",
             "patterns": ["explain about mechanical separation for separate components from mixtures?", "what are the methods used in mechanical separation for separate components from mixtures?"]
