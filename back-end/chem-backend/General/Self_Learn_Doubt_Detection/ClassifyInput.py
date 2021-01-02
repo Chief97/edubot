@@ -18,7 +18,6 @@ model = DoubtDetection.model
 
 
 class ClassifyInput(object):
-
     # restoring all the data structures from the trained model
     data = pickle.load(open("training_data", "rb"))
     stemmed_words = data['stemmed_words']
@@ -41,7 +40,7 @@ class ClassifyInput(object):
         sentence_words = [stemmer.stem(word.lower()) for word in sentence_words]
         return sentence_words
 
-    def bow(self, sentence, s_words, show_details=False,):
+    def bow(self, sentence, s_words, show_details=False, ):
         """
         returning bag of words array: 0 or 1 for each word in
         the bag that exists in the sentence
@@ -70,7 +69,7 @@ class ClassifyInput(object):
         :param sentence: input text or user question
         :return: intent_id for the input
         """
-        THRESHOLD = 0.3
+        THRESHOLD = 0.5
 
         results = model.predict([self.bow(sentence, self.stemmed_words)])[0]
         results = [[i, r] for i, r in enumerate(results) if r > THRESHOLD]
