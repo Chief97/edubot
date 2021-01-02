@@ -7,7 +7,7 @@ class QuestionTypeIdentification(object):
         # words = question.split()
         words = nltk.word_tokenize(question)
 
-        hverbs = ["is", "have", "had", "was", "could", "would", "will", "do", "did", "should", "shall", "can", "are"]
+        hverbs = ["is", "have", "had", "was", "could", "would", "will", "do", "did", "should", "shall", "can", "are", "does","do"]
         isWhType = False
         isDash = False
         isYesNo = False
