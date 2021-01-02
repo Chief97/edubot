@@ -503,14 +503,14 @@ class QuestionFormation(object):
             for i in entityArray:
                 nouns.append(i)
             noun = random.choice(nouns)
-            sentence = sentence.replace(noun, ' @dash ',
-                                        1)  # replacing a random word that is a special named entity using @dash sign
+            sentence = sentence.replace(noun, ' dash ',
+                                        1)  # replacing a random word that is a special named entity using dash sign
             return sentence
         else:
             nouns = helper.getNounPhrases(sentence)
             if len(nouns) != 0:
                 noun = random.choice(nouns)
-                sentence = sentence.replace(noun, ' @dash ', 1)  # replacing a random noun using @dash sign
+                sentence = sentence.replace(noun, ' dash ', 1)  # replacing a random noun using dash sign
                 return sentence
             else:
                 return ''
