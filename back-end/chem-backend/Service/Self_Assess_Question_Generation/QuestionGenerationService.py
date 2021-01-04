@@ -214,9 +214,9 @@ class QuestionGenerationService(object):
                 else:
                     answerOptions = []
                     numbersList = random.sample(range(0, 19), 3)
-                    numbersList1 = ['21', '22', '23', '24', '25']
+                    numbersList1 = ['20', '21', '22', '23', '24', '25']
                     symbols = ['H', 'He', 'li', 'Be', 'B', 'N', 'C', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S',
-                               'Cl', 'Ar', 'K', 'Ca', 'Kr', 'Se', 'Ti', 'Co', 'Mn' ,'Cr']
+                               'Cl', 'Ar', 'K', 'Ca', 'Kr', 'Se', 'Ti', 'Co', 'Mn', 'Cr']
                     # symbols_copy = symbols
                     for i in numbersList:
                         if answer == symbols[i]:
