@@ -15,12 +15,13 @@ import {HttpClientModule} from "@angular/common/http";
 import {GeneralServiceService} from "../../services/general-service.service";
 import {SummaryPopupComponent} from "../../components/summary-popup/summary-popup.component";
 import {ChartsModule} from "ng2-charts";
+import {DataDisplayComponent} from '../../components/data-display/data-display.component';
 
 
 
 
 @NgModule({
-  declarations: [MainComponentComponent,HeaderComponentComponent,HomeComponentComponent,ProfileComponentComponent,AboutComponentComponent,LearnComponentComponent,AssessComponentComponent,MainContentComponentComponent,SummaryPopupComponent],
+  declarations: [DataDisplayComponent, MainComponentComponent,HeaderComponentComponent,HomeComponentComponent,ProfileComponentComponent,AboutComponentComponent,LearnComponentComponent,AssessComponentComponent,MainContentComponentComponent,SummaryPopupComponent],
   exports: [SummaryPopupComponent],
   imports: [
     CommonModule,

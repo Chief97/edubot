@@ -14,15 +14,22 @@ class DoubtRespond(object):
                 "output_value": "How are you?"
             }
             return jsonify(final_results)
+        elif input_query == "How are you?":
+            final_results = {
+                "type": "ConversationReply",
+                "output_value": "I am doing well as always!"
+            }
+            return jsonify(final_results)
         elif input_query == "goodbye":
             final_results = {
                 "type": "ConversationReply",
                 "output_value": "Goodbye! Have a nice day"
             }
-        elif input_query == "greeting response":
+            return jsonify(final_results)
+        elif input_query == "negative greeting response":
             final_results = {
                 "type": "ConversationReply",
-                "output_value": "How may I help you today?"
+                "output_value": "Do not worry, everything will be fine. How may I help you today?"
             }
             return jsonify(final_results)
         elif input_query == "thanks":
@@ -31,17 +38,23 @@ class DoubtRespond(object):
                 "output_value": "Hope that was helpful!"
             }
             return jsonify(final_results)
-        elif input_query == "greeting response":
+        elif input_query == "positive greeting response":
             final_results = {
                 "type": "ConversationReply",
                 "output_value": "What can I help you with today?"
+            }
+            return jsonify(final_results)
+        elif input_query == "":
+            final_results = {
+                "type": "ConversationReply",
+                "output_value": "Sorry! that is not in the O/L chemistry Syllabus"
             }
             return jsonify(final_results)
         else:
             ranking = Rank()
             self.search_query = input_query
             rank1 = ranking.rank(input_query, word_dictionary)
-            return rank1
+            return jsonify(rank1)
 
     def scraper(self):
         
