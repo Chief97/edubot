@@ -537,9 +537,9 @@ class QuestionFormation(object):
                 question = question + ' ?'
                 # print("WHO1 ************************************************************ " + question)
                 return question
-            else:
-                question = question + "Who " + verb + " " + subject + " ?"
-                # print("WHO2 **************************************************************** " + question)
-                return question
+            # else:
+            #     question = question + "Who " + verb + " " + subject + " ?"
+            #     # print("WHO2 **************************************************************** " + question)
+            #     return question
         else:
             return question
