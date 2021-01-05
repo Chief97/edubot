@@ -71,26 +71,36 @@ class AnswerExtraction(object):
                 print(sentence_NN)
                 print(question.value)
                 possibleAnswer = []
-                for noun in sentence_NN:
-                    if noun not in nltk.word_tokenize(question.value):
-                        possibleAnswer.append(noun)
-                print(possibleAnswer)
+                # for noun in sentence_NN:
+                #     if noun not in nltk.word_tokenize(question.value):
+                #         possibleAnswer.append(noun)
+                # print(possibleAnswer)
                 answer_obj = Answer
-                numbersList = random.sample(range(0, len(sentence_NN) - 1), 3)
+                # numbersList = random.sample(range(0, len(sentence_NN) - 1), 3)
+                answer_obj.correctAnswer = answer
                 answerOptions = list()
-                for i in numbersList:
-                    answerOptions.append(sentence_NN[i])
-                answer = self.removeStopWords(answer)
                 answerOptions.append(answer)
-                print("random           :::: ", random.shuffle(answerOptions))
+                answerOptions = self.generateOptionsForWhatTypeQuestion(answer,question,paragraph,answerOptions)
+                random.shuffle(answerOptions)
                 answer_obj.mcqAnswer = answerOptions
                 for j, i in enumerate(answerOptions):
                     if i == answer:
                         answer_obj.position = j + 1
-
-                answer_obj.correctAnswer = answer
-                # answer_obj.smallAnswer = answer_obj.mcqAnswer[answer_obj.correctAnswer]
                 question.answerObject = answer_obj
+
+                # for i in numbersList:
+                #     answerOptions.append(sentence_NN[i])
+                # answer = self.removeStopWords(answer)
+
+                # print("random           :::: ", random.shuffle(answerOptions))
+                # answer_obj.mcqAnswer = answerOptions
+                # for j, i in enumerate(answerOptions):
+                #     if i == answer:
+                #         answer_obj.position = j + 1
+                #
+                # answer_obj.correctAnswer = answer
+                # answer_obj.smallAnswer = answer_obj.mcqAnswer[answer_obj.correctAnswer]
+                # question.answerObject = answer_obj
                 print("POSSIBLE_ANSWER : ", answerOptions)
                 print("CORRECT_ANSWER : ", answer)
                 print(question.sentence, question.value)
@@ -179,8 +189,10 @@ class AnswerExtraction(object):
                             answer = nltk.sent_tokenize(paragraph)[indexOfAnswerSentence]
                             answer_obj = Answer
                             answer_obj.correctAnswer = answer
+                            answerOptions = list()
+                            answerOptions.append(answer)
+                            answerOptions = self.generateOptionsForWhyTypeQuestion(answer, question, paragraph,answerOptions)
 
-                            answerOptions = self.generateOptions(answer,"")
                             random.shuffle(answerOptions)
                             answer_obj.mcqAnswer = answerOptions
                             for j, i in enumerate(answerOptions):
@@ -197,8 +209,11 @@ class AnswerExtraction(object):
                             answer = self.helperForWhyQuestions(nltk.sent_tokenize(paragraph)[i])
                             answer_obj = Answer
                             answer_obj.correctAnswer = answer
+                            answerOptions = list()
+                            answerOptions.append(answer)
+                            answerOptions = self.generateOptionsForWhyTypeQuestion(answer, question, paragraph,
+                                                                                   answerOptions)
 
-                            answerOptions = self.generateOptions(answer, "")
                             random.shuffle(answerOptions)
                             answer_obj.mcqAnswer = answerOptions
                             for j, i in enumerate(answerOptions):
@@ -421,6 +436,91 @@ class AnswerExtraction(object):
 
 
         return optionList
+
+    def generateOptionsForWhatTypeQuestion(self, answer, question,paragraph,optionList):
+
+        sentence_NN = []
+
+        if any(char.isdigit() for char in answer):
+            numbersList = random.sample(range(0, 25), 3)
+            for i in numbersList:
+                if i not in optionList:
+                    optionList.append(i)
+        else:
+            sent_POS = nltk.pos_tag(nltk.word_tokenize(paragraph))
+            helper = QuestionFormationHelper()
+            subject = helper.getSubject(answer)
+            option = ""
+            for tag in sent_POS:
+                if (tag[1] == "NN") and tag[0] not in sentence_NN:
+                    op = tag[0]
+                    op = op + " "
+                    option = answer.replace(subject,op,1)
+                    if option not in sentence_NN :
+                        sentence_NN.append(option)
+            print("The length of options ",len(sentence_NN))
+            print(" options ",sentence_NN)
+            lengthCurrent = len(sentence_NN)
+            if lengthCurrent >= 3 :
+                numbersList = random.sample(range(0, len(sentence_NN) - 1), 3)
+                for i in numbersList:
+                    if sentence_NN[i] not in optionList:
+                        optionList.append(sentence_NN[i])
+            else :
+                missingOption = 3 - lengthCurrent
+                for tag in sent_POS:
+                    if (tag[1] == "NN") and tag[0] not in sentence_NN:
+                        sentence_NN.append(tag[0])
+                print(sentence_NN)
+                numbersList = random.sample(range(0, len(sentence_NN) - 1), missingOption)
+                for i in numbersList:
+                    if sentence_NN[i] not in optionList:
+                        optionList.append(sentence_NN[i])
+
+        return optionList
+
+    def generateOptionsForWhyTypeQuestion(self, answer, question,paragraph,optionList):
+
+        sentence_NN = []
+
+        if any(char.isdigit() for char in answer):
+            numbersList = random.sample(range(0, 25), 3)
+            for i in numbersList:
+                if i not in optionList:
+                    optionList.append(i)
+        else:
+            sent_POS = nltk.pos_tag(nltk.word_tokenize(paragraph))
+            helper = QuestionFormationHelper()
+            subject = helper.getSubject(answer)
+            option = ""
+            for tag in sent_POS:
+                if (tag[1] == "NN") and tag[0] not in sentence_NN:
+                    op = tag[0]
+                    op = op + " "
+                    option = answer.replace(subject,op,1)
+                    if option not in sentence_NN :
+                        sentence_NN.append(option)
+            print("The length of options ",len(sentence_NN))
+            print(" options ",sentence_NN)
+            lengthCurrent = len(sentence_NN)
+            if lengthCurrent >= 3 :
+                numbersList = random.sample(range(0, len(sentence_NN) - 1), 3)
+                for i in numbersList:
+                    if sentence_NN[i] not in optionList:
+                        optionList.append(sentence_NN[i])
+            else :
+                missingOption = 3 - lengthCurrent
+                for tag in sent_POS:
+                    if (tag[1] == "NN") and tag[0] not in sentence_NN:
+                        sentence_NN.append(tag[0])
+                print(sentence_NN)
+                numbersList = random.sample(range(0, len(sentence_NN) - 1), missingOption)
+                for i in numbersList:
+                    if sentence_NN[i] not in optionList:
+                        optionList.append(sentence_NN[i])
+
+        return optionList
+
 
     def helperForWhyQuestions(self, sentence):
         sentencePart = ""
