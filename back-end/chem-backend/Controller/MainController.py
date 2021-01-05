@@ -10,7 +10,6 @@ from Service.Self_Learn_Doubt_Detection.DoubtDetectionService import DoubtDetect
 from Service.Self_Assess_Question_Generation.QuestionGenerationService import QuestionGenerationService
 from Service.Self_Learn_Doubt_Response.DoubtResponseService import DoubtResponseService
 
-
 # def prepare_data():
 #     data = doubtResponseService.collect_data()
 #     processing = doubtResponseService.process_data(data)
@@ -59,12 +58,14 @@ def updateUserDetails():
     user_details = userAccessManagement.updateUserDetails(textInput)
     return jsonify(user_details)
 
+
 ################################################# End User access management End points #########################################################
 
 ################################################# Start Self Assess Component ###################################################################
 
 questionGenerationService1 = QuestionGenerationService()
 answerGenerationService1 = AnswerGenerationService()
+
 
 # @app.route('/selfAssess/getQuestions', methods=['POST'])
 # def retrieveQuestions():
@@ -82,7 +83,6 @@ answerGenerationService1 = AnswerGenerationService()
 
 @app.route('/selfAssess/getQuestions', methods=['POST'])
 def getMcqQuestions():
-
     textInput = request.get_json()['data']
     questionCategory = textInput["questionCategory"]
     sectionName = textInput["sectionName"]
@@ -108,9 +108,9 @@ def getSectionPara():
     paraForSection = questionGenerationService.retrieveParaForSection()
     return jsonify(paraForSection)
 
+
 @app.route('/selfAssess/getAllQuestions', methods=['POST'])
 def getAllQuestions():
-
     textInput = request.get_json()['data']
     questionCategory = textInput["questionCategory"]
     sectionName = textInput["sectionName"]
@@ -122,7 +122,8 @@ def getAllQuestions():
     elif questionCategory == "section" and sectionName != "" and questionType != "" and paragraph != "":
         mcqQuestionsList = questionGenerationService1.retrieveQuestionList(paragraph)
         # answerGenerationService1.autoAnswerGeneration(paragraph,mcqQuestionsList)
-        return jsonify(answerGenerationService1.autoAnswerGeneration(paragraph,mcqQuestionsList))
+        return jsonify(answerGenerationService1.autoAnswerGeneration(paragraph, mcqQuestionsList))
+
 
 ################################################# End Self Assess Component ###################################################################
 
@@ -138,10 +139,9 @@ def detectIntent_id():
     intent_id = doubtDetectionService.getIntent(textInput)
     print("intentID")
     print(intent_id)
-    #response(intent_id)
-    #return intent_id
+    # response(intent_id)
+    # return intent_id
     return response(intent_id)
-
 
 
 ################################################# End Doubt Detection End points ################################################################
@@ -166,13 +166,25 @@ def prepare_data():
 
 @app.route('/selfLearn/doubtResponse/respond', methods=['POST'])
 def response(text_input):
-    #text_input = request.get_json()['text']
+    # text_input = request.get_json()['text']
     # print(text)
     # text_input = text['text']
     print("text_input")
     print(text_input)
     doubt_response = doubtResponseService.respond(text_input)
     print("respond hit")
+    return doubt_response
+
+
+@app.route('/selfLearn/doubtResponse/getChapter', methods=['POST'])
+def retrieveChapter():
+    grade = request.get_json()['grade']
+    chapter = request.get_json()['chapter']
+    print("chapter number")
+    print(grade, chapter)
+    doubt_response = doubtResponseService.retrieve_data(grade, chapter)
+    print("data retrieved")
+    print(doubt_response)
     return doubt_response
 
 
@@ -223,14 +235,17 @@ def allQuestions():
 ################################################# Start Answer Generation End points ##############################################################
 
 autoAnswerGenerationService = AnswerGenerationService()
+
+
 @app.route('/selfEvaluate/answerGeneration/answer', methods=['POST'])
 def allAnswers():
     textInput = request.get_json()['text']
     paragraph = textInput["paragraph"]
     questionList = textInput["questionList"]
     print("Initial ", questionList)
-    allAnswersForQuestions = autoAnswerGenerationService.autoAnswerGeneration(paragraph,questionList)
+    allAnswersForQuestions = autoAnswerGenerationService.autoAnswerGeneration(paragraph, questionList)
     return jsonify(allAnswersForQuestions)
+
 
 ################################################# End Answer Generation End points ##############################################################
 
