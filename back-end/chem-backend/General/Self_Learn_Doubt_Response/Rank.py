@@ -103,12 +103,13 @@ class Rank(object):
                 final_results = {
                     "type": "textContent",
                     "name": data.iloc[final_candidates[0]]['name'],
-                    "html_text": preprocessed.iloc[final_candidates[0]]['no_html_text']
+                    "html_text": preprocessed.iloc[final_candidates[0]]['no_html_text'],
+                    "response": "Is this what you were looking for?"
                 }
                 print("final candidates 6")
                 print(final_candidates[0])
                 print(final_results)
-                return jsonify(final_results)
+                return final_results
         except:
             print("error")
             results3 = {

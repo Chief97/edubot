@@ -4,12 +4,12 @@ from General.Self_Learn_Doubt_Response.DataLoading import DataLoading
 from General.Self_Learn_Doubt_Response.DoubtRespond import DoubtRespond
 from General.Self_Learn_Doubt_Response.Indexing import Indexing
 from General.Self_Learn_Doubt_Response.Preprocess import Preprocess
+from General.Self_Learn_Doubt_Response.RetrieveFiles import RetrieveFiles
 from General.Self_Learn_Doubt_Response.webScraper.webScraper.spiders.chem_spider import ChemistrySpider
 from scrapy.crawler import CrawlerProcess
 
 
 class DoubtResponseService(object):
-
     word_dictionary = []
 
     def startScraper(self):
@@ -41,4 +41,7 @@ class DoubtResponseService(object):
         response = doubt_response.classify(input_query, self.word_dictionary)
         return response
 
-
+    def retrieve_data(self, grade, chapter):
+        file_retrieve = RetrieveFiles()
+        file = file_retrieve.load_chapter(grade, chapter)
+        return file

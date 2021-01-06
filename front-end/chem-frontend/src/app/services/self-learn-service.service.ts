@@ -21,4 +21,8 @@ export class SelfLearnServiceService {
   generateReply(data) {
     return this.http.post(`${BASE_URL}//selfLearn/doubtDetection/getIntent`, data, this.httpOptions);
   }
+
+  getChapter(data){
+    return this.http.post(`${BASE_URL}/selfLearn/doubtResponse/getChapter`, data, this.httpOptions);
+  }
 }
