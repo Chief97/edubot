@@ -1,7 +1,7 @@
 import {Component, OnInit, ElementRef, ViewChild, Inject} from '@angular/core';
 import {SelfLearnServiceService} from '../../../../../services/self-learn-service.service';
 import {Router} from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-learn-component',

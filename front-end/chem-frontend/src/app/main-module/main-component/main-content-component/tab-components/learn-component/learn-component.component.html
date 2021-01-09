@@ -6,10 +6,11 @@
       <div class="data" *ngIf="viewData">
         <h1>Grade 10</h1>
         <ul>
-<!--          <li class="chapter-selector" (click) = "retrieveChapter()"></li>-->
-<!--          <li class="chapter-selector" (click) = "retrieveChapter()"></li>-->
-<!--          <li class="chapter-selector" (click) = "retrieveChapter()"></li>-->
-<!--          <li class="chapter-selector" (click) = "retrieveChapter()"></li>-->
+          <li class="chapter-selector" (click) = "retrieveChapter(10,3)">Structure of matter</li>
+          <li class="chapter-selector" (click) = "retrieveChapter(10,7)">Quantification of elements and compounds</li>
+          <li class="chapter-selector" (click) = "retrieveChapter(10,10)">Chemical bonds</li>
+          <li class="chapter-selector" (click) = "retrieveChapter(10,16)">Changes in matter</li>
+          <li class="chapter-selector" (click) = "retrieveChapter(10,17)">Rate of reactions</li>
         </ul>
         <br>
         <h1>Grade 11</h1>
@@ -70,26 +71,31 @@
                     <span class="time">{{message.date | date:'medium'}}</span>
                     <!--                  </div>-->
                   </div>
-                  <!--                  <img class="outgoing-chats-img" src="../../assets/image/chatImage/user-icon.jpg">-->
+                  <div class="outgoing-chats-img">
+                    <img src="../../assets/image/chatImage/user-icon.jpg">
+                  </div>
                 </div>
               </div>
             </div>
+<!--            repeat end-->
+          </div>
+          <div>
             <div class="typing" *ngIf="typing" style="margin-left: 35px;">
-              <img src="../../assets/image/typing.gif">
+              <img src="../../assets/image/typing1.gif">
             </div>
           </div>
         </div>
       </div>
-      <div class="msg-bottom">
-        <div class="bottom">
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="data" (keydown.enter)='input()' placeholder="Type your message here.">
-            <div class="input-group-append">
-              <span class="input-group-text"><i class="fa fa-paper-plane fa-2x" (click)="input()"></i></span>
+        <div class="msg-bottom">
+          <div class="bottom">
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="data" (keydown.enter)='input()' placeholder="Type your message here.">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-paper-plane fa-2x" (click)="input()"></i></span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </div>

@@ -246,7 +246,6 @@ def allAnswers():
     allAnswersForQuestions = autoAnswerGenerationService.autoAnswerGeneration(paragraph, questionList)
     return jsonify(allAnswersForQuestions)
 
-
 ################################################# End Answer Generation End points ##############################################################
 
 app.run(debug=True)
