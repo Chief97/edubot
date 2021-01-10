@@ -44,6 +44,18 @@ class DoubtRespond(object):
                 "output_value": "What can I help you with today?"
             }
             return jsonify(final_results)
+        elif input_query == "positive acknowledgement":
+            final_results = {
+                "type": "ConversationReply",
+                "output_value": "Great! What else can I help you with?"
+            }
+            return final_results
+        elif input_query == "negative acknowledgement":
+            final_results = {
+                "type": "ConversationReply",
+                "output_value": "Oops! Can you try to be more specific?"
+            }
+            return final_results
         elif input_query == "":
             final_results = {
                 "type": "ConversationReply",
