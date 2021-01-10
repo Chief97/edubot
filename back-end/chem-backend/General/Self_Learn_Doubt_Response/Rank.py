@@ -97,13 +97,13 @@ class Rank(object):
                 # return the most appropriate document
                 load_data = DataLoading()
                 data = load_data.load_file()
-                preprocess = Preprocess()
-                preprocessed = preprocess.remove_html_tags(data)
-                print(preprocessed)
+                # preprocess = Preprocess()
+                # preprocessed = preprocess.remove_html_tags(data)
+                # print(preprocessed)
                 final_results = {
                     "type": "textContent",
                     "name": data.iloc[final_candidates[0]]['name'],
-                    "html_text": preprocessed.iloc[final_candidates[0]]['no_html_text'],
+                    "html_text": data.iloc[final_candidates[0]]['html_text'],
                     "response": "Is this what you were looking for?"
                 }
                 print("final candidates 6")
