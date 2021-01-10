@@ -1,15 +1,21 @@
 {"intents": [
         {"intent_id": "greeting",
-         "patterns": ["Hi", "Is anyone there?", "Hello", "hey", "what's new?"]
+         "patterns": ["Hi", "Is anyone there?", "Hello", "hey", "hi", "what's new?"]
         },
         {"intent_id": "How are you?",
          "patterns": ["How are you", "what's going on?", "how have you been?"]
         },
         {"intent_id": "positive greeting response",
-         "patterns": ["I'm fine", "i am doing fine", "feeling good", "great"]
+         "patterns": ["I'm fine", "i am doing fine", "feeling good", "great", "good", "i'm doing good"]
         },
         {"intent_id": "negative greeting response",
-         "patterns": ["not so good", "i am really tired", "i feel sick", "i'm upset"]
+         "patterns": ["not so good", "feeling bad", "bad", "i am really tired", "i feel sick", "i'm upset"]
+        },
+        {"intent_id": "positive acknowledgement",
+         "patterns": ["yes", "yeah", "yes this is it", "yeah great"]
+        },
+        {"intent_id": "negative acknowledgement",
+         "patterns": ["no", "not", "nope", "this is not it"]
         },
         {"intent_id": "goodbye",
          "patterns": ["Bye", "See you later", "Goodbye", "good bye"]
@@ -517,13 +523,13 @@
             "patterns": ["explain the practical that does to confirm the pressure of carbon and hydrogen in candle wax?", "confirming pressure of carbon and hydrogen in candle wax", "examing pressure of carbon and hydrogen in candle wax?"]
            },
         {"intent_id": "explain about alkanes",
-            "patterns": ["explain about alkanes?", "what is alkanes?"]
+            "patterns": ["explain about alkanes?", "what is alkanes?", "can you explain about alkanes?"]
            },
         {"intent_id": "give molecular formula and structural formula of alkanes",
             "patterns": ["give molecular formula and structural formula of alkanes?", "list the molecular and structral formula of alkanes?"]
            },
         {"intent_id": "explain about alkenes",
-            "patterns": ["explain about alkenes?", "what is alkenes?"]
+            "patterns": ["explain about alkenes?", "what is alkenes?", "can you explain about alkenes? ","tell about alkenes?"]
            },
         {"intent_id": "give molecular formula and structural formula of alkenes",
             "patterns": ["give molecular formula and structural formula of alkenes?", "list the molecular and structral formula of alkenes?"]
@@ -532,7 +538,8 @@
             "patterns": ["explain about ethene?", "what is ethene?"]
            },
         {"intent_id": "what are the derivatives of ethene",
-            "patterns": ["what are the derivatives of ethene?", "list the derivatives of ethene?"]
+            "patterns": ["what are derivatives of ethene?", "explain about derivatives of ethene",
+              "what is derivatives of ethene?", "list the derivatives of ethene?", "can you tell about derivatives of ethene?"]
         },
         {"intent_id": "explain about chloroethene",
             "patterns": ["explain about chloroethene", "what is chloroethene?", "can you define chloroethene?"]
@@ -541,7 +548,10 @@
             "patterns": ["explain about tetrafluoroethene", "what is tetrafluoroethene?", "can you define tetrafluoroethene?"]
         },
         {"intent_id": "explain about polymers",
-            "patterns": ["explain about polymers", "what is polymers?", "can you define polymers?"]
+            "patterns": ["explain about polymers", "what is polymers?", "can you define polymers?", "can you explain about polymers?"]
+        },
+        {"intent_id": "explain about rubber",
+            "patterns": ["explain about rubber", "what is rubber?", "can you define rubber?", "can you explain about rubber?"]
         },
         {"intent_id": "explain about polythene",
             "patterns": ["explain about polythene", "what is polythene?", "can you define polythene?"]
