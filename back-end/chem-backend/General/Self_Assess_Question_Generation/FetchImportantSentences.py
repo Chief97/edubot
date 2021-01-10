@@ -150,7 +150,7 @@ class FetchImportantSentences(object):
                     print("")
                     percentage = (optimalVal - len(sentences)) / optimalVal
                     variable = (average - (average * percentage))
-                    print("UPDATED AVERAGE : " + str(average))
+                    print("UPDATED AVERAGE : " + str(variable))
                     print("-----IMPORTANT SENTENCE AFTER UPDATING AVERAGE START ------")
                     # print("DECREASED AVERAGE " + str(variable))
                     if TFVals[tf] >= variable:
