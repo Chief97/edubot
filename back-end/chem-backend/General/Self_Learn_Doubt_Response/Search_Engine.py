@@ -38,6 +38,8 @@ class SearchEngine(object):
                     realwords.append(word)
             words = realwords
             numwords = len(words)
+            print('real search words')
+            print(words)
 
             # make metric of number of occurances of all words in each doc & largest total IDF
             for word in words:
@@ -111,7 +113,6 @@ class SearchEngine(object):
 
             # also the one above should be given a big boost if ALL found together
 
-            # could make another metric for if they are not next to each other but still close
             print("Results")
             print("search sentence")
             print(searchsentence)
